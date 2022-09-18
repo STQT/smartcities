@@ -22,7 +22,7 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
       with:
         source: "."
-        target: "/root/hub.smartcities.uz"
+        target: "/root/test.smartcities.uz"
 
     - name: Komandalar terilishi @@@@@@@@@@
       uses: appleboy/ssh-action@master
@@ -33,6 +33,5 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
         script_stop: true
         script: |
-          whoami
-          # npm install
-          # npm run buld
+          npm install
+          npm run buld
