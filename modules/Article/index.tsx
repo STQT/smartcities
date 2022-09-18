@@ -43,9 +43,7 @@ export const ArticlePage = ({ id }: ArticlePageProps) => {
 
   const onArticleLike = () => {
     if (user && article) {
-      likeArticle(user.id, article.id).then((res) => {
-        // Add smth
-      })
+      likeArticle(user.id, article.id).then((res) => {})
     }
   }
 

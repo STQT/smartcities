@@ -38,7 +38,7 @@ export const Header = () => {
         <Avatar size={50} onClick={() => router.push("/me")} />
       </>
     )
-  }, [user])
+  }, [user, isLoggedIn])
 
   const NotLoggedInState = useMemo(() => {
     const router = useRouter()
@@ -54,7 +54,7 @@ export const Header = () => {
         </button>
       </section>
     )
-  }, [])
+  }, [isLoggedIn])
 
   return (
     <header

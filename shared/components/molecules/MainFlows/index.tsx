@@ -1,29 +1,28 @@
 import { useRouter } from "next/router"
 import cn from "classnames"
 
-import { fetchFlows, setSelectedFlow } from "store/slices/main"
+import { fetchFlows } from "store/slices/main"
 import { useAppDispatch, useAppSelector } from "store"
 import { useEffect } from "react"
-import { Theme } from "../../../types"
 
 export const MainFlows = () => {
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const { flows, selectedFlow } = useAppSelector((state) => state.main)
+  const { flows } = useAppSelector((state) => state.main)
 
   const handleItemClick = (id: number) => {
     router.push({
       pathname: "/flow/[id]",
       query: { id }
     })
-    dispatch(setSelectedFlow(flows?.find((f) => f.id === id) as Theme))
   }
 
   const itemClasses = (id: number) =>
     cn(
       "transition-all text-gray-400 hover:text-gray-500 p-[10px] hover:bg-gray-100 flex justify-start rounded-[5px]",
       {
-        "text-gray-500 bg-gray-100 cursor-default": selectedFlow?.id === id
+        "text-gray-500 bg-gray-100 cursor-default":
+          Number(router.query.id) === id
       }
     )
 

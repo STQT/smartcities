@@ -11,7 +11,6 @@ export interface MainState {
   isLoggedIn: boolean
 
   flows: Theme[]
-  selectedFlow: undefined | Theme
 
   readingNow: Article[]
 }
@@ -19,10 +18,7 @@ export interface MainState {
 const initialState: MainState = {
   user: null,
   isLoggedIn: false,
-
   flows: [],
-  selectedFlow: undefined,
-
   readingNow: []
 }
 
@@ -49,14 +45,6 @@ export const mainSlice = createSlice({
     })
   },
   reducers: {
-    setSelectedFlow: (state, action: PayloadAction<Theme>) => {
-      state.selectedFlow = action.payload
-    },
-
-    clearSelectedFlow: (state) => {
-      state.selectedFlow = undefined
-    },
-
     setLoggedIn: (state, action: PayloadAction<User>) => {
       state.isLoggedIn = true
       state.user = action.payload
@@ -75,7 +63,6 @@ export const mainSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setSelectedFlow, setLoggedIn, logOut, clearSelectedFlow } =
-  mainSlice.actions
+export const { setLoggedIn, logOut } = mainSlice.actions
 
 export default mainSlice.reducer

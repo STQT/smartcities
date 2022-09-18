@@ -2,7 +2,7 @@ import { Menu, Page } from "shared/components/templates"
 import { useAppSelector } from "../../store"
 import { Tab } from "@headlessui/react"
 import cn from "classnames"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/router"
 import { NewsTab, ArticlesTab, QuestionsTab } from "./components/templates"
 
@@ -14,10 +14,13 @@ const TABS: Record<string, string> = {
 
 export const FlowPage = () => {
   const router = useRouter()
-  const { selectedFlow } = useAppSelector((state) => state.main)
-
+  const { flows } = useAppSelector((state) => state.main)
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]
+
+  const flow = useMemo(() => {
+    return flows.find((f) => f.id === Number(router.query.id))
+  }, [router])
 
   const [selectedTab, setSelectedTab] = useState<number>(
     getTabIdxByKey("profile")
@@ -61,7 +64,7 @@ export const FlowPage = () => {
       <main className={"flex-1"}>
         <div
           className={"flex flex-col p-[24px] pb-0 rounded-t-[20px] bg-white"}>
-          <h1 className={"font-semibold text-[24px]"}>{selectedFlow?.name}</h1>
+          <h1 className={"font-semibold text-[24px]"}>{flow?.name}</h1>
           <p className={"text-[14px]"}>
             Методология разработки программного обеспечения
           </p>

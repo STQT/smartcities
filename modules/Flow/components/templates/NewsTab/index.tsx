@@ -1,22 +1,22 @@
-import { useAppSelector } from "store"
 import { useEffect, useMemo, useState } from "react"
 import type { News as TNews } from "shared/types"
 import { getNewsByThemeId } from "services/api"
 import { AxiosListResponse } from "services/api/config"
 import { News } from "shared/components/templates"
 import { EmptyState, PostLoading } from "shared/components/molecules"
+import { useRouter } from "next/router"
 
 export const NewsTab = () => {
-  const { selectedFlow } = useAppSelector((state) => state.main)
-
   const [news, setNews] = useState<TNews[]>([])
   const [isLoading, setLoading] = useState(true)
 
-  const isEmpty = useMemo(() => news.length === 0, [selectedFlow, news])
+  const router = useRouter()
+
+  const isEmpty = useMemo(() => news.length === 0, [news])
 
   useEffect(() => {
-    if (selectedFlow) {
-      getNewsByThemeId(selectedFlow.id).then(
+    if (router.query.id) {
+      getNewsByThemeId(Number(router.query.id)).then(
         (res: AxiosListResponse<TNews>) => {
           const { results } = res.data
           setNews(results)
@@ -24,7 +24,7 @@ export const NewsTab = () => {
         }
       )
     }
-  }, [selectedFlow])
+  }, [router.query.id])
 
   return (
     <main>

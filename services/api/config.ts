@@ -20,14 +20,13 @@ const requestRefresh: TokenRefreshRequest = async (
   refreshToken: string
 ): Promise<IAuthTokens | string> => {
   const response = await axios.post(
-    `${BASE_URL}/token/refresh`,
+    `${BASE_URL}/token/refresh/`,
     {
       refresh: refreshToken
     },
     {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getAccessToken()}`
+        "Content-Type": "application/json"
       }
     }
   )

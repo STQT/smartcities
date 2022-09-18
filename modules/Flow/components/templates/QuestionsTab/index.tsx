@@ -1,25 +1,22 @@
-import { useAppSelector } from "store"
 import { useEffect, useMemo, useState } from "react"
 import type { Question as TQuestion } from "shared/types"
 import { getQuestionsByThemeId } from "services/api"
 import { AxiosListResponse } from "services/api/config"
 import { Question } from "shared/components/templates"
 import { EmptyState, PostLoading } from "shared/components/molecules"
+import { useRouter } from "next/router"
 
 export const QuestionsTab = () => {
-  const { selectedFlow } = useAppSelector((state) => state.main)
-
   const [questions, setQuestions] = useState<TQuestion[]>([])
   const [isLoading, setLoading] = useState(true)
 
-  const isEmpty = useMemo(
-    () => questions.length === 0,
-    [selectedFlow, questions]
-  )
+  const router = useRouter()
+
+  const isEmpty = useMemo(() => questions.length === 0, [questions])
 
   useEffect(() => {
-    if (selectedFlow) {
-      getQuestionsByThemeId(selectedFlow.id).then(
+    if (router.query.id) {
+      getQuestionsByThemeId(Number(router.query.id)).then(
         (res: AxiosListResponse<TQuestion>) => {
           const { results } = res.data
           setQuestions(results)
@@ -27,7 +24,7 @@ export const QuestionsTab = () => {
         }
       )
     }
-  }, [selectedFlow])
+  }, [router.query.id])
 
   return (
     <main>

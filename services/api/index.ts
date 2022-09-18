@@ -3,7 +3,7 @@ import type { Comment } from "../../shared/types"
 import axios from "axios"
 
 export const getNews = () => {
-  return axios.get(`${BASE_URL}/news`)
+  return axios.get(`${BASE_URL}/news/`)
 }
 
 interface RegisterFormState {
@@ -26,11 +26,11 @@ export const getCurrentUser = () => {
 }
 
 export const getFlows = () => {
-  return request.get("/theme")
+  return request.get("/theme/")
 }
 
 export const getNewsByThemeId = (theme_id: number) => {
-  return request.get(`/theme-gr-news`, {
+  return request.get(`/theme-gr-news/`, {
     params: {
       theme_id
     }
@@ -38,39 +38,47 @@ export const getNewsByThemeId = (theme_id: number) => {
 }
 
 export const getArticlesByThemeId = (theme_id: number) => {
-  return request.get(`/theme-gr-ar`, {
+  return request.get(`/theme-gr-ar/`, {
     params: { theme_id }
   })
 }
 
 export const getQuestionsByThemeId = (theme_id: number) => {
-  return request.get(`/theme-gr-qs`, {
+  return request.get(`/theme-gr-qs/`, {
     params: { theme_id }
   })
 }
 
 export const getFullNews = (id: string) => {
-  return request.get(`/news/${id}`)
+  return request.get(`/news/${id}/`)
 }
 
 export const getFullQuestion = (id: string) => {
-  return request.get(`/question/${id}`)
+  return request.get(`/question/${id}/`)
 }
 
 export const getFullArticle = (id: string) => {
-  return request.get(`/article/${id}`)
+  return request.get(`/article/${id}/`)
 }
 
 export const getReadingNow = () => {
-  return request.get(`/a-read`)
+  return request.get(`/a-read/`)
 }
 
 export const getArticleComments = (id: number) => {
-  return request.get(`/articles-comment?id=${id}`)
+  return request.get(`/articles-comment`, {
+    params: {
+      id
+    }
+  })
 }
 
 export const getNewsComments = (id: number) => {
-  return request.get(`/news-comment?id=${id}`)
+  return request.get(`/news-comment/`, {
+    params: {
+      id
+    }
+  })
 }
 
 export const postArticleComment = (comment: any) => {
@@ -82,5 +90,5 @@ export const postNewsComment = (comment: any) => {
 }
 
 export const likeArticle = (userId: number, articleId: number) => {
-  return request.post("/like-articles", { user: userId, article: articleId })
+  return request.post("/like-articles/", { user: userId, article: articleId })
 }

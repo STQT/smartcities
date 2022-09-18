@@ -3,13 +3,9 @@ import { useEffect, useState } from "react"
 import { getNews } from "services/api"
 import { News as TNews } from "shared/types"
 import { AxiosListResponse } from "services/api/config"
-import { useAppDispatch } from "store"
-import { clearSelectedFlow } from "store/slices/main"
 import { PostLoading } from "shared/components/molecules"
 
 export const FeedPage = () => {
-  const dispatch = useAppDispatch()
-
   const [news, setNews] = useState<TNews[]>([])
   const [isLoading, setLoading] = useState(true)
 
@@ -22,8 +18,6 @@ export const FeedPage = () => {
       setNews(res.data.results)
       handleAfterLoad()
     })
-
-    dispatch(clearSelectedFlow())
   }, [])
 
   return (
