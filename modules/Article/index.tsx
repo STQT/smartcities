@@ -102,7 +102,7 @@ export const ArticlePage = ({ id }: ArticlePageProps) => {
           />
         )}
 
-        <section className={"mt-96"}></section>
+        <section className={"mt-32"}></section>
       </main>
     </Page>
   )

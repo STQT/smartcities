@@ -89,6 +89,8 @@ export const NewsPage = ({ id }: NewsPageProps) => {
             id={news.id}
           />
         )}
+
+        <section className={"mt-32"}></section>
       </main>
     </Page>
   )
