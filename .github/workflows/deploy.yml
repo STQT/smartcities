@@ -7,31 +7,30 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
 
-    - name: Repozitoriydan git pull qilinishi
-      uses: appleboy/scp-action@master
-      env:
-        HOST: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
-      with:
-        source: "."
-        target: "/root/test.smartcities.uz"
+      - name: Repozitoriydan git pull qilinishi
+        uses: appleboy/scp-action@master
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+        with:
+          source: "."
+          target: "/root/test.smartcities.uz"
 
-    - name: Komandalar terilishi @@@@@@@@@@
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
-        script_stop: true
-        script: |
-          npm install
-          npm run buld
+      - name: Komandalar terilishi @@@@@@@@@@
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+          script_stop: true
+          script: |
+            npm install
+            npm run buld

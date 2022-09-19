@@ -1,29 +1,31 @@
 import { useEffect, useMemo, useState } from "react"
 import type { News as TNews } from "shared/types"
-import { getNewsByThemeId } from "services/api"
+import { getNews, searchNews } from "services/api"
 import { AxiosListResponse } from "services/api/config"
 import { News } from "shared/components/templates"
 import { EmptyState, PostLoading } from "shared/components/molecules"
-import { useRouter } from "next/router"
+import { Article as TArticle } from "shared/types"
 
-export const NewsTab = () => {
+export const NewsTab = ({ query }: { query: string }) => {
   const [news, setNews] = useState<TNews[]>([])
   const [isLoading, setLoading] = useState(true)
-
-  const router = useRouter()
-
   const isEmpty = useMemo(() => news.length === 0, [news])
 
   useEffect(() => {
-    if (router.query.id) {
-      getNewsByThemeId(Number(router.query.id)).then(
-        (res: AxiosListResponse<TNews>) => {
-          setNews(res.data.results)
-          setLoading(false)
-        }
-      )
+    if (query) {
+      searchNews(query).then((res: AxiosListResponse<TArticle>) => {
+        setNews(res.data.results)
+        setLoading(false)
+      })
     }
-  }, [router.query.id])
+  }, [query])
+
+  useEffect(() => {
+    getNews().then((res: AxiosListResponse<TNews>) => {
+      setLoading(false)
+      setNews(res.data.results)
+    })
+  }, [])
 
   return (
     <main>

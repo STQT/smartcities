@@ -4,12 +4,15 @@ import { Comment, Like, Tag, Views } from "../../atoms"
 import { useMemo } from "react"
 import { addBaseURL } from "../../../utils"
 import { useRouter } from "next/router"
+import { likeArticle, unlikeArticle } from "../../../../services/api"
+import { useAppSelector } from "../../../../store"
 
 interface ArticleProps {
   article: TArticle
 }
 
 export const Article = ({ article }: ArticleProps) => {
+  const { user } = useAppSelector((state) => state.main)
   const router = useRouter()
 
   const imageURL = useMemo(
@@ -26,10 +29,24 @@ export const Article = ({ article }: ArticleProps) => {
     })
   }
 
+  const onArticleLike = () => {
+    if (user && article) {
+      likeArticle(user.id, article.id).then(() => {})
+    }
+  }
+
+  const onUnlikeArticle = () => {
+    if (user && article) {
+      unlikeArticle(user.id, article.id).then(() => {})
+    }
+  }
+
   return (
     <article className={"rounded-[20px] bg-white px-[20px] py-[32px]"}>
       <section className={"flex flex-col"}>
-        <h1 className={"text-blue text-[18px]"}>{article.title}</h1>
+        <h1 className={"text-blue mb-4 font-semibold text-[20px]"}>
+          {article.title}
+        </h1>
         {article.image && (
           <div
             className={
@@ -54,7 +71,12 @@ export const Article = ({ article }: ArticleProps) => {
 
         <section className={"mt-auto flex w-full items-end justify-between"}>
           <section className={"flex items-center gap-[40px]"}>
-            <Like is_liked={article.is_liked} like_count={article.like_count} />
+            <Like
+              like_count={article.like_count}
+              is_liked={article.is_liked}
+              onUnlike={onUnlikeArticle}
+              onLike={onArticleLike}
+            />
             <Views views_count={article.view_count} />
             <Comment comments_count={article.comments_count} />
           </section>

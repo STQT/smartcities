@@ -28,6 +28,8 @@ function App({ Component, pageProps }: AppProps) {
       <AuthChecker />
       <Component {...pageProps} />
       <ToastContainer />
+
+      <div className={"mt-12"} />
     </Provider>
   )
 }

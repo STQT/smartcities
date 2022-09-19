@@ -1,29 +1,34 @@
 import { useEffect, useMemo, useState } from "react"
 import type { Article as TArticle } from "shared/types"
-import { getArticlesByThemeId } from "services/api"
+import { getArticles, searchArticles } from "services/api"
 import { AxiosListResponse } from "services/api/config"
 import { Article } from "shared/components/templates"
 import { EmptyState, PostLoading } from "shared/components/molecules"
-import { useRouter } from "next/router"
 
-export const ArticlesTab = () => {
+export const ArticlesTab = ({ query }: { query: string }) => {
   const [articles, setArticles] = useState<TArticle[]>([])
   const [isLoading, setLoading] = useState(true)
 
-  const router = useRouter()
-
-  const isEmpty = useMemo(() => articles.length === 0, [articles])
+  const isEmpty = useMemo(() => {
+    return articles.length === 0
+  }, [articles])
 
   useEffect(() => {
-    if (router.query.id) {
-      getArticlesByThemeId(Number(router.query.id)).then(
-        (res: AxiosListResponse<TArticle>) => {
-          setArticles(res.data.results)
-          setLoading(false)
-        }
-      )
+    if (query) {
+      searchArticles(query).then((res: AxiosListResponse<TArticle>) => {
+        const { results } = res.data
+        setArticles(results)
+        setLoading(false)
+      })
     }
-  }, [router.query.id])
+  }, [query])
+
+  useEffect(() => {
+    getArticles().then((res: AxiosListResponse<TArticle>) => {
+      setArticles(res.data.results)
+      setLoading(false)
+    })
+  }, [])
 
   return (
     <main>

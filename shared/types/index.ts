@@ -57,19 +57,19 @@ export interface Article {
 export interface Question {
   id: number
   tags: Tag[]
-
-  type: number
   title: string
+  image: string
   description: string
   view_count: number
   created_at: string
-
   is_delete: boolean
   is_active: boolean
   is_draft: boolean
-
-  user: number
-  theme: number
+  user: User
+  theme: Theme
+  is_liked: boolean
+  comments_count: number
+  like_count: number
 }
 
 export interface Comment {

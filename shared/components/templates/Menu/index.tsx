@@ -6,6 +6,7 @@ import {
   ArrowUturnRightIcon,
   BellIcon,
   Cog6ToothIcon,
+  MagnifyingGlassIcon,
   QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline"
 import { logOut } from "store/slices/main"
@@ -52,6 +53,10 @@ export const Menu = () => {
     router.push("/me?tab=notifications")
   }
 
+  const handleMoveToSearch = () => {
+    router.push("/search")
+  }
+
   const handleMoveToProfile = () => {
     router.push("/me?tab=profile")
   }
@@ -65,13 +70,15 @@ export const Menu = () => {
         className={"px-[20px] border-b-[0.5px] border-gray-300/30 pb-[30px]"}>
         <Logo onClick={() => router.push("/feed")} />
 
-        <input
-          placeholder={"Поиск..."}
-          className={"bg-gray-100 px-[12px] mt-[42px] h-[40px] rounded-[4px]"}
-        />
-
         {isLoggedIn && (
           <div className={"mt-[30px] flex flex-col gap-4"}>
+            <MenuItem
+              isActive={router.asPath.includes("/search")}
+              Icon={<MagnifyingGlassIcon className={"w-[20px] h-[20px]"} />}
+              onClick={handleMoveToSearch}
+              label={"Поиск"}
+            />
+
             <MenuItem
               isActive={router.asPath.includes("?tab=notifications")}
               Icon={<BellIcon className={"w-[20px] h-[20px]"} />}

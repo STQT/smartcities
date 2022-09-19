@@ -1,29 +1,31 @@
 import { useEffect, useMemo, useState } from "react"
 import type { Question as TQuestion } from "shared/types"
-import { getQuestionsByThemeId } from "services/api"
+import { getQuestions, searchQuestions } from "services/api"
 import { AxiosListResponse } from "services/api/config"
 import { Question } from "shared/components/templates"
 import { EmptyState, PostLoading } from "shared/components/molecules"
-import { useRouter } from "next/router"
+import { Article as TArticle } from "shared/types"
 
-export const QuestionsTab = () => {
+export const QuestionsTab = ({ query }: { query: string }) => {
   const [questions, setQuestions] = useState<TQuestion[]>([])
   const [isLoading, setLoading] = useState(true)
-
-  const router = useRouter()
-
   const isEmpty = useMemo(() => questions.length === 0, [questions])
 
   useEffect(() => {
-    if (router.query.id) {
-      getQuestionsByThemeId(Number(router.query.id)).then(
-        (res: AxiosListResponse<TQuestion>) => {
-          setQuestions(res.data.results)
-          setLoading(false)
-        }
-      )
+    if (query) {
+      searchQuestions(query).then((res: AxiosListResponse<TArticle>) => {
+        setQuestions(res.data.results)
+        setLoading(false)
+      })
     }
-  }, [router.query.id])
+  }, [query])
+
+  useEffect(() => {
+    getQuestions().then((res: AxiosListResponse<TQuestion>) => {
+      setQuestions(res.data.results)
+      setLoading(false)
+    })
+  }, [])
 
   return (
     <main>

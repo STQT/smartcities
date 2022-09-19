@@ -1,20 +1,20 @@
 import { Page } from "shared/components/templates"
-import { Article } from "shared/types"
+import { Question } from "shared/types"
 import { useEffect, useState } from "react"
-import { getFullArticle, likeArticle, unlikeArticle } from "services/api"
+import { getFullQuestion, likeQuestion, unlikeQuestion } from "services/api"
 import { AxiosResponse } from "axios"
 import Image from "next/image"
 import { CommentsSection, PostLoading } from "shared/components/molecules"
 import { Comment, Like, Tag, Views } from "shared/components/atoms"
 import { useAppSelector } from "../../store"
 
-interface ArticlePageProps {
+interface QuestionPageProps {
   id: string
 }
 
-export const ArticlePage = ({ id }: ArticlePageProps) => {
+export const QuestionPage = ({ id }: QuestionPageProps) => {
   const { user } = useAppSelector((state) => state.main)
-  const [article, setArticle] = useState<Article>()
+  const [question, setQuestion] = useState<Question>()
   const [isLoading, setLoading] = useState(true)
 
   const handleAfterLoad = () => {
@@ -23,15 +23,15 @@ export const ArticlePage = ({ id }: ArticlePageProps) => {
 
   useEffect(() => {
     if (id) {
-      getFullArticle(id).then((res: AxiosResponse<Article>) => {
-        setArticle(res.data)
+      getFullQuestion(id).then((res: AxiosResponse<Question>) => {
+        setQuestion(res.data)
         handleAfterLoad()
       })
     }
   }, [id])
 
   const updateCommentsCount = () => {
-    setArticle((prev) => {
+    setQuestion((prev) => {
       if (prev) {
         return {
           ...prev,
@@ -41,73 +41,73 @@ export const ArticlePage = ({ id }: ArticlePageProps) => {
     })
   }
 
-  const onArticleLike = () => {
-    if (user && article) {
-      likeArticle(user.id, article.id).then(() => {})
+  const onQuestionLike = () => {
+    if (user && question) {
+      likeQuestion(user.id, question.id).then(() => {})
     }
   }
 
-  const onUnlikeArticle = () => {
-    if (user && article) {
-      unlikeArticle(user.id, article.id).then(() => {})
+  const onUnlikeQuestion = () => {
+    if (user && question) {
+      unlikeQuestion(user.id, question.id).then(() => {})
     }
   }
 
   return (
-    <Page title={article?.title as string}>
+    <Page title={question?.title as string}>
       <main className={"flex-1 flex-col rounded-[20px]"}>
         <PostLoading isLoading={isLoading} />
 
-        {!isLoading && article && (
+        {!isLoading && question && (
           <section className={"bg-white py-[20px] rounded-[20px]"}>
             <section className={"px-[20px] flex flex-col border-b pb-4"}>
               <h1 className={"text-[20px] font-semibold mb-6"}>
-                {article.title}
+                {question.title}
               </h1>
 
-              {article.tags.length > 0 && (
+              {question.tags.length > 0 && (
                 <section className={"flex gap-2 mt-4 mb-[40px]"}>
-                  {article?.tags.map((tag) => (
+                  {question?.tags.map((tag) => (
                     <Tag key={tag.id} {...tag} />
                   ))}
                 </section>
               )}
 
-              {article.image && (
+              {question.image && (
                 <section
                   className={
                     "max-w-full h-[500px] my-[20px] rounded-[10px] overflow-hidden relative"
                   }>
                   <Image
                     className={"max-w-full h-full object-cover"}
-                    src={`https://api.smartcities.uz${article.image}`}
+                    src={`https://api.smartcities.uz${question.image}`}
                     layout={"fill"}
                   />
                 </section>
               )}
 
-              <p className={"text-[18px]"}>{article.description}</p>
+              <p className={"text-[18px]"}>{question.description}</p>
             </section>
 
             <section className={"p-[20px] pb-0 flex gap-5"}>
               <Like
-                is_liked={article.is_liked}
-                like_count={article.like_count}
-                onUnlike={onUnlikeArticle}
-                onLike={onArticleLike}
+                is_liked={question.is_liked}
+                like_count={question.like_count}
+                onUnlike={onUnlikeQuestion}
+                onLike={onQuestionLike}
               />
-              <Views views_count={article.view_count} />
-              <Comment comments_count={article.comments_count} />
+              <Views views_count={question.view_count} />
+              <Comment comments_count={question.comments_count} />
             </section>
           </section>
         )}
 
-        {article && (
+        {question && (
           <CommentsSection
             commentPostedCallback={updateCommentsCount}
-            comments_count={article.comments_count}
-            type={"ARTICLE"}
-            id={article.id}
+            comments_count={question.comments_count}
+            type={"QUESTION"}
+            id={question.id}
           />
         )}
 

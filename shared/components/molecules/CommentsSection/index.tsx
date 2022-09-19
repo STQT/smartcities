@@ -4,21 +4,27 @@ import { useEffect, useState } from "react"
 import {
   getArticleComments,
   getNewsComments,
+  getQuestionComments,
   postArticleComment,
-  postNewsComment
+  postNewsComment,
+  postQuestionComment
 } from "../../../../services/api"
 import { AxiosListResponse } from "../../../../services/api/config"
 import { useAppSelector } from "../../../../store"
 import { EmptyState } from "../EmptyState"
+import moment from "moment"
 
-const Comment = ({ user, comment }: TComment) => {
+const Comment = ({ user, comment, created_at }: TComment) => {
   return (
     <article className={"flex flex-col"}>
       <div className={"flex gap-2 items-center mb-[20px]"}>
         <Avatar size={40} />
 
-        <div className={"flex text-blue"}>
+        <div className={"flex text-blue text-[18px] items-center"}>
           {user.first_name} {user.last_name}
+          <span className={"ml-2 text-[14px] font-normal text-gray-400"}>
+            {moment(created_at).calendar()}
+          </span>
         </div>
       </div>
 
@@ -52,6 +58,10 @@ export const CommentsSection = ({
     if (type === "NEWS") {
       fetchAndSetNewsComments(id)
     }
+
+    if (type === "QUESTION") {
+      fetchAndSetQuestionComments(id)
+    }
   }, [type, id])
 
   const fetchAndSetArticleComments = (id: number) => {
@@ -65,6 +75,14 @@ export const CommentsSection = ({
   const fetchAndSetNewsComments = (id: number) => {
     if (type === "NEWS") {
       getNewsComments(id).then((res: AxiosListResponse<TComment>) => {
+        setComments(res.data.results)
+      })
+    }
+  }
+
+  const fetchAndSetQuestionComments = (id: number) => {
+    if (type === "QUESTION") {
+      getQuestionComments(id).then((res: AxiosListResponse<TComment>) => {
         setComments(res.data.results)
       })
     }
@@ -101,6 +119,19 @@ export const CommentsSection = ({
         commentPostedCallback?.()
       })
     }
+
+    if (type === "QUESTION") {
+      postQuestionComment({
+        ...payload,
+        created_at: new Date().toString(),
+        question: id
+      }).then(() => {
+        fetchAndSetQuestionComments(id)
+        setMyComment("")
+
+        commentPostedCallback?.()
+      })
+    }
   }
 
   return (
@@ -119,7 +150,15 @@ export const CommentsSection = ({
           "flex-1 p-[20px] h-full overflow-y-scroll flex flex-col gap-[40px]"
         }>
         {comments &&
-          comments.map((comment) => <Comment key={comment.id} {...comment} />)}
+          comments
+            .sort((a, b) => {
+              const aDate = new Date(a.created_at),
+                bDate = new Date(b.created_at)
+
+              // @ts-ignore
+              return aDate - bDate
+            })
+            .map((comment) => <Comment key={comment.id} {...comment} />)}
 
         {comments?.length === 0 && (
           <div className={"flex py-6 items-center justify-center"}>

@@ -1,10 +1,11 @@
 import { Page } from "shared/components/templates"
-import { useAppSelector } from "../../store"
 import { Tab } from "@headlessui/react"
 import cn from "classnames"
-import { useEffect, useMemo, useState } from "react"
+import { ChangeEvent, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/router"
 import { NewsTab, ArticlesTab, QuestionsTab } from "./components/templates"
+import { Input } from "../../shared/components/atoms"
+import debouce from "lodash.debounce"
 
 const TABS: Record<string, string> = {
   news: "Новости",
@@ -12,15 +13,12 @@ const TABS: Record<string, string> = {
   questions: "Вопросы"
 }
 
-export const FlowPage = () => {
+export const SearchPage = () => {
   const router = useRouter()
-  const { flows } = useAppSelector((state) => state.main)
+  const [query, setQuery] = useState("")
+
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]
-
-  const flow = useMemo(() => {
-    return flows.find((f) => f.id === Number(router.query.id))
-  }, [router])
 
   const [selectedTab, setSelectedTab] = useState<number>(
     getTabIdxByKey("profile")
@@ -59,15 +57,26 @@ export const FlowPage = () => {
     }
   }, [router])
 
+  const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value)
+  }
+
+  const debouncedResults = useMemo(() => {
+    return debouce(handleQueryChange, 500)
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel()
+    }
+  })
+
   return (
     <Page title={"Flow"}>
       <main className={"flex-1"}>
         <div
           className={"flex flex-col p-[24px] pb-0 rounded-t-[20px] bg-white"}>
-          <h1 className={"font-semibold text-[24px]"}>{flow?.name}</h1>
-          <p className={"text-[14px]"}>
-            Методология разработки программного обеспечения
-          </p>
+          <Input onChange={debouncedResults} placeholder={"Поиск"} />
         </div>
         <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
           <Tab.List
@@ -82,15 +91,15 @@ export const FlowPage = () => {
           </Tab.List>
           <Tab.Panels className={"overflow-hidden rounded-b-[20px]"}>
             <Tab.Panel>
-              <NewsTab />
+              <NewsTab query={query} />
             </Tab.Panel>
 
             <Tab.Panel>
-              <ArticlesTab />
+              <ArticlesTab query={query} />
             </Tab.Panel>
 
             <Tab.Panel>
-              <QuestionsTab />
+              <QuestionsTab query={query} />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>

@@ -47,7 +47,7 @@ export const NewsPage = ({ id }: NewsPageProps) => {
         {!isLoading && news && (
           <section className={"bg-white py-[20px] rounded-[20px]"}>
             <section className={"px-[20px] flex flex-col border-b pb-4"}>
-              <h1 className={"text-[18px] font-semibold"}>{news.title}</h1>
+              <h1 className={"text-[20px] font-semibold mb-6"}>{news.title}</h1>
 
               {news.tags.length > 0 && (
                 <section className={"flex gap-2 mt-4 mb-[40px]"}>
