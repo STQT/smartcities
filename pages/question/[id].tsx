@@ -1,12 +1,28 @@
-import type { NextPage } from "next"
-import { QuestionPage } from "modules/Question"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import type { NextPage } from "next"
 
-const Question: NextPage = () => {
+import { AxiosResponse } from "axios"
+
+import { PostView } from "modules/PostView"
+import type { Post } from "shared/types"
+import { QUESTION } from "services/api"
+
+const Article: NextPage = () => {
+  const [post, setPost] = useState<Post>()
   const router = useRouter()
+
   const { id } = router.query
 
-  return <QuestionPage id={id as string} />
+  useEffect(() => {
+    if (id) {
+      QUESTION.getFull(id as string).then((res: AxiosResponse<Post>) => {
+        setPost(res.data)
+      })
+    }
+  }, [id])
+
+  return <>{post && <PostView post={post} type={"QUESTION"} />}</>
 }
 
-export default Question
+export default Article

@@ -1,14 +1,17 @@
-import { Page } from "shared/components/templates"
-import { Input, Password, Button, Logo } from "shared/components/atoms"
-import { useRouter } from "next/router"
 import { ChangeEvent, useState } from "react"
-import { login } from "services/api/config"
-import { getCurrentUser } from "services/api"
-import { useAppDispatch } from "store"
-import { setLoggedIn } from "../../store/slices/main"
+import { useRouter } from "next/router"
 import { AxiosResponse } from "axios"
-import { User } from "../../shared/types"
+
 import { toast } from "react-toastify"
+import { User } from "shared/types"
+
+import { Input, Password, Button, Logo } from "shared/components/atoms"
+import { Page } from "shared/components/templates"
+import { login } from "services/api/config"
+import { USER } from "services/api"
+
+import { setLoggedIn } from "store/slices/main"
+import { useAppDispatch } from "store"
 
 export const AuthPage = () => {
   const router = useRouter()
@@ -31,7 +34,7 @@ export const AuthPage = () => {
   const handleLoginClick = () => {
     login(formState.username, formState.password, {
       successCb: () => {
-        getCurrentUser().then((res: AxiosResponse<User>) => {
+        USER.getCurrent().then((res: AxiosResponse<User>) => {
           dispatch(setLoggedIn(res.data))
           router.push("/feed")
         })

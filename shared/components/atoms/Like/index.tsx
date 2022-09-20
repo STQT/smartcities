@@ -1,5 +1,4 @@
 import { HeartIcon } from "@heroicons/react/24/solid"
-import { useState } from "react"
 import cn from "classnames"
 
 interface LikeProps {
@@ -7,8 +6,7 @@ interface LikeProps {
   like_count: number
 
   isClickable?: boolean
-  onLike?: () => void
-  onUnlike?: () => void
+  toggleLike: () => void
 }
 
 export const Like = ({
@@ -16,37 +14,17 @@ export const Like = ({
   like_count,
   isClickable = true,
 
-  onLike,
-  onUnlike
+  toggleLike
 }: LikeProps) => {
-  const [isLiked, setLiked] = useState(is_liked)
-  const [likeCount, setLikeCount] = useState(like_count)
-
   const classes = cn("flex transition-all gap-1 items-center text-[14px]", {
-    "text-blue": isLiked,
-    "text-gray-300": !isLiked
+    "text-blue": is_liked,
+    "text-gray-300": !is_liked
   })
 
-  const handleLikeClick = () => {
-    if (isLiked) {
-      setLikeCount((prev) => prev - 1)
-      setLiked(false)
-
-      onUnlike?.()
-    } else {
-      setLikeCount((prev) => prev + 1)
-      setLiked(true)
-
-      onLike?.()
-    }
-  }
-
   return (
-    <button
-      onClick={isClickable ? handleLikeClick : () => {}}
-      className={classes}>
+    <button onClick={isClickable ? toggleLike : () => {}} className={classes}>
       <HeartIcon className={"w-[20px] h-[20px]"} />
-      <span>{likeCount}</span>
+      <span>{like_count}</span>
     </button>
   )
 }

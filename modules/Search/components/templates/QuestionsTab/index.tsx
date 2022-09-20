@@ -1,19 +1,23 @@
 import { useEffect, useMemo, useState } from "react"
-import type { Question as TQuestion } from "shared/types"
-import { getQuestions, searchQuestions } from "services/api"
+
 import { AxiosListResponse } from "services/api/config"
-import { Question } from "shared/components/templates"
+import type { Post as TPost } from "shared/types"
+import { QUESTION } from "services/api"
+
 import { EmptyState, PostLoading } from "shared/components/molecules"
-import { Article as TArticle } from "shared/types"
+import { Post } from "shared/components/templates"
 
 export const QuestionsTab = ({ query }: { query: string }) => {
-  const [questions, setQuestions] = useState<TQuestion[]>([])
+  const [questions, setQuestions] = useState<TPost[]>([])
   const [isLoading, setLoading] = useState(true)
-  const isEmpty = useMemo(() => questions.length === 0, [questions])
+
+  const isEmpty = useMemo(() => {
+    return questions.length === 0
+  }, [questions])
 
   useEffect(() => {
     if (query) {
-      searchQuestions(query).then((res: AxiosListResponse<TArticle>) => {
+      QUESTION.search(query).then((res: AxiosListResponse<TPost>) => {
         setQuestions(res.data.results)
         setLoading(false)
       })
@@ -21,7 +25,7 @@ export const QuestionsTab = ({ query }: { query: string }) => {
   }, [query])
 
   useEffect(() => {
-    getQuestions().then((res: AxiosListResponse<TQuestion>) => {
+    QUESTION.getList().then((res: AxiosListResponse<TPost>) => {
       setQuestions(res.data.results)
       setLoading(false)
     })
@@ -34,7 +38,7 @@ export const QuestionsTab = ({ query }: { query: string }) => {
       <PostLoading className={"mt-6"} isLoading={isLoading} />
       {!isLoading && (
         <EmptyState
-          caption={"Нету вопросов"}
+          caption={"Нету новостей"}
           className={"mt-6"}
           isEmpty={isEmpty}
         />
@@ -43,7 +47,7 @@ export const QuestionsTab = ({ query }: { query: string }) => {
       {!isLoading && questions.length > 0 && (
         <section className={"flex flex-col gap-5 mt-5"}>
           {questions.map((question) => (
-            <Question key={question.id} question={question} />
+            <Post type={"QUESTION"} key={question.id} targetPost={question} />
           ))}
         </section>
       )}

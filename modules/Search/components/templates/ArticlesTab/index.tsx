@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from "react"
-import type { Article as TArticle } from "shared/types"
-import { getArticles, searchArticles } from "services/api"
+
 import { AxiosListResponse } from "services/api/config"
-import { Article } from "shared/components/templates"
+import type { Post as TPost } from "shared/types"
+import { ARTICLE } from "services/api"
+
 import { EmptyState, PostLoading } from "shared/components/molecules"
+import { Post } from "shared/components/templates"
 
 export const ArticlesTab = ({ query }: { query: string }) => {
-  const [articles, setArticles] = useState<TArticle[]>([])
+  const [articles, setArticles] = useState<TPost[]>([])
   const [isLoading, setLoading] = useState(true)
 
   const isEmpty = useMemo(() => {
@@ -15,16 +17,15 @@ export const ArticlesTab = ({ query }: { query: string }) => {
 
   useEffect(() => {
     if (query) {
-      searchArticles(query).then((res: AxiosListResponse<TArticle>) => {
-        const { results } = res.data
-        setArticles(results)
+      ARTICLE.search(query).then((res: AxiosListResponse<TPost>) => {
+        setArticles(res.data.results)
         setLoading(false)
       })
     }
   }, [query])
 
   useEffect(() => {
-    getArticles().then((res: AxiosListResponse<TArticle>) => {
+    ARTICLE.getList().then((res: AxiosListResponse<TPost>) => {
       setArticles(res.data.results)
       setLoading(false)
     })
@@ -46,7 +47,7 @@ export const ArticlesTab = ({ query }: { query: string }) => {
       {!isLoading && articles.length > 0 && (
         <section className={"flex flex-col gap-5 mt-5"}>
           {articles.map((article) => (
-            <Article key={article.id} article={article} />
+            <Post type={"ARTICLE"} key={article.id} targetPost={article} />
           ))}
         </section>
       )}

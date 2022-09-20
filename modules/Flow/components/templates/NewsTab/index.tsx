@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from "react"
-import type { News as TNews } from "shared/types"
-import { getNewsByThemeId } from "services/api"
-import { AxiosListResponse } from "services/api/config"
-import { News } from "shared/components/templates"
-import { EmptyState, PostLoading } from "shared/components/molecules"
 import { useRouter } from "next/router"
 
+import { AxiosListResponse } from "services/api/config"
+import { NEWS } from "services/api"
+
+import { EmptyState, PostLoading } from "shared/components/molecules"
+import { Post } from "shared/components/templates"
+import type { Post as TPost } from "shared/types"
+
 export const NewsTab = () => {
-  const [news, setNews] = useState<TNews[]>([])
+  const [news, setNews] = useState<TPost[]>([])
   const [isLoading, setLoading] = useState(true)
 
   const router = useRouter()
@@ -16,8 +18,8 @@ export const NewsTab = () => {
 
   useEffect(() => {
     if (router.query.id) {
-      getNewsByThemeId(Number(router.query.id)).then(
-        (res: AxiosListResponse<TNews>) => {
+      NEWS.getListByThemeId(Number(router.query.id)).then(
+        (res: AxiosListResponse<TPost>) => {
           setNews(res.data.results)
           setLoading(false)
         }
@@ -41,7 +43,7 @@ export const NewsTab = () => {
       {!isLoading && news.length > 0 && (
         <section className={"flex flex-col gap-5 mt-5"}>
           {news.map((news) => (
-            <News key={news.id} news={news} />
+            <Post type={"NEWS"} key={news.id} targetPost={news} />
           ))}
         </section>
       )}

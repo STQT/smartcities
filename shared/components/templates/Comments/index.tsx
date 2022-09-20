@@ -1,18 +1,12 @@
-import { Avatar, Button } from "../../atoms"
-import type { Comment as TComment } from "../../../types"
 import { useEffect, useState } from "react"
-import {
-  getArticleComments,
-  getNewsComments,
-  getQuestionComments,
-  postArticleComment,
-  postNewsComment,
-  postQuestionComment
-} from "../../../../services/api"
-import { AxiosListResponse } from "../../../../services/api/config"
-import { useAppSelector } from "../../../../store"
-import { EmptyState } from "../EmptyState"
 import moment from "moment"
+
+import { Avatar, Button } from "shared/components/atoms"
+import type { Comment as TComment, PostTypes } from "shared/types"
+import { useAppSelector } from "store"
+
+import { AxiosListResponse } from "services/api/config"
+import { ARTICLE, NEWS, QUESTION } from "services/api"
 
 const Comment = ({ user, comment, created_at }: TComment) => {
   return (
@@ -33,19 +27,19 @@ const Comment = ({ user, comment, created_at }: TComment) => {
   )
 }
 
-interface CommentsSectionProps {
+interface CommentsProps {
   comments_count: number
-  type: "NEWS" | "ARTICLE" | "QUESTION"
+  type: PostTypes
   id: number
 
   commentPostedCallback?: () => void
 }
-export const CommentsSection = ({
+export const Comments = ({
+  commentPostedCallback,
   comments_count,
-  id,
   type,
-  commentPostedCallback
-}: CommentsSectionProps) => {
+  id
+}: CommentsProps) => {
   const { user, isLoggedIn } = useAppSelector((state) => state.main)
   const [comments, setComments] = useState<TComment[]>()
   const [myComment, setMyComment] = useState("")
@@ -66,25 +60,31 @@ export const CommentsSection = ({
 
   const fetchAndSetArticleComments = (id: number) => {
     if (type === "ARTICLE") {
-      getArticleComments(id).then((res: AxiosListResponse<TComment>) => {
-        setComments(res.data.results)
-      })
+      ARTICLE.COMMENTS.getCommentsList(id).then(
+        (res: AxiosListResponse<TComment>) => {
+          setComments(res.data.results)
+        }
+      )
     }
   }
 
   const fetchAndSetNewsComments = (id: number) => {
     if (type === "NEWS") {
-      getNewsComments(id).then((res: AxiosListResponse<TComment>) => {
-        setComments(res.data.results)
-      })
+      NEWS.COMMENTS.getCommentsList(id).then(
+        (res: AxiosListResponse<TComment>) => {
+          setComments(res.data.results)
+        }
+      )
     }
   }
 
   const fetchAndSetQuestionComments = (id: number) => {
     if (type === "QUESTION") {
-      getQuestionComments(id).then((res: AxiosListResponse<TComment>) => {
-        setComments(res.data.results)
-      })
+      QUESTION.COMMENTS.getCommentsList(id).then(
+        (res: AxiosListResponse<TComment>) => {
+          setComments(res.data.results)
+        }
+      )
     }
   }
 
@@ -95,7 +95,7 @@ export const CommentsSection = ({
     }
 
     if (type === "ARTICLE") {
-      postArticleComment({
+      ARTICLE.COMMENTS.postComment({
         ...payload,
         created_at: new Date().toString(),
         article: id
@@ -108,7 +108,7 @@ export const CommentsSection = ({
     }
 
     if (type === "NEWS") {
-      postNewsComment({
+      NEWS.COMMENTS.postComment({
         ...payload,
         created_at: new Date().toString(),
         news: id
@@ -121,7 +121,7 @@ export const CommentsSection = ({
     }
 
     if (type === "QUESTION") {
-      postQuestionComment({
+      QUESTION.COMMENTS.postComment({
         ...payload,
         created_at: new Date().toString(),
         question: id
@@ -150,15 +150,7 @@ export const CommentsSection = ({
           "flex-1 p-[20px] h-full overflow-y-scroll flex flex-col gap-[40px]"
         }>
         {comments &&
-          comments
-            .sort((a, b) => {
-              const aDate = new Date(a.created_at),
-                bDate = new Date(b.created_at)
-
-              // @ts-ignore
-              return aDate - bDate
-            })
-            .map((comment) => <Comment key={comment.id} {...comment} />)}
+          comments.map((comment) => <Comment key={comment.id} {...comment} />)}
 
         {comments?.length === 0 && (
           <div className={"flex py-6 items-center justify-center"}>

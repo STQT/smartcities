@@ -1,14 +1,17 @@
 import { ChangeEvent, useMemo, useState } from "react"
-import { Page } from "shared/components/templates"
-import { Button, Input, Logo, Password } from "shared/components/atoms"
 import { useRouter } from "next/router"
-import { Dialog } from "shared/components/molecules"
-import { register, verify } from "services/api"
-import { useAppDispatch } from "store"
-import { setLoggedIn } from "../../store/slices/main"
-import { AxiosResponse } from "axios"
-import { User } from "../../shared/types"
+
 import { toast } from "react-toastify"
+import { AxiosResponse } from "axios"
+import { User } from "shared/types"
+
+import { Button, Input, Logo, Password } from "shared/components/atoms"
+import { Page } from "shared/components/templates"
+import { Dialog } from "shared/components/molecules"
+import { USER } from "services/api"
+
+import { setLoggedIn } from "store/slices/main"
+import { useAppDispatch } from "store"
 
 export const RegisterPage = () => {
   const router = useRouter()
@@ -38,7 +41,7 @@ export const RegisterPage = () => {
   }
 
   const handleRegisterClick = () => {
-    register(formState).then((res: AxiosResponse<User>) => {
+    USER.register(formState).then((res: AxiosResponse<User>) => {
       setUserData(res.data)
       setDialogOpen(true)
     })
@@ -46,7 +49,7 @@ export const RegisterPage = () => {
 
   const handleVerifyClick = () => {
     if (userData) {
-      verify(code, userData.id)
+      USER.verify(code, userData.id)
         .then((res) => {
           const { access, refresh } = res.data.token
 

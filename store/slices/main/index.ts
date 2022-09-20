@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { Article, Theme, User } from "shared/types"
-import { getFlows, getReadingNow } from "services/api"
-import { AxiosListResponse } from "services/api/config"
-import { AxiosResponse } from "axios"
 import { clearAuthTokens } from "axios-jwt"
+import { AxiosResponse } from "axios"
+
+import { Post, Theme, User } from "shared/types"
+
+import { AxiosListResponse } from "services/api/config"
+import { BASE } from "services/api"
 
 export interface MainState {
   user: User | null
@@ -12,7 +14,7 @@ export interface MainState {
 
   flows: Theme[]
 
-  readingNow: Article[]
+  readingNow: Post[]
 }
 
 const initialState: MainState = {
@@ -23,13 +25,15 @@ const initialState: MainState = {
 }
 
 export const fetchFlows = createAsyncThunk("flows/fetchFlows", () =>
-  getFlows().then((res: AxiosResponse<Theme[]>) => res.data)
+  BASE.getFlows().then((res: AxiosResponse<Theme[]>) => res.data)
 )
 
 export const fetchReadingNow = createAsyncThunk(
   "readingNow/fetchReadingNow",
   () =>
-    getReadingNow().then((res: AxiosListResponse<Article>) => res.data.results)
+    BASE.getReadingNow().then(
+      (res: AxiosListResponse<Post>) => res.data.results
+    )
 )
 
 export const mainSlice = createSlice({

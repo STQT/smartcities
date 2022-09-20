@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from "react"
-import type { Question as TQuestion } from "shared/types"
-import { getQuestionsByThemeId } from "services/api"
-import { AxiosListResponse } from "services/api/config"
-import { Question } from "shared/components/templates"
-import { EmptyState, PostLoading } from "shared/components/molecules"
 import { useRouter } from "next/router"
 
+import { AxiosListResponse } from "services/api/config"
+import { QUESTION } from "services/api"
+
+import { EmptyState, PostLoading } from "shared/components/molecules"
+import { Post } from "shared/components/templates"
+import type { Post as TPost } from "shared/types"
+
 export const QuestionsTab = () => {
-  const [questions, setQuestions] = useState<TQuestion[]>([])
+  const [questions, setQuestions] = useState<TPost[]>([])
   const [isLoading, setLoading] = useState(true)
 
   const router = useRouter()
@@ -16,8 +18,8 @@ export const QuestionsTab = () => {
 
   useEffect(() => {
     if (router.query.id) {
-      getQuestionsByThemeId(Number(router.query.id)).then(
-        (res: AxiosListResponse<TQuestion>) => {
+      QUESTION.getListByThemeId(Number(router.query.id)).then(
+        (res: AxiosListResponse<TPost>) => {
           setQuestions(res.data.results)
           setLoading(false)
         }
@@ -41,7 +43,7 @@ export const QuestionsTab = () => {
       {!isLoading && questions.length > 0 && (
         <section className={"flex flex-col gap-5 mt-5"}>
           {questions.map((question) => (
-            <Question key={question.id} question={question} />
+            <Post type={"NEWS"} key={question.id} targetPost={question} />
           ))}
         </section>
       )}

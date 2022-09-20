@@ -1,6 +1,7 @@
-import { Button, Input, Password } from "shared/components/atoms"
-import { useAppSelector } from "store"
 import { ChangeEvent, useMemo, useState } from "react"
+import { useAppSelector } from "store"
+
+import { Button, Input, Password } from "shared/components/atoms"
 
 export const ProfileTab = () => {
   const { user } = useAppSelector((state) => state.main)
