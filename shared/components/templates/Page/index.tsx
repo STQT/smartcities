@@ -1,9 +1,7 @@
 import { ReactNode } from "react"
 import Head from "next/head"
 
-import { Header } from "shared/components/molecules"
-import { Menu } from "../Menu"
-import { Aside } from "../Aside"
+import { Header, Menu, Aside } from "shared/components/templates"
 
 interface PageProps {
   title: string

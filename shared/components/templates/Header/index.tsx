@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import cn from "classnames"
-import { Avatar, Logo } from "../../atoms"
-import { useAppSelector } from "store"
 import { useRouter } from "next/router"
+import cn from "classnames"
+
+import { Avatar, Logo } from "shared/components/atoms"
+import { useAppSelector } from "store"
 
 export const Header = () => {
   const headerRef = useRef<HTMLElement>(null)
@@ -38,11 +39,9 @@ export const Header = () => {
         <Avatar size={50} onClick={() => router.push("/me")} />
       </>
     )
-  }, [user, isLoggedIn])
+  }, [user])
 
   const NotLoggedInState = useMemo(() => {
-    const router = useRouter()
-
     return (
       <section className={"flex items-center w-full justify-between"}>
         <Logo onClick={() => router.push("/feed")} />
@@ -54,7 +53,7 @@ export const Header = () => {
         </button>
       </section>
     )
-  }, [isLoggedIn])
+  }, [])
 
   return (
     <header

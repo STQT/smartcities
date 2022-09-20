@@ -29,7 +29,7 @@ export const Avatar = ({ src, size, onClick }: AvatarProps) => {
   ) : (
     <div onClick={onClick} className={classes}>
       <Image
-        src={"/svg/icons/user-icon.svg"}
+        src={"/svg/icons/user-placeholder.svg"}
         className={"pointer-events-none"}
         width={20}
         height={20}

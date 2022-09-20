@@ -17,7 +17,7 @@ export const Logo = ({ type = "lg", onClick }: LogoProps) => {
         <Image
           className={classes}
           onClick={onClick}
-          src={"/svg/logo-icon.svg"}
+          src={"/svg/logo/icon.svg"}
           width={"60px"}
           height={"60px"}
         />
@@ -26,7 +26,7 @@ export const Logo = ({ type = "lg", onClick }: LogoProps) => {
         <Image
           className={classes}
           onClick={onClick}
-          src={"/svg/smartcity-logo.svg"}
+          src={"/svg/logo/full.svg"}
           width={"135px"}
           height={"10px"}
         />

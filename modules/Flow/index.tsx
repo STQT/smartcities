@@ -1,9 +1,11 @@
-import { Page } from "shared/components/templates"
-import { useAppSelector } from "../../store"
-import { Tab } from "@headlessui/react"
-import cn from "classnames"
 import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/router"
+import { Tab } from "@headlessui/react"
+import cn from "classnames"
+
+import { Page } from "shared/components/templates"
+import { useAppSelector } from "store"
+
 import { NewsTab, ArticlesTab, QuestionsTab } from "./components/templates"
 
 const TABS: Record<string, string> = {
@@ -18,9 +20,10 @@ export const FlowPage = () => {
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]
 
-  const flow = useMemo(() => {
-    return flows.find((f) => f.id === Number(router.query.id))
-  }, [router])
+  const flow = useMemo(
+    () => flows.find((f) => f.id === Number(router.query.id)),
+    [router]
+  )
 
   const [selectedTab, setSelectedTab] = useState<number>(
     getTabIdxByKey("profile")

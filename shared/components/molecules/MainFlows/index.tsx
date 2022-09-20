@@ -12,7 +12,7 @@ export const MainFlows = () => {
 
   const handleItemClick = (id: number) => {
     router.push({
-      pathname: "/flow/[id]",
+      pathname: "/flow/[id]/",
       query: { id }
     })
   }

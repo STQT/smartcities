@@ -1,7 +1,5 @@
 export { MainFlows } from "./MainFlows"
-export { Header } from "./Header"
 export { Dialog } from "./Dialog"
 export { PostLoading } from "../atoms/PostLoading"
 export { ReadingNow } from "./ReadingNow"
 export { EmptyState } from "../atoms/EmptyState"
-export { CommentsSection } from "../templates/Comments"

@@ -17,7 +17,7 @@ const AuthChecker = () => {
     if (isLoggedIn() && localStorage.getItem("user")) {
       dispatch(setLoggedIn(JSON.parse(localStorage.getItem("user") as string)))
     }
-  }, [])
+  }, [dispatch])
 
   return <></>
 }

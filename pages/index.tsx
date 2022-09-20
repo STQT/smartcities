@@ -7,7 +7,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     router.push("/feed")
-  }, [])
+  }, [router])
 
   return <main className={"text-3xl"}></main>
 }
