@@ -38,7 +38,7 @@ export const QuestionsTab = ({ query }: { query: string }) => {
       <PostLoading className={"mt-6"} isLoading={isLoading} />
       {!isLoading && (
         <EmptyState
-          caption={"Нету новостей"}
+          caption={"Нету вопросов"}
           className={"mt-6"}
           isEmpty={isEmpty}
         />
