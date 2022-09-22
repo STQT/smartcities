@@ -1,12 +1,11 @@
 import axios, { AxiosResponse } from "axios"
 import {
   applyAuthTokenInterceptor,
-  getAccessToken,
   IAuthTokens,
   setAuthTokens,
   TokenRefreshRequest
 } from "axios-jwt"
-import { toast } from "react-toastify"
+
 export const BASE_URL = "https://api.smartcities.uz/v1"
 
 export const request = axios.create({

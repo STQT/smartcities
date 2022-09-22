@@ -9,11 +9,10 @@ import { Comments } from "shared/components/templates"
 import { ARTICLE, NEWS, QUESTION } from "services/api"
 
 interface PostViewProps {
-  type: PostTypes
   post: Post
 }
 
-export const PostView = ({ type, post: targetPost }: PostViewProps) => {
+export const PostView = ({ post: targetPost }: PostViewProps) => {
   const [post, setPost] = useState(targetPost)
 
   const onCommentPosted = () => {
@@ -25,7 +24,7 @@ export const PostView = ({ type, post: targetPost }: PostViewProps) => {
       ARTICLE,
       NEWS,
       QUESTION
-    }[type].LIKES.toggle
+    }[post.type].LIKES.toggle
 
     if (post.is_liked) {
       toggleLikeEvent(post.id).then(() => {
@@ -96,7 +95,7 @@ export const PostView = ({ type, post: targetPost }: PostViewProps) => {
           <Comments
             commentPostedCallback={onCommentPosted}
             comments_count={post.comments_count}
-            type={type}
+            type={post.type}
             id={post.id}
           />
         )}

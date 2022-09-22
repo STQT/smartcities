@@ -10,11 +10,10 @@ import { addBaseURL } from "shared/utils"
 import { ARTICLE, QUESTION, NEWS } from "services/api"
 
 interface PostProps {
-  type: "QUESTION" | "NEWS" | "ARTICLE"
   targetPost: TPost
 }
 
-export const Post = ({ type, targetPost }: PostProps) => {
+export const Post = ({ targetPost }: PostProps) => {
   const [post, setPost] = useState(targetPost)
   const router = useRouter()
 
@@ -22,7 +21,7 @@ export const Post = ({ type, targetPost }: PostProps) => {
 
   const handleReadMore = () => {
     router.push({
-      pathname: `/${type.toLowerCase()}/[id]`,
+      pathname: `/${post.type.toLowerCase()}/[id]`,
       query: { id: post.id }
     })
   }
@@ -32,7 +31,7 @@ export const Post = ({ type, targetPost }: PostProps) => {
       ARTICLE,
       NEWS,
       QUESTION
-    }[type].LIKES.toggle
+    }[post.type].LIKES.toggle
 
     if (post.is_liked) {
       toggleLikeEvent(post.id).then(() => {

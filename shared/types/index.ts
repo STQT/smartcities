@@ -47,4 +47,5 @@ export interface Post {
   is_liked: boolean
   comments_count: number
   like_count: number
+  type: PostTypes
 }

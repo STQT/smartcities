@@ -38,7 +38,7 @@ export const ARTICLE = {
 
   LIKES: {
     toggle(id: number) {
-      return request.get(`/articles/${id}/user_like/`)
+      return request.get(`/article/${id}/user_like/`)
     }
   }
 }

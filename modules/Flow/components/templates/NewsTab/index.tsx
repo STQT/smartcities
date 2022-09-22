@@ -43,7 +43,7 @@ export const NewsTab = () => {
       {!isLoading && news.length > 0 && (
         <section className={"flex flex-col gap-5 mt-5"}>
           {news.map((news) => (
-            <Post type={"NEWS"} key={news.id} targetPost={news} />
+            <Post key={news.id} targetPost={news} />
           ))}
         </section>
       )}

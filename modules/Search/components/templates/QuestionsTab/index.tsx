@@ -47,7 +47,7 @@ export const QuestionsTab = ({ query }: { query: string }) => {
       {!isLoading && questions.length > 0 && (
         <section className={"flex flex-col gap-5 mt-5"}>
           {questions.map((question) => (
-            <Post type={"QUESTION"} key={question.id} targetPost={question} />
+            <Post key={question.id} targetPost={question} />
           ))}
         </section>
       )}
