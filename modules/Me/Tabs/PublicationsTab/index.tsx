@@ -58,6 +58,12 @@ export const PublicationsTab = () => {
   }
 
   useEffect(() => {
+    NEWS.getMine().then((res: AxiosListResponse<TPost>) => {
+      setPosts(res.data.results)
+    })
+  }, [])
+
+  useEffect(() => {
     if (getTabKeyByIdx(selectedTab) === "news") {
       NEWS.getMine().then((res: AxiosListResponse<TPost>) => {
         setPosts(res.data.results)
@@ -110,6 +116,7 @@ export const PublicationsTab = () => {
             {posts?.length === 0 && (
               <section>
                 <EmptyState
+                  className={"mt-0"}
                   isEmpty={true}
                   caption={"Не найдено созданных новостей"}
                 />
@@ -127,6 +134,7 @@ export const PublicationsTab = () => {
             {posts?.length === 0 && (
               <section>
                 <EmptyState
+                  className={"mt-0"}
                   isEmpty={true}
                   caption={"Не найдено созданных статей"}
                 />
@@ -144,6 +152,7 @@ export const PublicationsTab = () => {
             {posts?.length === 0 && (
               <section>
                 <EmptyState
+                  className={"mt-0"}
                   isEmpty={true}
                   caption={"Не найдено созданных вопросов"}
                 />

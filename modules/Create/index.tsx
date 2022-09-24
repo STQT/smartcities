@@ -16,9 +16,7 @@ export const CreatePage = () => {
   const { flows } = useAppSelector((state) => state.main)
   const dispatch = useAppDispatch()
 
-  const [isFlowDialogOpen, setFlowDialogOpen] = useState(false)
   const [isThemeDialogOpen, setThemeDialogOpen] = useState(false)
-
   const [selectedFlow, setSelectedFlow] = useState<Theme>()
 
   // Current Selected Theme
@@ -63,7 +61,6 @@ export const CreatePage = () => {
 
   const handleFlowSelect = (flow: Theme) => {
     setSelectedFlow(flow)
-    setFlowDialogOpen(false)
   }
 
   const handleFirstLevelThemeSelect = (theme: Theme) => {
@@ -87,14 +84,13 @@ export const CreatePage = () => {
   }
 
   const handlePublish = () => {
+    // TODO: Add Publication
     ARTICLE.create({
       title: formValues.title,
       description: formValues.description,
       theme: selectedTheme?.id,
       tags_ids: [1, 3]
-    }).then((res) => {
-      console.log(res)
-    })
+    }).then((res) => {})
   }
 
   useEffect(() => {
@@ -103,31 +99,8 @@ export const CreatePage = () => {
 
   return (
     <>
-      <Dialog isOpen={isFlowDialogOpen} setOpen={setFlowDialogOpen}>
-        <section className={"flex items-center justify-between"}>
-          <h1 className={"text-xl font-semibold"}>Выберите поток</h1>
-          <button
-            className={"w-[32px] outline-none h-[32px] text-gray-400"}
-            onClick={() => setFlowDialogOpen(false)}>
-            <XMarkIcon />
-          </button>
-        </section>
-
-        <section className={"flex flex-col mt-[30px] gap-[10px]"}>
-          {flows &&
-            flows.map((flow) => (
-              <button
-                onClick={() => handleFlowSelect(flow)}
-                className={
-                  "w-full rounded-[10px] text-left px-5 bg-gray-100 h-16 transition-all hover:bg-gray-200"
-                }>
-                {flow.name}
-              </button>
-            ))}
-        </section>
-      </Dialog>
-
       <Dialog
+        className={"h-[586px]"}
         width={"max-w-7xl"}
         isOpen={isThemeDialogOpen}
         setOpen={setThemeDialogOpen}>
@@ -141,6 +114,12 @@ export const CreatePage = () => {
         </section>
 
         <section className={"flex flex mt-[30px] gap-[10px] w-[1200px]"}>
+          <ThemesSection
+            themes={flows}
+            handleThemeSelect={handleFlowSelect}
+            selectedTheme={selectedTheme}
+          />
+
           <ThemesSection
             themes={firstLevelThemes}
             handleThemeSelect={handleFirstLevelThemeSelect}
@@ -166,14 +145,6 @@ export const CreatePage = () => {
           className={
             "w-full p-[40px] rounded-[20px] bg-white flex flex-col gap-[30px]"
           }>
-          <Input
-            onClick={() => setFlowDialogOpen(true)}
-            hint={"Поток"}
-            readOnly={true}
-            placeholder={"Поток"}
-            value={selectedFlow?.name}
-          />
-
           <Input
             onClick={() => setThemeDialogOpen(true)}
             readOnly={true}

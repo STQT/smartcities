@@ -11,8 +11,6 @@ import { ARTICLE, NEWS, QUESTION } from "services/api"
 const Post = ({ targetPost }: { targetPost: TPost }) => {
   const [post, setPost] = useState(targetPost)
 
-  console.log(post)
-
   const handleLikeToggle = () => {
     const toggleLikeEvent = {
       ARTICLE,

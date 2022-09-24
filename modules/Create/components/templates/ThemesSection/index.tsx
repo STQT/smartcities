@@ -12,7 +12,7 @@ export const ThemesSection = ({
 }) => {
   const buttonClasses = (id: number) =>
     cn(
-      "w-full rounded-[10px] text-left px-5 bg-gray-100 h-16 transition-all hover:bg-gray-200",
+      "w-full text-left px-5 bg-gray-100 border-b last:border-none h-16 transition-all hover:bg-gray-200",
       {
         "bg-gray-200": id === (selectedTheme && selectedTheme.id)
       }
@@ -21,7 +21,7 @@ export const ThemesSection = ({
   return themes && themes.length > 0 ? (
     <section
       className={
-        "w-full flex flex-col gap-[10px] border-r-2 border-blue pr-3 last:border-none last:pr-0"
+        "w-full h-[450px] overflow-y-scroll flex-col border-r-2 border-blue pr-3 last:border-none last:pr-0"
       }>
       {themes.map((theme) => (
         <button

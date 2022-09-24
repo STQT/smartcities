@@ -9,6 +9,7 @@ interface DialogProps {
   title?: string
   closeOnOverlayClick?: boolean
   width?: string
+  className?: string
 }
 
 export const Dialog = ({
@@ -17,7 +18,8 @@ export const Dialog = ({
   title,
   children,
   closeOnOverlayClick = true,
-  width
+  width,
+  className
 }: DialogProps) => {
   function closeModal() {
     setOpen(false)
@@ -25,7 +27,8 @@ export const Dialog = ({
 
   const panelClasses = cn(
     "w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all",
-    width ? width : "max-w-md"
+    width ? width : "max-w-md",
+    className
   )
 
   return (
