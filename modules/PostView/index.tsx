@@ -100,6 +100,21 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
           />
         )}
 
+        <section
+          className={
+            "w-full mt-[42px] p-[20px] bg-white rounded-[20px] flex flex-col"
+          }>
+          <h2 className={"text-[18px] text-blue font-semibold"}>
+            Минуточку внимания
+          </h2>
+
+          <section className={"w-full grid gap-[20px] mt-[20px] grid-cols-3"}>
+            <div className={"h-[224px] bg-blue"} />
+            <div className={"h-[224px] bg-blue"} />
+            <div className={"h-[224px] bg-blue"} />
+          </section>
+        </section>
+
         <section className={"mt-32"}></section>
       </main>
     </Page>

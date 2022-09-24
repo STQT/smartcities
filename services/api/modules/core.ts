@@ -27,6 +27,14 @@ export const BASE = {
     return request.get("/theme/")
   },
 
+  getThemeByTreeId(id: number) {
+    return request.get("/theme/", {
+      params: {
+        tree_id: id
+      }
+    })
+  },
+
   getReadingNow() {
     return request.get(`/a-read/`)
   }

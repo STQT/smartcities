@@ -28,9 +28,7 @@ export const FeedPage = () => {
       <main className={"flex-1 flex flex-col gap-[20px]"}>
         <PostLoading isLoading={isLoading} />
         {!isLoading &&
-          news.map((news) => (
-            <Post key={news.id} targetPost={news} type={"NEWS"} />
-          ))}
+          news.map((news) => <Post key={news.id} targetPost={news} />)}
       </main>
     </Page>
   )

@@ -14,6 +14,7 @@ interface SelectProps {
   hint?: string
 
   size?: "sm" | "md"
+  selectPosition?: "top" | "bottom"
 }
 
 export const Select = ({
@@ -21,7 +22,8 @@ export const Select = ({
   options,
   placeholder,
   size = "md",
-  hint
+  hint,
+  selectPosition = "bottom"
 }: SelectProps) => {
   const classes = cn(
     "relative bg-gray-100 w-full px-[20px] border border-gray-200 rounded-[10px] outline-none text-left",
@@ -30,6 +32,11 @@ export const Select = ({
       "py-[13px] text-[14px]": size === "sm",
       "py-[18px] text-[16px]": size === "md"
     }
+  )
+
+  const optionsClasses = cn(
+    "absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm",
+    { "bottom-14": selectPosition === "top" }
   )
 
   return (
@@ -48,7 +55,7 @@ export const Select = ({
             )}
 
             {placeholder && (
-              <span className={"text-gray-400"}>{placeholder}</span>
+              <span className={"text-gray-400 pr-3"}>{placeholder}</span>
             )}
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronDownIcon
@@ -62,7 +69,7 @@ export const Select = ({
             leave="transition ease-in duration-100"
             leaveFrom="opacity-100"
             leaveTo="opacity-0">
-            <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className={optionsClasses}>
               {options.map((option) => (
                 <Listbox.Option
                   key={option.value}

@@ -23,6 +23,18 @@ export const ARTICLE = {
     })
   },
 
+  create(payload: any) {
+    return request.post("/article/", payload)
+  },
+
+  getMine() {
+    return request.get("/articles-history/", {
+      params: {
+        status: "True"
+      }
+    })
+  },
+
   COMMENTS: {
     getCommentsList(id: number) {
       return request.get(`/articles-comment`, {

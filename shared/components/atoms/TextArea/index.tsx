@@ -1,22 +1,19 @@
-import { ChangeEvent, MouseEventHandler } from "react"
+import { ChangeEvent } from "react"
 import cn from "classnames"
 
-interface InputProps {
+interface TextAreaProps {
   className?: string
   name?: string
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
+  onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
   placeholder?: string
 
   size?: "sm" | "md"
   hint?: string
   maxLength?: number
-  type?: "text" | "email" | "number"
   value?: string
-  onClick?: () => void
-  readOnly?: boolean
 }
 
-export const Input = ({
+export const TextArea = ({
   value,
   className,
   name,
@@ -24,18 +21,14 @@ export const Input = ({
   size = "sm",
   placeholder,
   hint,
-  maxLength,
-  type = "text",
-  readOnly = false,
-  onClick
-}: InputProps) => {
+  maxLength
+}: TextAreaProps) => {
   const classes = cn(
     "bg-gray-100 px-[20px] border border-gray-200 rounded-[10px] outline-none",
     "transition-all focus:bg-blue-pale focus:border-blue",
     {
       "py-[13px] text-[14px]": size === "sm",
-      "py-[18px] text-[16px]": size === "md",
-      "cursor-pointer": readOnly
+      "py-[18px] text-[16px]": size === "md"
     },
     className
   )
@@ -48,11 +41,8 @@ export const Input = ({
           {hint}
         </span>
       )}
-      <input
-        readOnly={readOnly}
-        onClick={onClick}
+      <textarea
         value={value}
-        type={type}
         maxLength={maxLength}
         spellCheck={false}
         placeholder={placeholder}

@@ -23,6 +23,14 @@ export const QUESTION = {
     })
   },
 
+  getMine() {
+    return request.get("/questions-history/", {
+      params: {
+        status: "True"
+      }
+    })
+  },
+
   COMMENTS: {
     getCommentsList(id: number) {
       return request.get(`/questions-comment/`, {

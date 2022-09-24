@@ -1,5 +1,6 @@
 import { Dispatch, Fragment, ReactNode, SetStateAction, useState } from "react"
 import { Dialog as HDialog, Transition } from "@headlessui/react"
+import cn from "classnames"
 
 interface DialogProps {
   isOpen: boolean
@@ -7,6 +8,7 @@ interface DialogProps {
   children: ReactNode
   title?: string
   closeOnOverlayClick?: boolean
+  width?: string
 }
 
 export const Dialog = ({
@@ -14,11 +16,17 @@ export const Dialog = ({
   setOpen,
   title,
   children,
-  closeOnOverlayClick = true
+  closeOnOverlayClick = true,
+  width
 }: DialogProps) => {
   function closeModal() {
     setOpen(false)
   }
+
+  const panelClasses = cn(
+    "w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all",
+    width ? width : "max-w-md"
+  )
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -47,7 +55,7 @@ export const Dialog = ({
               leave="ease-in duration-200"
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95">
-              <HDialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <HDialog.Panel className={panelClasses}>
                 {title && (
                   <HDialog.Title
                     as="h3"

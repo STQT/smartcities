@@ -25,6 +25,14 @@ export const NEWS = {
     })
   },
 
+  getMine() {
+    return request.get("/news-history/", {
+      params: {
+        status: "True"
+      }
+    })
+  },
+
   COMMENTS: {
     getCommentsList(id: number) {
       return request.get(`/news-comment/`, {

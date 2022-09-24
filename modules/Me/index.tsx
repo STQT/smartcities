@@ -4,7 +4,7 @@ import cn from "classnames"
 import { useRouter } from "next/router"
 
 import { Page } from "shared/components/templates"
-import { NotificationsTab, ProfileTab } from "./Tabs"
+import { NotificationsTab, ProfileTab, PublicationsTab } from "./Tabs"
 import { EmptyState } from "../../shared/components/molecules"
 
 const TABS: Record<string, string> = {
@@ -82,8 +82,10 @@ export const ProfilePage = () => {
 
           <div
             className={cn(
-              "w-full h-[35px] bg-white",
-              hasTabTransparentBg ? "rounded-b-3xl" : "rounded-none"
+              "w-full bg-white",
+              hasTabTransparentBg
+                ? "rounded-b-3xl h-0"
+                : "rounded-none h-[35px]"
             )}
           />
 
@@ -97,7 +99,7 @@ export const ProfilePage = () => {
             </Tab.Panel>
 
             <Tab.Panel>
-              <EmptyState isEmpty={true} caption={"Публикации не найдены"} />
+              <PublicationsTab />
             </Tab.Panel>
             <Tab.Panel>
               <EmptyState isEmpty={true} caption={"Закладки не найдены"} />
