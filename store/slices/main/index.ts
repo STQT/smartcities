@@ -3,10 +3,10 @@ import type { PayloadAction } from "@reduxjs/toolkit"
 import { clearAuthTokens } from "axios-jwt"
 import { AxiosResponse } from "axios"
 
-import { Post, Theme, User } from "shared/types"
+import { Post, Tag, Theme, User } from "shared/types"
 
 import { AxiosListResponse } from "services/api/config"
-import { BASE } from "services/api"
+import { BASE, TAGS } from "services/api"
 
 export interface MainState {
   user: User | null
@@ -15,13 +15,16 @@ export interface MainState {
   flows: Theme[]
 
   readingNow: Post[]
+
+  tags: Tag[]
 }
 
 const initialState: MainState = {
   user: null,
   isLoggedIn: false,
   flows: [],
-  readingNow: []
+  readingNow: [],
+  tags: []
 }
 
 export const fetchFlows = createAsyncThunk("flows/fetchFlows", () =>
@@ -36,6 +39,10 @@ export const fetchReadingNow = createAsyncThunk(
     )
 )
 
+export const fetchTags = createAsyncThunk("tags/fetchTags", () =>
+  TAGS.getList().then((res) => res.data)
+)
+
 export const mainSlice = createSlice({
   name: "main",
   initialState,
@@ -46,6 +53,10 @@ export const mainSlice = createSlice({
 
     builder.addCase(fetchReadingNow.fulfilled, (state, action) => {
       state.readingNow = action.payload
+    })
+
+    builder.addCase(fetchTags.fulfilled, (state, action) => {
+      state.tags = action.payload
     })
   },
   reducers: {

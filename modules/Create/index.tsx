@@ -1,20 +1,30 @@
 import { ChangeEvent, useEffect, useState } from "react"
 
-import { Button, Input, Select, TextArea } from "shared/components/atoms"
+import { Button, Input, Select } from "shared/components/atoms"
 import { Page } from "shared/components/templates"
 import { Dialog } from "shared/components/molecules"
 import { XMarkIcon } from "@heroicons/react/24/outline"
 
 import { useAppDispatch, useAppSelector } from "store"
-import { fetchFlows } from "store/slices/main"
-import { Theme } from "shared/types"
+import { fetchFlows, fetchTags } from "store/slices/main"
+import { PostTypes, Theme } from "shared/types"
 import { ARTICLE, BASE } from "services/api"
 
-import { ThemesSection } from "./components/templates"
+import { useQuill } from "react-quilljs"
+
+import { TagsSelect, ThemesSection } from "./components/templates"
+
+const PostTypeOptions: { label: string; value: PostTypes }[] = [
+  { label: "Вопрос", value: "QUESTION" },
+  { label: "Статья", value: "ARTICLE" },
+  { label: "Новость", value: "NEWS" }
+]
 
 export const CreatePage = () => {
-  const { flows } = useAppSelector((state) => state.main)
+  const { flows, tags } = useAppSelector((state) => state.main)
   const dispatch = useAppDispatch()
+
+  const { quill, quillRef } = useQuill()
 
   const [isThemeDialogOpen, setThemeDialogOpen] = useState(false)
   const [selectedFlow, setSelectedFlow] = useState<Theme>()
@@ -27,10 +37,13 @@ export const CreatePage = () => {
   const [secondLevelThemes, setSecondLevelThemes] = useState<Theme[]>()
   const [thirdLevelThemes, setThirdLevelThemes] = useState<Theme[]>()
 
+  const [selectedPostType, setSelectedPostType] = useState<{
+    label: string
+    value: PostTypes
+  }>()
   const [formValues, setFormValues] = useState({
     title: "",
-    subtitle: "",
-    description: ""
+    tags_ids: []
   })
 
   const handleInputChange = (
@@ -53,6 +66,7 @@ export const CreatePage = () => {
     if (selectedFlow) {
       BASE.getThemeByTreeId(selectedFlow.id).then((res) => {
         setFirstLevelThemes(res.data)
+        setSelectedTheme(selectedFlow)
       })
     }
 
@@ -83,18 +97,29 @@ export const CreatePage = () => {
     setSelectedTheme(theme)
   }
 
+  const handleTagSelect = (value: any) => {
+    setFormValues((prev) => ({
+      ...prev,
+      tags_ids: value.map((v: any) => v.value)
+    }))
+  }
+
   const handlePublish = () => {
-    // TODO: Add Publication
-    ARTICLE.create({
-      title: formValues.title,
-      description: formValues.description,
-      theme: selectedTheme?.id,
-      tags_ids: [1, 3]
-    }).then((res) => {})
+    if (quill) {
+      ARTICLE.create({
+        title: formValues.title,
+        description: quill?.root.innerHTML,
+        theme: selectedTheme?.id,
+        tags_ids: formValues.tags_ids
+      }).then((res) => {
+        console.log(res)
+      })
+    }
   }
 
   useEffect(() => {
     dispatch(fetchFlows())
+    dispatch(fetchTags())
   }, [])
 
   return (
@@ -117,7 +142,7 @@ export const CreatePage = () => {
           <ThemesSection
             themes={flows}
             handleThemeSelect={handleFlowSelect}
-            selectedTheme={selectedTheme}
+            selectedTheme={selectedFlow}
           />
 
           <ThemesSection
@@ -160,30 +185,23 @@ export const CreatePage = () => {
             placeholder={"Заголовок"}
           />
 
-          <Input
-            name={"subtitle"}
-            onChange={handleInputChange}
-            hint={"Подзаголовок (необязательное поле)"}
-            placeholder={"Подзаголовок"}
-          />
+          {tags && <TagsSelect onChange={handleTagSelect} options={tags} />}
 
-          <TextArea
-            name={"description"}
-            onChange={handleInputChange}
-            hint={"Контент"}
-            placeholder={"Напишите что нибудь..."}
-          />
+          <section className={"w-full"}>
+            <section className={"w-full"} ref={quillRef} />
+          </section>
 
-          <section className={"flex items-center justify-between"}>
+          <section className={"flex items-center mt-12 justify-between"}>
             <Select
               placeholder={"Тип поста"}
               selectPosition={"top"}
               size={"sm"}
-              options={[
-                { label: "Вопрос", value: "QUESTION" },
-                { label: "Статья", value: "ARTICLE" },
-                { label: "Новость", value: "NEWS" }
-              ]}
+              selected={selectedPostType}
+              onChange={(option) => {
+                /* @ts-ignore */
+                setSelectedPostType(option)
+              }}
+              options={PostTypeOptions}
             />
 
             <Button className={"px-5"} onClick={handlePublish}>

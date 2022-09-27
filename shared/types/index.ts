@@ -39,13 +39,12 @@ export interface Post {
   description: string
   view_count: number
   created_at: string
-  is_delete: boolean
-  is_active: boolean
-  is_draft: boolean
   user: User
   theme: Theme
   is_liked: boolean
+  is_saved: boolean
   comments_count: number
   like_count: number
+  saved_count: number
   type: PostTypes
 }

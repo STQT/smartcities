@@ -1,11 +1,13 @@
-import { request } from "../config"
+import { AxiosListResponse, request } from "../config"
+import { Post, Comment } from "shared/types"
+import { AxiosResponse } from "axios"
 
 export const NEWS = {
-  getList() {
+  getList(): Promise<AxiosListResponse<Post>> {
     return request.get(`/news/`)
   },
 
-  getListByThemeId(theme_id: number) {
+  getListByThemeId(theme_id: number): Promise<AxiosListResponse<Post>> {
     return request.get(`/theme-gr-news/`, {
       params: {
         theme_id
@@ -13,11 +15,11 @@ export const NEWS = {
     })
   },
 
-  getFull(id: string) {
+  getFull(id: string): Promise<AxiosResponse<Post>> {
     return request.get(`/news/${id}/`)
   },
 
-  search(query: string) {
+  search(query: string): Promise<AxiosListResponse<Post>> {
     return request.get("/search-news/", {
       params: {
         key: query
@@ -25,7 +27,7 @@ export const NEWS = {
     })
   },
 
-  getMine() {
+  getMine(): Promise<AxiosListResponse<Post>> {
     return request.get("/news-history/", {
       params: {
         status: "True"
@@ -34,7 +36,7 @@ export const NEWS = {
   },
 
   COMMENTS: {
-    getCommentsList(id: number) {
+    getCommentsList(id: number): Promise<AxiosListResponse<Comment>> {
       return request.get(`/news-comment/`, {
         params: {
           id

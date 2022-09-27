@@ -4,8 +4,12 @@ import cn from "classnames"
 import { useRouter } from "next/router"
 
 import { Page } from "shared/components/templates"
-import { NotificationsTab, ProfileTab, PublicationsTab } from "./Tabs"
-import { EmptyState } from "../../shared/components/molecules"
+import {
+  NotificationsTab,
+  ProfileTab,
+  PublicationsTab,
+  SavingsTab
+} from "./Tabs"
 
 const TABS: Record<string, string> = {
   profile: "Профиль",
@@ -101,8 +105,9 @@ export const ProfilePage = () => {
             <Tab.Panel>
               <PublicationsTab />
             </Tab.Panel>
+
             <Tab.Panel>
-              <EmptyState isEmpty={true} caption={"Закладки не найдены"} />
+              <SavingsTab />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>

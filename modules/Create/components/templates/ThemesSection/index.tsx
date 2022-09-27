@@ -1,5 +1,7 @@
+import { Fragment } from "react"
 import { Theme } from "shared/types"
 import cn from "classnames"
+import { Transition } from "@headlessui/react"
 
 export const ThemesSection = ({
   themes,
@@ -18,18 +20,30 @@ export const ThemesSection = ({
       }
     )
 
-  return themes && themes.length > 0 ? (
-    <section
-      className={
-        "w-full h-[450px] overflow-y-scroll flex-col border-r-2 border-blue pr-3 last:border-none last:pr-0"
-      }>
-      {themes.map((theme) => (
-        <button
-          onClick={() => handleThemeSelect(theme)}
-          className={buttonClasses(theme.id)}>
-          {theme.name}
-        </button>
-      ))}
-    </section>
-  ) : null
+  return (
+    <Transition
+      as={Fragment}
+      show={themes && themes.length > 0}
+      enter="transition-all transform-gpu duration-[200ms]"
+      enterFrom="opacity-0 translate-x-1/2"
+      enterTo="opacity-100 translate-x-0"
+      leave="transition-all transform-gpu duration-[200ms]"
+      leaveFrom="opacity-100 translate-x-0"
+      leaveTo="opacity-0 translate-x-1/2">
+      <section
+        className={
+          "w-full h-[450px] overflow-y-scroll flex-col border-r-2 border-blue pr-3 last:border-none last:pr-0"
+        }>
+        {themes &&
+          themes.map((theme) => (
+            <button
+              key={theme.id}
+              onClick={() => handleThemeSelect(theme)}
+              className={buttonClasses(theme.id)}>
+              {theme.name}
+            </button>
+          ))}
+      </section>
+    </Transition>
+  )
 }

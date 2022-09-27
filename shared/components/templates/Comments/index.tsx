@@ -5,7 +5,6 @@ import { Avatar, Button } from "shared/components/atoms"
 import type { Comment as TComment, PostTypes } from "shared/types"
 import { useAppSelector } from "store"
 
-import { AxiosListResponse } from "services/api/config"
 import { ARTICLE, NEWS, QUESTION } from "services/api"
 
 const Comment = ({ user, comment, created_at }: TComment) => {
@@ -41,7 +40,7 @@ export const Comments = ({
   id
 }: CommentsProps) => {
   const { user, isLoggedIn } = useAppSelector((state) => state.main)
-  const [comments, setComments] = useState<TComment[]>()
+  const [comments, setComments] = useState<TComment[]>([])
   const [myComment, setMyComment] = useState("")
 
   useEffect(() => {
@@ -60,31 +59,25 @@ export const Comments = ({
 
   const fetchAndSetArticleComments = (id: number) => {
     if (type === "ARTICLE") {
-      ARTICLE.COMMENTS.getCommentsList(id).then(
-        (res: AxiosListResponse<TComment>) => {
-          setComments(res.data.results)
-        }
-      )
+      ARTICLE.COMMENTS.getCommentsList(id).then((res) => {
+        setComments(res.data.results)
+      })
     }
   }
 
   const fetchAndSetNewsComments = (id: number) => {
     if (type === "NEWS") {
-      NEWS.COMMENTS.getCommentsList(id).then(
-        (res: AxiosListResponse<TComment>) => {
-          setComments(res.data.results)
-        }
-      )
+      NEWS.COMMENTS.getCommentsList(id).then((res) => {
+        setComments(res.data.results)
+      })
     }
   }
 
   const fetchAndSetQuestionComments = (id: number) => {
     if (type === "QUESTION") {
-      QUESTION.COMMENTS.getCommentsList(id).then(
-        (res: AxiosListResponse<TComment>) => {
-          setComments(res.data.results)
-        }
-      )
+      QUESTION.COMMENTS.getCommentsList(id).then((res) => {
+        setComments(res.data.results)
+      })
     }
   }
 

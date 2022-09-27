@@ -2,12 +2,20 @@ import { useMemo, useState } from "react"
 import { useRouter } from "next/router"
 import Image from "next/image"
 
-import { Comment, Like, Tag, Views } from "shared/components/atoms"
+import {
+  Avatar,
+  Bookmark,
+  Comment,
+  Like,
+  Tag,
+  Views
+} from "shared/components/atoms"
 import { Post as TPost } from "shared/types"
 
 import { addBaseURL } from "shared/utils"
 
-import { ARTICLE, QUESTION, NEWS } from "services/api"
+import { ARTICLE, QUESTION, NEWS, BOOKMARKS } from "services/api"
+import moment from "moment"
 
 interface PostProps {
   targetPost: TPost
@@ -54,12 +62,50 @@ export const Post = ({ targetPost }: PostProps) => {
     }
   }
 
+  const handleSaveToggle = () => {
+    if (!post.is_saved) {
+      BOOKMARKS.add(post.id, post.type).then(() => {
+        setPost((prev) => ({
+          ...prev,
+          is_saved: !prev.is_saved,
+          saved_count: prev.saved_count + 1
+        }))
+      })
+    }
+
+    if (post.is_saved) {
+      BOOKMARKS.add(post.id, post.type).then(() => {
+        setPost((prev) => ({
+          ...prev,
+          is_saved: !prev.is_saved,
+          saved_count: prev.saved_count - 1
+        }))
+      })
+    }
+  }
+
   return (
     <article className={"rounded-[20px] bg-white px-[20px] py-[32px]"}>
+      <section className={"flex flex-col mb-[20px]"}>
+        <div className={"flex gap-2 items-center select-none"}>
+          <Avatar size={40} />
+          <span className={"text-[14px]"}>
+            {post.user.first_name && post.user.last_name
+              ? `${post.user.first_name} ${post.user.last_name}`
+              : `@${post.user.username}`}
+          </span>
+
+          <span className={"ml-2 text-gray-400 text-[14px]"}>
+            {moment(post.created_at).calendar()}
+          </span>
+        </div>
+      </section>
       <section className={"flex flex-col"}>
         <h1
           onClick={handleReadMore}
-          className={"text-blue mb-4 font-semibold text-[20px]"}>
+          className={
+            "text-blue cursor-pointer hover:opacity-80 transition-opacity mb-4 font-semibold text-[20px]"
+          }>
           {post.title}
         </h1>
 
@@ -75,7 +121,13 @@ export const Post = ({ targetPost }: PostProps) => {
             />
           </div>
         )}
-        <p className={"text-[16px] mb-[20px]"}>{post.description}</p>
+
+        <p
+          className={"text-[16px] mb-[20px]"}
+          dangerouslySetInnerHTML={{
+            __html: `${post.description.slice(0, 500)}...`
+          }}
+        />
 
         {post.tags.length > 0 && (
           <section className={"mt-[10px] flex gap-2"}>
@@ -95,6 +147,11 @@ export const Post = ({ targetPost }: PostProps) => {
 
             <Views views_count={post.view_count} />
             <Comment comments_count={post.comments_count} />
+            <Bookmark
+              is_saved={post.is_saved}
+              saves_count={post.saved_count}
+              toggleSave={handleSaveToggle}
+            />
           </section>
 
           <button

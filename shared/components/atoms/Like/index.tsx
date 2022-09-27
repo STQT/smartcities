@@ -24,7 +24,7 @@ export const Like = ({
   return (
     <button onClick={isClickable ? toggleLike : () => {}} className={classes}>
       <HeartIcon className={"w-[20px] h-[20px]"} />
-      <span>{like_count}</span>
+      <span className={"select-none"}>{like_count}</span>
     </button>
   )
 }

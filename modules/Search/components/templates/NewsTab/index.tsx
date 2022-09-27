@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
 
-import { AxiosListResponse } from "services/api/config"
 import type { Post as TPost } from "shared/types"
 import { NEWS } from "services/api"
 
@@ -17,7 +16,7 @@ export const NewsTab = ({ query }: { query: string }) => {
 
   useEffect(() => {
     if (query) {
-      NEWS.search(query).then((res: AxiosListResponse<TPost>) => {
+      NEWS.search(query).then((res) => {
         setNews(res.data.results)
         setLoading(false)
       })
@@ -25,7 +24,7 @@ export const NewsTab = ({ query }: { query: string }) => {
   }, [query])
 
   useEffect(() => {
-    NEWS.getList().then((res: AxiosListResponse<TPost>) => {
+    NEWS.getList().then((res) => {
       setNews(res.data.results)
       setLoading(false)
     })

@@ -25,7 +25,12 @@ const Post = ({ post }: { post: TPost }) => {
         </Link>
       </div>
 
-      <div className={"py-[20px] px-[20px]"}>{post.description}</div>
+      <div
+        className={"py-[20px] px-[20px]"}
+        dangerouslySetInnerHTML={{
+          __html: `${post.description.slice(0, 120)}...`
+        }}
+      />
 
       <div className={"px-[20px] py-[20px] flex gap-4"}>
         <Like

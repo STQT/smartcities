@@ -1,21 +1,23 @@
-import { request } from "../config"
+import { AxiosListResponse, request } from "../config"
+import { Comment, Post } from "shared/types"
+import { AxiosResponse } from "axios"
 
 export const QUESTION = {
-  getList() {
+  getList(): Promise<AxiosListResponse<Post>> {
     return request.get("/question/")
   },
 
-  getListByThemeId(theme_id: number) {
+  getListByThemeId(theme_id: number): Promise<AxiosListResponse<Post>> {
     return request.get(`/theme-gr-qs/`, {
       params: { theme_id }
     })
   },
 
-  getFull(id: string) {
+  getFull(id: string): Promise<AxiosResponse<Post>> {
     return request.get(`/question/${id}/`)
   },
 
-  search(query: string) {
+  search(query: string): Promise<AxiosListResponse<Post>> {
     return request.get("/search-questions/", {
       params: {
         key: query
@@ -23,7 +25,7 @@ export const QUESTION = {
     })
   },
 
-  getMine() {
+  getMine(): Promise<AxiosListResponse<Post>> {
     return request.get("/questions-history/", {
       params: {
         status: "True"
@@ -32,7 +34,7 @@ export const QUESTION = {
   },
 
   COMMENTS: {
-    getCommentsList(id: number) {
+    getCommentsList(id: number): Promise<AxiosListResponse<Comment>> {
       return request.get(`/questions-comment/`, {
         params: {
           id

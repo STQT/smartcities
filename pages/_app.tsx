@@ -10,6 +10,11 @@ import { isLoggedIn } from "axios-jwt"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
+import moment from "moment"
+import "moment/locale/ru"
+
+moment.locale("ru")
+
 const AuthChecker = () => {
   const dispatch = useAppDispatch()
 

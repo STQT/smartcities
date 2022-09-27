@@ -1,12 +1,20 @@
 import { useState } from "react"
 import { Page } from "shared/components/templates"
-import { Post, PostTypes } from "shared/types"
+import { Post } from "shared/types"
 import Image from "next/image"
 
-import { Comment, Like, Tag, Views } from "shared/components/atoms"
+import {
+  Avatar,
+  Bookmark,
+  Comment,
+  Like,
+  Tag,
+  Views
+} from "shared/components/atoms"
 import { Comments } from "shared/components/templates"
 
-import { ARTICLE, NEWS, QUESTION } from "services/api"
+import { ARTICLE, BOOKMARKS, NEWS, QUESTION } from "services/api"
+import moment from "moment/moment"
 
 interface PostViewProps {
   post: Post
@@ -47,12 +55,49 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
     }
   }
 
+  const handleSaveToggle = () => {
+    if (!post.is_saved) {
+      BOOKMARKS.add(post.id, post.type).then(() => {
+        setPost((prev) => ({
+          ...prev,
+          is_saved: !prev.is_saved,
+          saved_count: prev.saved_count + 1
+        }))
+      })
+    }
+
+    if (post.is_saved) {
+      BOOKMARKS.add(post.id, post.type).then(() => {
+        setPost((prev) => ({
+          ...prev,
+          is_saved: !prev.is_saved,
+          saved_count: prev.saved_count - 1
+        }))
+      })
+    }
+  }
+
   return (
     <Page title={post?.title as string}>
       <main className={"flex-1 rounded-[20px]"}>
         {post && (
           <section className={"bg-white py-[20px] rounded-[20px]"}>
             <section className={"px-[20px] flex flex-col border-b pb-4"}>
+              <section className={"flex flex-col mb-[20px]"}>
+                <div className={"flex gap-2 items-center select-none"}>
+                  <Avatar size={40} />
+                  <span className={"text-[14px]"}>
+                    {post.user.first_name && post.user.last_name
+                      ? `${post.user.first_name} ${post.user.last_name}`
+                      : `@${post.user.username}`}
+                  </span>
+
+                  <span className={"ml-2 text-gray-400 text-[14px]"}>
+                    {moment(post.created_at).calendar()}
+                  </span>
+                </div>
+              </section>
+
               <h1 className={"text-[20px] font-semibold mb-6"}>{post.title}</h1>
 
               {post.tags.length > 0 && (
@@ -76,7 +121,12 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
                 </section>
               )}
 
-              <p className={"text-[18px]"}>{post.description}</p>
+              <div
+                className={"ql-snow ql-editor"}
+                dangerouslySetInnerHTML={{
+                  __html: post.description
+                }}
+              />
             </section>
 
             <section className={"p-[20px] pb-0 flex gap-5"}>
@@ -87,6 +137,11 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
               />
               <Views views_count={post.view_count} />
               <Comment comments_count={post.comments_count} />
+              <Bookmark
+                is_saved={post.is_saved}
+                saves_count={post.saved_count}
+                toggleSave={handleSaveToggle}
+              />
             </section>
           </section>
         )}
@@ -99,21 +154,6 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
             id={post.id}
           />
         )}
-
-        <section
-          className={
-            "w-full mt-[42px] p-[20px] bg-white rounded-[20px] flex flex-col"
-          }>
-          <h2 className={"text-[18px] text-blue font-semibold"}>
-            Минуточку внимания
-          </h2>
-
-          <section className={"w-full grid gap-[20px] mt-[20px] grid-cols-3"}>
-            <div className={"h-[224px] bg-blue"} />
-            <div className={"h-[224px] bg-blue"} />
-            <div className={"h-[224px] bg-blue"} />
-          </section>
-        </section>
 
         <section className={"mt-32"}></section>
       </main>

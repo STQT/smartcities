@@ -15,6 +15,7 @@ interface SelectProps {
 
   size?: "sm" | "md"
   selectPosition?: "top" | "bottom"
+  onChange?: (option: Option) => void
 }
 
 export const Select = ({
@@ -23,7 +24,8 @@ export const Select = ({
   placeholder,
   size = "md",
   hint,
-  selectPosition = "bottom"
+  selectPosition = "bottom",
+  onChange
 }: SelectProps) => {
   const classes = cn(
     "relative bg-gray-100 w-full px-[20px] border border-gray-200 rounded-[10px] outline-none text-left",
@@ -47,14 +49,14 @@ export const Select = ({
           {hint}
         </span>
       )}
-      <Listbox value={selected} onChange={() => {}}>
+      <Listbox value={selected} onChange={onChange}>
         <div className="relative">
           <Listbox.Button className={classes}>
-            {selected?.value && (
-              <span className="block truncate">{selected.value}</span>
+            {selected?.value && selected?.label && (
+              <span className="block truncate pr-4">{selected.label}</span>
             )}
 
-            {placeholder && (
+            {placeholder && !selected && (
               <span className={"text-gray-400 pr-3"}>{placeholder}</span>
             )}
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">

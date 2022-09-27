@@ -2,8 +2,6 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import type { NextPage } from "next"
 
-import { AxiosResponse } from "axios"
-
 import { PostView } from "modules/PostView"
 import type { Post } from "shared/types"
 import { NEWS } from "services/api"
@@ -16,7 +14,7 @@ const Article: NextPage = () => {
 
   useEffect(() => {
     if (id) {
-      NEWS.getFull(id as string).then((res: AxiosResponse<Post>) => {
+      NEWS.getFull(id as string).then((res) => {
         setPost(res.data)
       })
     }
