@@ -7,6 +7,7 @@ import {
   BellIcon,
   Cog6ToothIcon,
   MagnifyingGlassIcon,
+  PlusIcon,
   QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline"
 import { logOut } from "store/slices/main"
@@ -61,6 +62,10 @@ export const Menu = () => {
     router.push("/me?tab=profile")
   }
 
+  const handleMoveToCreate = () => {
+    router.push("/create")
+  }
+
   return (
     <aside
       className={
@@ -84,6 +89,12 @@ export const Menu = () => {
               Icon={<BellIcon className={"w-[20px] h-[20px]"} />}
               onClick={handleMoveToNotifications}
               label={"Уведомления"}
+            />
+
+            <MenuItem
+              Icon={<PlusIcon className={"w-[20px] h-[20px]"} />}
+              onClick={handleMoveToCreate}
+              label={"Создать"}
             />
           </div>
         )}

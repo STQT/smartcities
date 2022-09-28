@@ -25,6 +25,10 @@ export const QUESTION = {
     })
   },
 
+  create(payload: any) {
+    return request.post("/question/", payload)
+  },
+
   getMine(): Promise<AxiosListResponse<Post>> {
     return request.get("/questions-history/", {
       params: {

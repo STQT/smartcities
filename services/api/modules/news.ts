@@ -27,6 +27,10 @@ export const NEWS = {
     })
   },
 
+  create(payload: any) {
+    return request.post("/news/", payload)
+  },
+
   getMine(): Promise<AxiosListResponse<Post>> {
     return request.get("/news-history/", {
       params: {

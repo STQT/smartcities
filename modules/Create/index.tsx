@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useMemo, useState } from "react"
 
 import { Button, Input, Select } from "shared/components/atoms"
 import { Page } from "shared/components/templates"
@@ -8,11 +8,13 @@ import { XMarkIcon } from "@heroicons/react/24/outline"
 import { useAppDispatch, useAppSelector } from "store"
 import { fetchFlows, fetchTags } from "store/slices/main"
 import { PostTypes, Theme } from "shared/types"
-import { ARTICLE, BASE } from "services/api"
+import { ARTICLE, BASE, NEWS, QUESTION } from "services/api"
 
 import { useQuill } from "react-quilljs"
 
 import { TagsSelect, ThemesSection } from "./components/templates"
+import { toast } from "react-toastify"
+import { useRouter } from "next/router"
 
 const PostTypeOptions: { label: string; value: PostTypes }[] = [
   { label: "Вопрос", value: "QUESTION" },
@@ -20,11 +22,22 @@ const PostTypeOptions: { label: string; value: PostTypes }[] = [
   { label: "Новость", value: "NEWS" }
 ]
 
+const generateSuccessCreateToast = (type: string) => {
+  return toast(
+    `Вы успешно создали ${type}, она появится после проверки модераторами.`,
+    {
+      type: "success"
+    }
+  )
+}
+
 export const CreatePage = () => {
   const { flows, tags } = useAppSelector((state) => state.main)
   const dispatch = useAppDispatch()
+  const router = useRouter()
 
   const { quill, quillRef } = useQuill()
+  const [isQuillEmpty, setQuillEmpty] = useState(true)
 
   const [isThemeDialogOpen, setThemeDialogOpen] = useState(false)
   const [selectedFlow, setSelectedFlow] = useState<Theme>()
@@ -104,16 +117,58 @@ export const CreatePage = () => {
     }))
   }
 
+  const isSubmitAvailable = useMemo(() => {
+    return (
+      formValues.title &&
+      formValues.tags_ids.length > 0 &&
+      selectedPostType &&
+      selectedPostType.value &&
+      !isQuillEmpty &&
+      (selectedTheme || selectedFlow)
+    )
+  }, [formValues, selectedPostType, isQuillEmpty])
+
   const handlePublish = () => {
-    if (quill) {
-      ARTICLE.create({
+    if (quill && selectedPostType) {
+      const payload = {
         title: formValues.title,
         description: quill?.root.innerHTML,
         theme: selectedTheme?.id,
         tags_ids: formValues.tags_ids
-      }).then((res) => {
-        console.log(res)
-      })
+      }
+
+      if (selectedPostType.value === "ARTICLE") {
+        ARTICLE.create(payload)
+          .then(() => {
+            generateSuccessCreateToast("статью")
+            router.push("/me?tab=posts")
+          })
+          .catch(() => {
+            toast("Что-то пошло не так, попробуйте позже", { type: "error" })
+          })
+      }
+
+      if (selectedPostType.value === "NEWS") {
+        NEWS.create(payload)
+          .then(() => {
+            generateSuccessCreateToast("новость")
+            router.push("/me?tab=posts")
+          })
+          .catch(() => {
+            toast("Что-то пошло не так, попробуйте позже", { type: "error" })
+          })
+      }
+
+      if (selectedPostType.value === "QUESTION") {
+        QUESTION.create(payload)
+          .then(() => {
+            generateSuccessCreateToast("вопрос")
+            router.push("/me?tab=posts")
+          })
+          .catch(() => {
+            toast("Что-то пошло не так, попробуйте позже", { type: "error" })
+          })
+      }
     }
   }
 
@@ -121,6 +176,16 @@ export const CreatePage = () => {
     dispatch(fetchFlows())
     dispatch(fetchTags())
   }, [])
+
+  useEffect(() => {
+    if (quill) {
+      quill.on("text-change", () => {
+        setQuillEmpty(
+          JSON.stringify(quill.getContents()) == '{"ops":[{"insert":"\\n"}]}'
+        )
+      })
+    }
+  }, [quill])
 
   return (
     <>
@@ -204,7 +269,10 @@ export const CreatePage = () => {
               options={PostTypeOptions}
             />
 
-            <Button className={"px-5"} onClick={handlePublish}>
+            <Button
+              disabled={!isSubmitAvailable}
+              className={"px-5"}
+              onClick={handlePublish}>
               Опубликовать
             </Button>
           </section>
