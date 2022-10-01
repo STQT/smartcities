@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import moment from "moment"
 
 import { Avatar, Button } from "shared/components/atoms"
@@ -6,6 +6,11 @@ import type { Comment as TComment, PostTypes } from "shared/types"
 import { useAppSelector } from "store"
 
 import { ARTICLE, NEWS, QUESTION } from "services/api"
+
+// @ts-ignore
+import Editor from "react-medium-editor"
+import "medium-editor/dist/css/medium-editor.css"
+import "medium-editor/dist/css/themes/default.css"
 
 const Comment = ({ user, comment, created_at }: TComment) => {
   return (
@@ -21,7 +26,10 @@ const Comment = ({ user, comment, created_at }: TComment) => {
         </div>
       </div>
 
-      <div className={"text-[14px]"}>{comment}</div>
+      <div
+        className={"text-[14px]"}
+        dangerouslySetInnerHTML={{ __html: comment }}
+      />
     </article>
   )
 }
@@ -44,16 +52,18 @@ export const Comments = ({
   const [myComment, setMyComment] = useState("")
 
   useEffect(() => {
-    if (type === "ARTICLE") {
-      fetchAndSetArticleComments(id)
-    }
+    switch (type) {
+      case "ARTICLE":
+        fetchAndSetArticleComments(id)
+        break
 
-    if (type === "NEWS") {
-      fetchAndSetNewsComments(id)
-    }
+      case "NEWS":
+        fetchAndSetNewsComments(id)
+        break
 
-    if (type === "QUESTION") {
-      fetchAndSetQuestionComments(id)
+      case "QUESTION":
+        fetchAndSetQuestionComments(id)
+        break
     }
   }, [type, id])
 
@@ -156,15 +166,25 @@ export const Comments = ({
 
       {isLoggedIn && (
         <section
-          className={"p-[20px] border-t gap-[10px] bg-white flex items-center"}>
+          className={
+            "p-[20px] border-t relative gap-[10px] bg-white flex items-center"
+          }>
           <Avatar size={40} />
-          <input
-            value={myComment}
-            onChange={(e) => setMyComment(e.target.value)}
-            className={
-              "outline-none text-[16px] flex items-center flex-1 bg-none"
-            }
-            placeholder={"Написать комментарий..."}
+
+          <Editor
+            spellCheck={false}
+            text={myComment}
+            className={"flex-1 flex items-center outline-none text-[16px]"}
+            options={{
+              toolbar: { buttons: ["bold", "italic", "underline"] },
+              spellcheck: false,
+              placeholder: {
+                text: "Написать комментарий..."
+              }
+            }}
+            onChange={(e: string) => {
+              setMyComment(e)
+            }}
           />
 
           <Button

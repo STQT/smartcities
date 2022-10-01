@@ -10,7 +10,7 @@ import {
   PublicationsTab,
   SavingsTab
 } from "./Tabs"
-import { useAppSelector } from "../../store"
+import { isLoggedIn } from "axios-jwt"
 
 const TABS: Record<string, string> = {
   profile: "Профиль",
@@ -21,7 +21,6 @@ const TABS: Record<string, string> = {
 
 export const ProfilePage = () => {
   const router = useRouter()
-  const { isLoggedIn } = useAppSelector((state) => state.main)
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]

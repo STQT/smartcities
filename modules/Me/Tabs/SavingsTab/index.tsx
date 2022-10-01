@@ -55,7 +55,7 @@ const Post = ({
       </div>
 
       <div
-        className={"py-[32px] px-[32px]"}
+        className={"p-[12px] lg:p-[32px]"}
         dangerouslySetInnerHTML={{
           __html: `${post.description.slice(0, 120)}...`
         }}

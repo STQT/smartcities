@@ -18,6 +18,7 @@ import {
 } from "./components/templates"
 import { toast } from "react-toastify"
 import { useRouter } from "next/router"
+import { isLoggedIn } from "axios-jwt"
 
 const PostTypeOptions: { label: string; value: PostTypes }[] = [
   { label: "Вопрос", value: "QUESTION" },
@@ -42,7 +43,7 @@ interface FormValues {
 }
 
 export const CreatePage = () => {
-  const { flows, tags, isLoggedIn } = useAppSelector((state) => state.main)
+  const { flows, tags } = useAppSelector((state) => state.main)
   const dispatch = useAppDispatch()
   const router = useRouter()
 
