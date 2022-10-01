@@ -128,7 +128,12 @@ export const SavingsTab = () => {
                 "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
               }>
               {posts?.news.map((post) => (
-                <Post onDelete={handleDelete} post={post} type={"NEWS"} />
+                <Post
+                  key={post.id}
+                  onDelete={handleDelete}
+                  post={post}
+                  type={"NEWS"}
+                />
               ))}
             </section>
 
@@ -149,7 +154,12 @@ export const SavingsTab = () => {
                 "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
               }>
               {posts?.articles.map((post) => (
-                <Post onDelete={handleDelete} post={post} type={"ARTICLE"} />
+                <Post
+                  key={post.id}
+                  onDelete={handleDelete}
+                  post={post}
+                  type={"ARTICLE"}
+                />
               ))}
             </section>
 
@@ -170,7 +180,12 @@ export const SavingsTab = () => {
                 "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
               }>
               {posts?.questions.map((post) => (
-                <Post onDelete={handleDelete} post={post} type={"QUESTION"} />
+                <Post
+                  key={post.id}
+                  onDelete={handleDelete}
+                  post={post}
+                  type={"QUESTION"}
+                />
               ))}
             </section>
 

@@ -116,6 +116,7 @@ export const Post = ({ targetPost }: PostProps) => {
               "max-w-full h-[350px] w-full relative overflow-hidden rounded-[10px] my-[20px]"
             }>
             <Image
+              priority={true}
               src={imageURL as string}
               layout={"fill"}
               className={"max-w-full h-full object-cover"}

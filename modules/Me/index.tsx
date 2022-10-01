@@ -10,6 +10,7 @@ import {
   PublicationsTab,
   SavingsTab
 } from "./Tabs"
+import { useAppSelector } from "../../store"
 
 const TABS: Record<string, string> = {
   profile: "Профиль",
@@ -20,6 +21,7 @@ const TABS: Record<string, string> = {
 
 export const ProfilePage = () => {
   const router = useRouter()
+  const { isLoggedIn } = useAppSelector((state) => state.main)
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]
@@ -27,6 +29,12 @@ export const ProfilePage = () => {
   const [selectedTab, setSelectedTab] = useState<number>(
     getTabIdxByKey("profile")
   )
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/auth")
+    }
+  }, [])
 
   const hasTabTransparentBg = useMemo(() => {
     // TODO: Yes I know, but deadline is soon :)

@@ -121,6 +121,7 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
                     "max-w-full transition-all h-[200px] md:h-[350px] lg:h-[450px] xl:h-[500px] my-[20px] rounded-[10px] overflow-hidden relative"
                   }>
                   <Image
+                    priority={true}
                     className={"max-w-full h-full object-cover"}
                     src={`https://api.smartcities.uz${post.image}`}
                     layout={"fill"}

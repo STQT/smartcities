@@ -117,7 +117,7 @@ export const PublicationsTab = () => {
                 "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
               }>
               {posts?.map((post) => (
-                <Post post={post} />
+                <Post key={post.id} post={post} />
               ))}
             </section>
 
@@ -138,7 +138,7 @@ export const PublicationsTab = () => {
                 "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
               }>
               {posts?.map((post) => (
-                <Post post={post} />
+                <Post key={post.id} post={post} />
               ))}
             </section>
 
@@ -159,7 +159,7 @@ export const PublicationsTab = () => {
                 "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
               }>
               {posts?.map((post) => (
-                <Post post={post} />
+                <Post key={post.id} post={post} />
               ))}
             </section>
 

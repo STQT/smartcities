@@ -42,7 +42,7 @@ interface FormValues {
 }
 
 export const CreatePage = () => {
-  const { flows, tags } = useAppSelector((state) => state.main)
+  const { flows, tags, isLoggedIn } = useAppSelector((state) => state.main)
   const dispatch = useAppDispatch()
   const router = useRouter()
 
@@ -99,6 +99,12 @@ export const CreatePage = () => {
 
     clearThemes()
   }, [selectedFlow])
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/auth")
+    }
+  }, [])
 
   const handleFlowSelect = (flow: Theme) => {
     setSelectedFlow(flow)

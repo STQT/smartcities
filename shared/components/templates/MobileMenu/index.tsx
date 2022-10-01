@@ -85,31 +85,31 @@ export const MobileMenu = ({ closeMenu, isMenuOpened }: MobileMenuProps) => {
                 />
               </section>
 
-              {isLoggedIn && (
-                <div className={"mt-[30px] flex flex-col gap-4"}>
-                  <MenuItem
-                    isActive={router.asPath.includes("/search")}
-                    Icon={
-                      <MagnifyingGlassIcon className={"w-[20px] h-[20px]"} />
-                    }
-                    onClick={handleMoveToSearch}
-                    label={"Поиск"}
-                  />
+              <div className={"mt-[30px] flex flex-col gap-4"}>
+                <MenuItem
+                  isActive={router.asPath.includes("/search")}
+                  Icon={<MagnifyingGlassIcon className={"w-[20px] h-[20px]"} />}
+                  onClick={handleMoveToSearch}
+                  label={"Поиск"}
+                />
 
+                {isLoggedIn && (
                   <MenuItem
                     isActive={router.asPath.includes("?tab=notifications")}
                     Icon={<BellIcon className={"w-[20px] h-[20px]"} />}
                     onClick={handleMoveToNotifications}
                     label={"Уведомления"}
                   />
+                )}
 
+                {isLoggedIn && (
                   <MenuItem
                     Icon={<PlusIcon className={"w-[20px] h-[20px]"} />}
                     onClick={handleMoveToCreate}
                     label={"Создать"}
                   />
-                </div>
-              )}
+                )}
+              </div>
             </section>
 
             <section className={"mt-[28px]"}>
