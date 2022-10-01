@@ -10,9 +10,12 @@ import { fetchFlows, fetchTags } from "store/slices/main"
 import { PostTypes, Theme } from "shared/types"
 import { ARTICLE, BASE, NEWS, QUESTION } from "services/api"
 
-import { useQuill } from "react-quilljs"
-
-import { TagsSelect, ThemesSection } from "./components/templates"
+import {
+  PreviewSelect,
+  TagsSelect,
+  ThemesSection,
+  Editor
+} from "./components/templates"
 import { toast } from "react-toastify"
 import { useRouter } from "next/router"
 
@@ -31,13 +34,17 @@ const generateSuccessCreateToast = (type: string) => {
   )
 }
 
+interface FormValues {
+  title: string
+  tags_ids: number[]
+  image: null | File
+  description: string
+}
+
 export const CreatePage = () => {
   const { flows, tags } = useAppSelector((state) => state.main)
   const dispatch = useAppDispatch()
   const router = useRouter()
-
-  const { quill, quillRef } = useQuill()
-  const [isQuillEmpty, setQuillEmpty] = useState(true)
 
   const [isThemeDialogOpen, setThemeDialogOpen] = useState(false)
   const [selectedFlow, setSelectedFlow] = useState<Theme>()
@@ -54,9 +61,12 @@ export const CreatePage = () => {
     label: string
     value: PostTypes
   }>()
-  const [formValues, setFormValues] = useState({
+
+  const [formValues, setFormValues] = useState<FormValues>({
     title: "",
-    tags_ids: []
+    tags_ids: [],
+    description: "",
+    image: null
   })
 
   const handleInputChange = (
@@ -65,6 +75,10 @@ export const CreatePage = () => {
     if (e.target.name) {
       setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
+  }
+
+  const handleEditorChange = (value: string) => {
+    setFormValues((prev) => ({ ...prev, description: value }))
   }
 
   const clearThemes = () => {
@@ -121,54 +135,50 @@ export const CreatePage = () => {
     return (
       formValues.title &&
       formValues.tags_ids.length > 0 &&
+      formValues.image &&
+      formValues.description &&
       selectedPostType &&
       selectedPostType.value &&
-      !isQuillEmpty &&
       (selectedTheme || selectedFlow)
     )
-  }, [formValues, selectedPostType, isQuillEmpty])
+  }, [formValues, selectedPostType])
 
   const handlePublish = () => {
-    if (quill && selectedPostType) {
-      const payload = {
-        title: formValues.title,
-        description: quill?.root.innerHTML,
-        theme: selectedTheme?.id,
-        tags_ids: formValues.tags_ids
-      }
+    if (selectedPostType) {
+      const publicationFormData = new FormData()
 
-      if (selectedPostType.value === "ARTICLE") {
-        ARTICLE.create(payload)
-          .then(() => {
-            generateSuccessCreateToast("статью")
-            router.push("/me?tab=posts")
-          })
-          .catch(() => {
-            toast("Что-то пошло не так, попробуйте позже", { type: "error" })
-          })
-      }
+      publicationFormData.append("title", formValues.title)
+      publicationFormData.append("description", formValues.description)
+      publicationFormData.append("theme", String(selectedTheme?.id))
+      publicationFormData.append("image", formValues.image as File)
+      publicationFormData.append("tags_ids", formValues.tags_ids.join(","))
 
-      if (selectedPostType.value === "NEWS") {
-        NEWS.create(payload)
-          .then(() => {
-            generateSuccessCreateToast("новость")
-            router.push("/me?tab=posts")
-          })
-          .catch(() => {
-            toast("Что-то пошло не так, попробуйте позже", { type: "error" })
-          })
-      }
+      const POST_TYPE = {
+        ARTICLE,
+        NEWS,
+        QUESTION
+      }[selectedPostType.value]
 
-      if (selectedPostType.value === "QUESTION") {
-        QUESTION.create(payload)
-          .then(() => {
-            generateSuccessCreateToast("вопрос")
-            router.push("/me?tab=posts")
-          })
-          .catch(() => {
-            toast("Что-то пошло не так, попробуйте позже", { type: "error" })
-          })
-      }
+      POST_TYPE.create(publicationFormData)
+        .then(() => {
+          switch (selectedPostType.value) {
+            case "ARTICLE":
+              generateSuccessCreateToast("статью")
+              break
+
+            case "NEWS":
+              generateSuccessCreateToast("новость")
+              break
+
+            case "QUESTION":
+              generateSuccessCreateToast("вопрос")
+          }
+
+          router.push("/me?tab=posts")
+        })
+        .catch(() => {
+          toast("Что-то пошло не так, попробуйте позже", { type: "error" })
+        })
     }
   }
 
@@ -176,16 +186,6 @@ export const CreatePage = () => {
     dispatch(fetchFlows())
     dispatch(fetchTags())
   }, [])
-
-  useEffect(() => {
-    if (quill) {
-      quill.on("text-change", () => {
-        setQuillEmpty(
-          JSON.stringify(quill.getContents()) == '{"ops":[{"insert":"\\n"}]}'
-        )
-      })
-    }
-  }, [quill])
 
   return (
     <>
@@ -203,7 +203,7 @@ export const CreatePage = () => {
           </button>
         </section>
 
-        <section className={"flex flex mt-[30px] gap-[10px] w-[1200px]"}>
+        <section className={"flex mt-[30px] gap-[10px] w-full"}>
           <ThemesSection
             themes={flows}
             handleThemeSelect={handleFlowSelect}
@@ -242,19 +242,24 @@ export const CreatePage = () => {
             placeholder={"Тема"}
             value={selectedTheme?.name ?? ""}
           />
-
           <Input
             name={"title"}
             onChange={handleInputChange}
             hint={"Заголовок"}
             placeholder={"Заголовок"}
           />
-
           {tags && <TagsSelect onChange={handleTagSelect} options={tags} />}
 
-          <section className={"w-full"}>
-            <section className={"w-full"} ref={quillRef} />
-          </section>
+          <PreviewSelect
+            onChange={(imageFile) => {
+              setFormValues((prev) => ({ ...prev, image: imageFile }))
+            }}
+          />
+          {/*<section className={"w-full"}>*/}
+          {/*  <section className={"w-full"} ref={quillRef} />*/}
+          {/*</section>*/}
+
+          <Editor onChange={handleEditorChange} />
 
           <section className={"flex items-center mt-12 justify-between"}>
             <Select

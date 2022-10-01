@@ -79,7 +79,7 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
 
   return (
     <Page title={post?.title as string}>
-      <main className={"flex-1 rounded-[20px]"}>
+      <main className={"flex-1 w-full rounded-[20px]"}>
         {post && (
           <section className={"bg-white py-[20px] rounded-[20px]"}>
             <section className={"px-[20px] flex flex-col border-b pb-4"}>
@@ -98,10 +98,13 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
                 </div>
               </section>
 
-              <h1 className={"text-[20px] font-semibold mb-6"}>{post.title}</h1>
+              <h1 className={"text-[20px] font-semibold mb-2"}>{post.title}</h1>
+              <span className={"text-[14px] text-gray-400"}>
+                {post.theme.name}
+              </span>
 
               {post.tags.length > 0 && (
-                <section className={"flex gap-2 mt-4 mb-[40px]"}>
+                <section className={"flex gap-2 mt-4"}>
                   {post.tags.map((tag) => (
                     <Tag key={tag.id} {...tag} />
                   ))}
@@ -111,7 +114,7 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
               {post.image && (
                 <section
                   className={
-                    "max-w-full h-[500px] my-[20px] rounded-[10px] overflow-hidden relative"
+                    "max-w-full transition-all h-[200px] md:h-[350px] lg:h-[450px] xl:h-[500px] my-[20px] rounded-[10px] overflow-hidden relative"
                   }>
                   <Image
                     className={"max-w-full h-full object-cover"}
@@ -121,12 +124,14 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
                 </section>
               )}
 
-              <div
-                className={"ql-snow ql-editor"}
-                dangerouslySetInnerHTML={{
-                  __html: post.description
-                }}
-              />
+              <div className={"ql-snow"}>
+                <div
+                  className={"ql-editor"}
+                  dangerouslySetInnerHTML={{
+                    __html: post.description
+                  }}
+                />
+              </div>
             </section>
 
             <section className={"p-[20px] pb-0 flex gap-5"}>

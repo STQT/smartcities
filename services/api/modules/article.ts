@@ -25,8 +25,12 @@ export const ARTICLE = {
     })
   },
 
-  create(payload: any) {
-    return request.post("/article/", payload)
+  create(payload: FormData) {
+    return request.post("/article/", payload, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    })
   },
 
   getMine(): Promise<AxiosListResponse<Post>> {

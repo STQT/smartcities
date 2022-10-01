@@ -7,7 +7,7 @@ export const TAGS = {
     return request.get("/tags/")
   },
 
-  create(name: string) {
+  create(name: string): Promise<AxiosResponse<Tag>> {
     return request.post("/tags/", {
       name
     })

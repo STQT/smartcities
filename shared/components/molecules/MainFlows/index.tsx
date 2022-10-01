@@ -5,7 +5,11 @@ import { fetchFlows } from "store/slices/main"
 import { useAppDispatch, useAppSelector } from "store"
 import { useEffect } from "react"
 
-export const MainFlows = () => {
+interface MainFlowsProps {
+  onItemClick?: () => void
+}
+
+export const MainFlows = ({ onItemClick }: MainFlowsProps) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const { flows } = useAppSelector((state) => state.main)
@@ -15,6 +19,8 @@ export const MainFlows = () => {
       pathname: "/flow/[id]/",
       query: { id }
     })
+
+    onItemClick?.()
   }
 
   const itemClasses = (id: number) =>

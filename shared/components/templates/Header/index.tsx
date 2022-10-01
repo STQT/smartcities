@@ -4,14 +4,30 @@ import cn from "classnames"
 
 import { Avatar, Logo } from "shared/components/atoms"
 import { useAppSelector } from "store"
+import { Bars3Icon } from "@heroicons/react/24/outline"
+import { MobileMenu } from "../MobileMenu"
+import { useScrollBlock } from "../../../hooks"
 
 export const Header = () => {
   const headerRef = useRef<HTMLElement>(null)
   const [hasScrolled, setScrolled] = useState(false)
+  const [isMenuOpened, setMenuOpen] = useState(false)
+
+  const [blockScroll, allowScroll] = useScrollBlock()
 
   const router = useRouter()
 
   const { isLoggedIn, user } = useAppSelector((state) => state.main)
+
+  const closeMenu = () => {
+    setMenuOpen(false)
+  }
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setMenuOpen(false)
+    })
+  }, [])
 
   useEffect(() => {
     const headerScrollListener = () => {
@@ -29,12 +45,24 @@ export const Header = () => {
     }
   }, [])
 
+  useEffect(() => {
+    isMenuOpened ? blockScroll() : allowScroll()
+  }, [isMenuOpened])
+
   const LoggedInState = useMemo(() => {
+    const handleMenuOpen = () => {
+      setMenuOpen(true)
+    }
+
     return (
       <>
-        <h1 className={"text-[24px] font-semibold"}>
+        <h1 className={"hidden md:block text-[24px] font-semibold"}>
           Добро пожаловать, {user?.first_name}
         </h1>
+
+        <button onClick={handleMenuOpen} className={"block md:hidden"}>
+          <Bars3Icon className={"w-[30px] text-blue h-[30px]"} />
+        </button>
 
         <Avatar size={50} onClick={() => router.push("/me")} />
       </>
@@ -56,20 +84,26 @@ export const Header = () => {
   }, [])
 
   return (
-    <header
-      ref={headerRef}
-      style={{
-        borderRadius: hasScrolled ? "0 0 30px 30px" : "100px"
-      }}
-      className={cn(
-        "w-full sticky top-0 z-50 h-[80px] bg-white mt-[40px] mb-[20px] duration-300 transition-all shadow-gray-300/20",
-        hasScrolled ? "shadow-lg" : "shadow-none"
-      )}>
-      <section
-        className={"w-full h-full flex justify-between px-[30px] items-center"}>
-        {isLoggedIn && LoggedInState}
-        {!isLoggedIn && NotLoggedInState}
-      </section>
-    </header>
+    <>
+      <MobileMenu isMenuOpened={isMenuOpened} closeMenu={closeMenu} />
+
+      <header
+        ref={headerRef}
+        style={{
+          borderRadius: hasScrolled ? "0 0 30px 30px" : "100px"
+        }}
+        className={cn(
+          "w-full sticky top-0 z-50 h-[80px] bg-white mt-[40px] mb-[20px] duration-300 transition-all shadow-gray-300/20",
+          hasScrolled ? "shadow-lg" : "shadow-none"
+        )}>
+        <section
+          className={
+            "w-full h-full flex justify-between px-[30px] items-center"
+          }>
+          {isLoggedIn && LoggedInState}
+          {!isLoggedIn && NotLoggedInState}
+        </section>
+      </header>
+    </>
   )
 }

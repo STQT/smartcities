@@ -37,7 +37,11 @@ export const Button = ({
   )
 
   return (
-    <button disabled={disabled} className={classes} onClick={onClick}>
+    <button
+      type={"button"}
+      disabled={disabled}
+      className={classes}
+      onClick={onClick}>
       {children}
     </button>
   )

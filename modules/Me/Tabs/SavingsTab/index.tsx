@@ -123,7 +123,10 @@ export const SavingsTab = () => {
         </Tab.List>
         <Tab.Panels className={"overflow-hidden rounded-b-[20px]"}>
           <Tab.Panel>
-            <section className={"grid grid-cols-2 gap-[20px] mt-[20px]"}>
+            <section
+              className={
+                "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
+              }>
               {posts?.news.map((post) => (
                 <Post onDelete={handleDelete} post={post} type={"NEWS"} />
               ))}
@@ -141,7 +144,10 @@ export const SavingsTab = () => {
           </Tab.Panel>
 
           <Tab.Panel>
-            <section className={"grid grid-cols-2 gap-[20px] mt-[20px]"}>
+            <section
+              className={
+                "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
+              }>
               {posts?.articles.map((post) => (
                 <Post onDelete={handleDelete} post={post} type={"ARTICLE"} />
               ))}
@@ -159,7 +165,10 @@ export const SavingsTab = () => {
           </Tab.Panel>
 
           <Tab.Panel>
-            <section className={"grid grid-cols-2 gap-[20px] mt-[20px]"}>
+            <section
+              className={
+                "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
+              }>
               {posts?.questions.map((post) => (
                 <Post onDelete={handleDelete} post={post} type={"QUESTION"} />
               ))}

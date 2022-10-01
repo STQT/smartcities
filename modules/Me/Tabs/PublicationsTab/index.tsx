@@ -112,7 +112,10 @@ export const PublicationsTab = () => {
         </Tab.List>
         <Tab.Panels className={"overflow-hidden rounded-b-[20px]"}>
           <Tab.Panel>
-            <section className={"grid grid-cols-2 gap-[20px] mt-[20px]"}>
+            <section
+              className={
+                "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
+              }>
               {posts?.map((post) => (
                 <Post post={post} />
               ))}
@@ -130,7 +133,10 @@ export const PublicationsTab = () => {
           </Tab.Panel>
 
           <Tab.Panel>
-            <section className={"grid grid-cols-2 gap-[20px] mt-[20px]"}>
+            <section
+              className={
+                "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
+              }>
               {posts?.map((post) => (
                 <Post post={post} />
               ))}
@@ -148,7 +154,10 @@ export const PublicationsTab = () => {
           </Tab.Panel>
 
           <Tab.Panel>
-            <section className={"grid grid-cols-2 gap-[20px] mt-[20px]"}>
+            <section
+              className={
+                "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
+              }>
               {posts?.map((post) => (
                 <Post post={post} />
               ))}

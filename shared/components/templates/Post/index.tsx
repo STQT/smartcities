@@ -122,12 +122,17 @@ export const Post = ({ targetPost }: PostProps) => {
           </div>
         )}
 
-        <p
-          className={"text-[16px] mb-[20px]"}
-          dangerouslySetInnerHTML={{
-            __html: `${post.description.slice(0, 500)}...`
-          }}
-        />
+        {post.description && (
+          <p
+            className={"text-[16px] mb-[20px]"}
+            dangerouslySetInnerHTML={{
+              __html:
+                post.description.length > 300
+                  ? `${post.description.slice(0, 300)}...`
+                  : post.description
+            }}
+          />
+        )}
 
         {post.tags.length > 0 && (
           <section className={"mt-[10px] flex gap-2"}>
@@ -137,8 +142,12 @@ export const Post = ({ targetPost }: PostProps) => {
           </section>
         )}
 
-        <section className={"mt-auto flex w-full items-end justify-between"}>
-          <section className={"flex items-center gap-[40px]"}>
+        <section
+          className={"mt-8 md:mt-auto flex w-full items-end justify-between"}>
+          <section
+            className={
+              "flex items-center justify-between md:justify-start w-full md:w-auto gap-[40px]"
+            }>
             <Like
               toggleLike={handleLikeToggle}
               like_count={post.like_count}
@@ -157,7 +166,7 @@ export const Post = ({ targetPost }: PostProps) => {
           <button
             onClick={handleReadMore}
             className={
-              "px-[20px] py-[16px] text-blue border border-blue rounded-[10px] transition-all hover:bg-blue hover:text-white"
+              "hidden md:block px-[20px] py-[16px] text-blue border border-blue rounded-[10px] transition-all hover:bg-blue hover:text-white"
             }>
             Читать далее
           </button>

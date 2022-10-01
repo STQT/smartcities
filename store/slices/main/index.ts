@@ -34,8 +34,8 @@ export const fetchFlows = createAsyncThunk("flows/fetchFlows", () =>
 export const fetchReadingNow = createAsyncThunk(
   "readingNow/fetchReadingNow",
   () =>
-    BASE.getReadingNow().then(
-      (res: AxiosListResponse<Post>) => res.data.results
+    BASE.getReadingNow().then((res: AxiosListResponse<Post>) =>
+      res.data.results.slice(0, 5)
     )
 )
 

@@ -4,7 +4,7 @@ export const Aside = () => {
   return (
     <aside
       className={
-        "w-[20%] max-w-[250px] sticky top-24  self-start rounded-[20px] overflow-hidden"
+        "hidden xl:block w-[20%] max-w-[250px] sticky top-24  self-start rounded-[20px] overflow-hidden"
       }>
       <ReadingNow />
     </aside>
