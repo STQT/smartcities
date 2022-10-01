@@ -188,8 +188,8 @@ export const Comments = ({
           />
 
           <Button
-            onClick={publishComment}
-            disabled={!Boolean(myComment)}
+            onClick={() => console.log(myComment)}
+            disabled={!Boolean(myComment && !myComment.includes("<p><br></p>"))}
             className={"px-[20px]"}>
             Опубликовать
           </Button>
