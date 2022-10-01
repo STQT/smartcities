@@ -19,9 +19,11 @@ export const ProfileTab = () => {
   }, [formState, user])
 
   return (
-    <section className={"flex flex-col px-[40px] bg-white"}>
+    <section className={"flex flex-col px-[20px] md:px-[40px] bg-white"}>
       <section
-        className={"grid grid-cols-2 gap-x-[40px] gap-y-[20px] mb-[60px]"}>
+        className={
+          "grid grid-cols-1 lg:grid-cols-2 gap-x-[40px] gap-y-[20px] mb-[60px]"
+        }>
         <Input
           onChange={handleInputChange}
           value={formState.first_name}
@@ -66,14 +68,21 @@ export const ProfileTab = () => {
         />
       </section>
 
-      <section className={"mt-[100px] mb-[40px]"}>
-        <div className={"flex items-center justify-between"}>
+      <section className={"lg:mt-[100px] mb-[40px]"}>
+        <div
+          className={"flex flex-col lg:flex-row items-center justify-between"}>
           <a href={"#"} className={"text-[18px] font-semibold text-blue"}>
             Как стать автором?
           </a>
 
-          <div className={"flex gap-2"}>
-            <Button theme={"gray"} size={"md"} className={"w-[200px]"}>
+          <div
+            className={
+              "flex flex-col mt-5 lg:mt-0 lg:flex-row w-full lg:w-auto gap-2"
+            }>
+            <Button
+              theme={"gray"}
+              size={"md"}
+              className={"w-full lg:w-[200px]"}>
               Выход
             </Button>
 
@@ -81,7 +90,7 @@ export const ProfileTab = () => {
               disabled={isChangeButtonAvailable}
               theme={"blue"}
               size={"md"}
-              className={"w-[200px]"}>
+              className={"w-full lg:w-[200px]"}>
               Изменить
             </Button>
           </div>

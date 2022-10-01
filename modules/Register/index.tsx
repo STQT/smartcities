@@ -82,10 +82,10 @@ export const RegisterPage = () => {
   return (
     <>
       <Page withAside={false} withMenu={false} title={"Регистрация"}>
-        <main className={"flex flex-col flex-1"}>
+        <main className={"flex w-full flex-col flex-1"}>
           <section
             className={
-              "max-w-[862px] w-full bg-white rounded-[10px] mt-[80px] py-[60px] px-[62px] mx-auto"
+              "max-w-[862px] w-full bg-white rounded-[10px] md:mt-[80px] py-[30px] md:py-[60px] px-[24px] md:px-[62px] mx-auto"
             }>
             <h1 className={"text-blue text-[24px] font-semibold mb-[60px]"}>
               Регистрация
@@ -93,7 +93,7 @@ export const RegisterPage = () => {
 
             <section
               className={
-                "grid grid-cols-2 gap-x-[40px] gap-y-[20px] mb-[60px]"
+                "grid grid-cols-1 md:grid-cols-2 gap-x-[40px] gap-y-[20px] mb-[60px]"
               }>
               <Input
                 onChange={handleInputChange}
@@ -176,7 +176,7 @@ export const RegisterPage = () => {
             className={
               "max-w-[862px] w-full bg-white rounded-[10px] my-[40px] flex items-center justify-center py-[33px] mx-auto"
             }>
-            <p className={"text-[18px]"}>
+            <p className={"text-[16px] md:text-[18px]"}>
               Уже зарегистрированы?{" "}
               <button className={"text-blue"} onClick={handleLoginClick}>
                 Войдите
@@ -186,7 +186,7 @@ export const RegisterPage = () => {
 
           <footer
             className={
-              "flex gap-[40px] text-gray-400 text-[16px] list-none mx-auto justify-center mb-[40px]"
+              "flex gap-[10px] md:gap-[40px] flex-wrap text-gray-400 text-[14px] md:text-[16px] list-none mx-auto justify-center mb-[40px]"
             }>
             <li>Русский</li>
             <li>О сервисе</li>

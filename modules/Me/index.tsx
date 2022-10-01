@@ -75,7 +75,7 @@ export const ProfilePage = () => {
         <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
           <Tab.List
             className={
-              "flex pt-[40px] bg-white px-[40px] gap-[20px] border-b-[0.5px] border-gray-300/30 w-full"
+              "flex overflow-x-auto pt-[40px] bg-white px-[40px] gap-[20px] border-b-[0.5px] border-gray-300/30 w-full"
             }>
             {Object.entries(TABS).map(([key, value]) => (
               <Tab className={({ selected }) => tabClasses(selected)} key={key}>

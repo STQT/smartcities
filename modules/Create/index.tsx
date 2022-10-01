@@ -196,11 +196,19 @@ export const CreatePage = () => {
         setOpen={setThemeDialogOpen}>
         <section className={"flex items-center justify-between"}>
           <h1 className={"text-xl font-semibold"}>Выберите тему</h1>
-          <button
-            className={"w-[32px] outline-none h-[32px] text-gray-400"}
-            onClick={() => setThemeDialogOpen(false)}>
-            <XMarkIcon />
-          </button>
+          {!selectedTheme ? (
+            <button
+              className={"w-[32px] outline-none h-[32px] text-gray-400"}
+              onClick={() => setThemeDialogOpen(false)}>
+              <XMarkIcon />
+            </button>
+          ) : (
+            <Button
+              onClick={() => setThemeDialogOpen(false)}
+              className={"px-3"}>
+              Выбрать "{selectedTheme.name}"
+            </Button>
+          )}
         </section>
 
         <section className={"flex mt-[30px] gap-[10px] w-full"}>
@@ -233,7 +241,7 @@ export const CreatePage = () => {
       <Page withMenu={false} title={"Создать пост"}>
         <section
           className={
-            "w-full p-[40px] rounded-[20px] bg-white flex flex-col gap-[30px]"
+            "w-full p-[20px] md:p-[40px] rounded-[20px] bg-white flex flex-col gap-[30px]"
           }>
           <Input
             onClick={() => setThemeDialogOpen(true)}
@@ -255,13 +263,11 @@ export const CreatePage = () => {
               setFormValues((prev) => ({ ...prev, image: imageFile }))
             }}
           />
-          {/*<section className={"w-full"}>*/}
-          {/*  <section className={"w-full"} ref={quillRef} />*/}
-          {/*</section>*/}
 
           <Editor onChange={handleEditorChange} />
 
-          <section className={"flex items-center mt-12 justify-between"}>
+          <section
+            className={"flex items-center mt-24 md:mt-12 justify-between"}>
             <Select
               placeholder={"Тип поста"}
               selectPosition={"top"}

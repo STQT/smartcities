@@ -8,7 +8,10 @@ export const NotificationsTab = () => {
   return (
     <section className={"flex flex-col bg-white"}>
       <div className={"pb-[35px] border-b-[0.5px] border-gray-300/30 w-full"}>
-        <div className={"w-full flex justify-between items-center px-[40px]"}>
+        <div
+          className={
+            "w-full flex flex-col md:flex-row justify-between gap-5 items-center px-[20px] md:px-[40px]"
+          }>
           <h2 className={"text-[24px] font-semibold text-black"}>
             Уведомления
           </h2>

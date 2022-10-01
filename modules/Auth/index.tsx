@@ -50,10 +50,10 @@ export const AuthPage = () => {
 
   return (
     <Page withMenu={false} withAside={false} title={"Вход SmartCity"}>
-      <main className={"flex flex-col justify-center flex-1"}>
+      <main className={"flex w-full flex-col justify-center flex-1"}>
         <section
           className={
-            "bg-white max-w-[400px] w-full mx-auto mt-12 py-[40px] px-[30px] rounded-[10px]"
+            "bg-white max-w-[400px] w-full mx-auto md:mt-12 py-[40px] px-[30px] rounded-[10px]"
           }>
           <div
             className={
@@ -114,7 +114,7 @@ export const AuthPage = () => {
 
         <footer
           className={
-            "flex gap-[40px] text-gray-400 text-[16px] list-none mx-auto justify-center mb-[40px]"
+            "flex gap-[10px] md:gap-[40px] flex-wrap text-gray-400 text-[14px] md:text-[16px] list-none mx-auto justify-center mb-[40px]"
           }>
           <li>Русский</li>
           <li>О сервисе</li>

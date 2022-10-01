@@ -85,7 +85,8 @@ export const Post = ({ targetPost }: PostProps) => {
   }
 
   return (
-    <article className={"rounded-[20px] bg-white px-[20px] py-[32px]"}>
+    <article
+      className={"rounded-[20px] bg-white px-[14px] md:px-[20px] py-[32px]"}>
       <section className={"flex flex-col mb-[20px]"}>
         <div className={"flex gap-2 items-center select-none"}>
           <Avatar size={40} />
@@ -104,7 +105,7 @@ export const Post = ({ targetPost }: PostProps) => {
         <h1
           onClick={handleReadMore}
           className={
-            "text-blue cursor-pointer hover:opacity-80 transition-opacity mb-4 font-semibold text-[20px]"
+            "text-blue cursor-pointer hover:opacity-80 transition-opacity mb-4 font-semibold text-[16px] md:text-[20px]"
           }>
           {post.title}
         </h1>
@@ -135,10 +136,14 @@ export const Post = ({ targetPost }: PostProps) => {
         )}
 
         {post.tags.length > 0 && (
-          <section className={"mt-[10px] flex gap-2"}>
-            {post.tags.map((tag) => (
-              <Tag key={tag.id} {...tag} />
-            ))}
+          <section className={"mt-[10px] mb-[10px] flex flex-wrap gap-2"}>
+            {post.tags
+              .sort((a, b) => {
+                return b.name.length - a.name.length
+              })
+              .map((tag) => (
+                <Tag key={tag.id} {...tag} />
+              ))}
           </section>
         )}
 

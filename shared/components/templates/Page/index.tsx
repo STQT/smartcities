@@ -22,7 +22,7 @@ export const Page = ({
   withAside = false
 }: PageProps) => {
   return (
-    <main className={"container mx-auto px-5"}>
+    <main className={"container mx-auto px-3 md:px-5"}>
       <Head>
         <title>{title}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />

@@ -48,7 +48,9 @@ export const PreviewSelect = ({ onChange }: PreviewSelectProps) => {
           />
           <label
             htmlFor={"preview"}
-            className={"px-3 py-3 bg-blue text-white rounded-[10px]"}>
+            className={
+              "px-3 py-3 text-[12px] md:text-[16px] bg-blue text-white rounded-[10px]"
+            }>
             Кликните чтобы выбрать изображение
           </label>
         </form>

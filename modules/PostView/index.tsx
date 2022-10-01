@@ -104,10 +104,14 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
               </span>
 
               {post.tags.length > 0 && (
-                <section className={"flex gap-2 mt-4"}>
-                  {post.tags.map((tag) => (
-                    <Tag key={tag.id} {...tag} />
-                  ))}
+                <section className={"flex flex-wrap gap-2 mt-4"}>
+                  {post.tags
+                    .sort((a, b) => {
+                      return b.name.length - a.name.length
+                    })
+                    .map((tag) => (
+                      <Tag key={tag.id} {...tag} />
+                    ))}
                 </section>
               )}
 
