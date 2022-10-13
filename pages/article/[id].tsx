@@ -22,7 +22,7 @@ const Article: NextPage = () => {
     }
   }, [id])
 
-  return <>{post && <PostView post={post} type={"ARTICLE"} />}</>
+  return <>{post && <PostView post={post} />}</>
 }
 
 export default Article

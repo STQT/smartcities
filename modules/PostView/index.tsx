@@ -118,14 +118,11 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
               {post.image && (
                 <section
                   className={
-                    "max-w-full transition-all h-[200px] md:h-[350px] lg:h-[450px] xl:h-[500px] my-[20px] rounded-[10px] overflow-hidden relative"
+                    "max-w-full transition-all my-[20px] flex justify-center rounded-[10px] overflow-hidden relative"
                   }>
-                  <Image
-                    priority={true}
-                    className={"max-w-full h-full object-cover"}
-                    src={`https://api.smartcities.uz${post.image}`}
-                    layout={"fill"}
-                  />
+
+                  <img className={"rounded-[10px]"} src={`https://api.smartcities.uz${post.image}`} alt={post.title} />
+
                 </section>
               )}
 

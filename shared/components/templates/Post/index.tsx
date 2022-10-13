@@ -112,14 +112,9 @@ export const Post = ({ targetPost }: PostProps) => {
         {post && post.image && (
           <div
             className={
-              "max-w-full h-[350px] w-full relative overflow-hidden rounded-[10px] my-[20px]"
+              "max-w-full w-full relative flex justify-center overflow-hidden rounded-[10px] my-[20px]"
             }>
-            <Image
-              priority={true}
-              src={imageURL as string}
-              layout={"fill"}
-              className={"max-w-full h-full object-cover"}
-            />
+            <img className={"rounded-[10px]"} alt={post.title} src={imageURL} />
           </div>
         )}
 
