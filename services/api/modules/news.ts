@@ -3,14 +3,22 @@ import { Post, Comment } from "shared/types"
 import { AxiosResponse } from "axios"
 
 export const NEWS = {
-  getList(): Promise<AxiosListResponse<Post>> {
-    return request.get(`/news/`)
+  getList(page?: number): Promise<AxiosListResponse<Post>> {
+    return request.get(`/news/`, {
+      params: {
+        page
+      }
+    })
   },
 
-  getListByThemeId(theme_id: number): Promise<AxiosListResponse<Post>> {
+  getListByThemeId(
+    theme_id: number,
+    page?: number
+  ): Promise<AxiosListResponse<Post>> {
     return request.get(`/theme-gr-news/`, {
       params: {
-        theme_id
+        theme_id,
+        page
       }
     })
   },
@@ -19,10 +27,11 @@ export const NEWS = {
     return request.get(`/news/${id}/`)
   },
 
-  search(query: string): Promise<AxiosListResponse<Post>> {
+  search(query: string, page?: number): Promise<AxiosListResponse<Post>> {
     return request.get("/search-news/", {
       params: {
-        key: query
+        key: query,
+        page
       }
     })
   },
@@ -31,19 +40,24 @@ export const NEWS = {
     return request.post("/news/", payload)
   },
 
-  getMine(): Promise<AxiosListResponse<Post>> {
+  getMine(page?: number): Promise<AxiosListResponse<Post>> {
     return request.get("/news-history/", {
       params: {
-        status: "True"
+        status: "True",
+        page
       }
     })
   },
 
   COMMENTS: {
-    getCommentsList(id: number): Promise<AxiosListResponse<Comment>> {
+    getCommentsList(
+      id: number,
+      page?: number
+    ): Promise<AxiosListResponse<Comment>> {
       return request.get(`/news-comment/`, {
         params: {
-          id
+          id,
+          page
         }
       })
     },

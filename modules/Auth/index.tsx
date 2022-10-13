@@ -6,7 +6,7 @@ import { toast } from "react-toastify"
 import { User } from "shared/types"
 
 import { Input, Password, Button, Logo } from "shared/components/atoms"
-import { Page } from "shared/components/templates"
+import { Page, SignInWith } from "shared/components/templates"
 import { login } from "services/api/config"
 import { USER } from "services/api"
 
@@ -94,6 +94,8 @@ export const AuthPage = () => {
             <h2 className={"text-[14px] font-semibold"}>
               Или войдите с помощью других сервисов
             </h2>
+
+            <SignInWith />
           </div>
         </section>
 

@@ -1,9 +1,7 @@
 import type { Tag as ITag } from "shared/types"
 
 export const Tag = ({ name, id }: ITag) => {
-  const handleTagClick = () => {
-    window.alert(id)
-  }
+  const handleTagClick = () => {}
 
   return (
     <button

@@ -13,6 +13,9 @@ import "react-toastify/dist/ReactToastify.css"
 import moment from "moment"
 import "moment/locale/ru"
 
+import { GoogleOAuthProvider } from "@react-oauth/google"
+import { GOOGLE_CLIENT_ID } from "../shared/constants"
+
 moment.locale("ru")
 
 const AuthChecker = () => {
@@ -27,14 +30,16 @@ const AuthChecker = () => {
   return <></>
 }
 
-function App({ Component, pageProps }: AppProps) {
+// @ts-ignore
+function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <Provider store={store}>
-      <AuthChecker />
-      <Component {...pageProps} />
-      <ToastContainer />
-
-      <div className={"mt-12"} />
+      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+        <AuthChecker />
+        <Component {...pageProps} />
+        <ToastContainer />
+        <div className={"mt-12"} />
+      </GoogleOAuthProvider>
     </Provider>
   )
 }

@@ -6,7 +6,7 @@ import { AxiosResponse } from "axios"
 import { User } from "shared/types"
 
 import { Button, Input, Logo, Password } from "shared/components/atoms"
-import { Page } from "shared/components/templates"
+import { Page, SignInWith } from "shared/components/templates"
 import { Dialog } from "shared/components/molecules"
 import { USER } from "services/api"
 
@@ -29,6 +29,8 @@ export const RegisterPage = () => {
     password: "",
     email: ""
   })
+
+  const [repeatPassword, setRepeatPassword] = useState("")
 
   const [userData, setUserData] = useState<User | null>(null)
 
@@ -75,9 +77,11 @@ export const RegisterPage = () => {
       formState.username &&
       formState.password &&
       formState.email &&
+      repeatPassword &&
+      repeatPassword === formState.password &&
       isRulesChecked
     )
-  }, [formState, isRulesChecked])
+  }, [formState, isRulesChecked, repeatPassword])
 
   return (
     <>
@@ -136,6 +140,7 @@ export const RegisterPage = () => {
               />
 
               <Password
+                onChange={(e) => setRepeatPassword(e.target.value)}
                 hint={"Повторите пароль"}
                 placeholder={"Пароль"}
                 size={"md"}
@@ -168,6 +173,8 @@ export const RegisterPage = () => {
                 <h3 className={"font-semibold text-[16px]"}>
                   Или войдите с помощью других сервисов
                 </h3>
+
+                <SignInWith />
               </div>
             </section>
           </section>

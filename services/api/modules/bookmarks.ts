@@ -3,10 +3,16 @@ import { Post, PostTypes } from "shared/types"
 import { AxiosResponse } from "axios"
 
 export const BOOKMARKS = {
-  getList(): Promise<
+  getList(
+    page?: number
+  ): Promise<
     AxiosResponse<{ news: Post[]; articles: Post[]; questions: Post[] }>
   > {
-    return request.get("/saved/")
+    return request.get("/saved/", {
+      params: {
+        page
+      }
+    })
   },
 
   add(id: number, type: PostTypes) {

@@ -63,4 +63,9 @@ export async function login(
   }
 }
 
-export type AxiosListResponse<T> = AxiosResponse<{ results: T[] }>
+export type AxiosListResponse<T> = AxiosResponse<{
+  results: T[]
+  count: number
+  next: string | null
+  previous: string | null
+}>

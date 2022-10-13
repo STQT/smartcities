@@ -51,6 +51,8 @@ export const Comments = ({
   const [comments, setComments] = useState<TComment[]>([])
   const [myComment, setMyComment] = useState("")
 
+  const [page, setPage] = useState(1)
+
   useEffect(() => {
     switch (type) {
       case "ARTICLE":
@@ -67,27 +69,65 @@ export const Comments = ({
     }
   }, [type, id])
 
-  const fetchAndSetArticleComments = (id: number) => {
+  useEffect(() => {
+    switch (type) {
+      case "ARTICLE":
+        fetchAndSetArticleComments(id, true)
+        break
+
+      case "NEWS":
+        fetchAndSetNewsComments(id, true)
+        break
+
+      case "QUESTION":
+        fetchAndSetQuestionComments(id, true)
+        break
+    }
+  }, [page])
+
+  const handleLoadMore = () => {
+    setPage((prev) => prev + 1)
+  }
+
+  const fetchAndSetArticleComments = (id: number, isLoadMore?: boolean) => {
     if (type === "ARTICLE") {
-      ARTICLE.COMMENTS.getCommentsList(id).then((res) => {
-        setComments(res.data.results)
-      })
+      if (!isLoadMore) {
+        ARTICLE.COMMENTS.getCommentsList(id).then((res) => {
+          setComments(res.data.results)
+        })
+      } else {
+        ARTICLE.COMMENTS.getCommentsList(id, page).then((res) => {
+          setComments((prev) => [...prev, ...res.data.results])
+        })
+      }
     }
   }
 
-  const fetchAndSetNewsComments = (id: number) => {
+  const fetchAndSetNewsComments = (id: number, isLoadMore?: boolean) => {
     if (type === "NEWS") {
-      NEWS.COMMENTS.getCommentsList(id).then((res) => {
-        setComments(res.data.results)
-      })
+      if (!isLoadMore) {
+        NEWS.COMMENTS.getCommentsList(id).then((res) => {
+          setComments(res.data.results)
+        })
+      } else {
+        NEWS.COMMENTS.getCommentsList(id, page).then((res) => {
+          setComments((prev) => [...prev, ...res.data.results])
+        })
+      }
     }
   }
 
-  const fetchAndSetQuestionComments = (id: number) => {
+  const fetchAndSetQuestionComments = (id: number, isLoadMore?: boolean) => {
     if (type === "QUESTION") {
-      QUESTION.COMMENTS.getCommentsList(id).then((res) => {
-        setComments(res.data.results)
-      })
+      if (!isLoadMore) {
+        QUESTION.COMMENTS.getCommentsList(id).then((res) => {
+          setComments(res.data.results)
+        })
+      } else {
+        QUESTION.COMMENTS.getCommentsList(id, page).then((res) => {
+          setComments((prev) => [...prev, ...res.data.results])
+        })
+      }
     }
   }
 
@@ -154,6 +194,12 @@ export const Comments = ({
         }>
         {comments &&
           comments.map((comment) => <Comment key={comment.id} {...comment} />)}
+
+        {comments.length < comments_count && (
+          <Button className={"px-4"} onClick={handleLoadMore}>
+            Загрузить еще
+          </Button>
+        )}
 
         {comments?.length === 0 && (
           <div className={"flex py-6 items-center justify-center"}>

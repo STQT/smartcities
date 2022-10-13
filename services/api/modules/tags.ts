@@ -3,8 +3,12 @@ import { Tag } from "shared/types"
 import { AxiosResponse } from "axios"
 
 export const TAGS = {
-  getList(): Promise<AxiosResponse<Tag[]>> {
-    return request.get("/tags/")
+  getList(page?: number): Promise<AxiosResponse<Tag[]>> {
+    return request.get("/tags/", {
+      params: {
+        page
+      }
+    })
   },
 
   create(name: string): Promise<AxiosResponse<Tag>> {
