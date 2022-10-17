@@ -1,22 +1,34 @@
 import { ChangeEvent, useMemo, useState } from "react"
-import { useAppSelector } from "store"
+import { useAppDispatch, useAppSelector } from "store"
 
 import { Button, Input, Password } from "shared/components/atoms"
+import { logOut } from "../../../../store/slices/main"
+import { useRouter } from "next/router"
 
 export const ProfileTab = () => {
   const { user } = useAppSelector((state) => state.main)
+  const dispatch = useAppDispatch()
+  const router = useRouter()
 
   const [formState, setFormState] = useState({
     ...user
   })
 
+  const [password, setPassword] = useState("")
+  const [repeatPassword, setRepeatPassword] = useState("")
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormState({ ...formState, [e.target.name]: e.target.value })
   }
 
+  const handleLogout = () => {
+    dispatch(logOut())
+    router.push("/auth")
+  }
+
   const isChangeButtonAvailable = useMemo(() => {
-    return JSON.stringify(formState) === JSON.stringify(user)
-  }, [formState, user])
+    return (JSON.stringify(formState) === JSON.stringify(user)) || repeatPassword === password
+  }, [formState, user, password, repeatPassword])
 
   return (
     <section className={"flex flex-col px-[20px] md:px-[40px] bg-white"}>
@@ -59,11 +71,17 @@ export const ProfileTab = () => {
           size={"md"}
         />
 
-        <Password hint={"Пароль"} placeholder={"Пароль"} size={"md"} />
+        <Password
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder={"Пароль"}
+          hint={"Пароль"}
+          size={"md"}
+        />
 
         <Password
+          onChange={(e) => setRepeatPassword(e.target.value)}
+          placeholder={"Повторите пароль"}
           hint={"Повторите пароль"}
-          placeholder={"Пароль"}
           size={"md"}
         />
       </section>
@@ -80,6 +98,7 @@ export const ProfileTab = () => {
               "flex flex-col mt-5 lg:mt-0 lg:flex-row w-full lg:w-auto gap-2"
             }>
             <Button
+              onClick={handleLogout}
               theme={"gray"}
               size={"md"}
               className={"w-full lg:w-[200px]"}>

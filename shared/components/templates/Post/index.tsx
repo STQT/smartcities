@@ -119,7 +119,7 @@ export const Post = ({ targetPost }: PostProps) => {
         )}
 
         {post.description && (
-          <p
+          <div
             className={"text-[16px] mb-[20px]"}
             dangerouslySetInnerHTML={{
               __html:
