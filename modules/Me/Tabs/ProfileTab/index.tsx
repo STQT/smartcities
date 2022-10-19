@@ -2,8 +2,10 @@ import { ChangeEvent, useMemo, useState } from "react"
 import { useAppDispatch, useAppSelector } from "store"
 
 import { Button, Input, Password } from "shared/components/atoms"
-import { logOut } from "../../../../store/slices/main"
+import { logOut, setUser } from "../../../../store/slices/main"
 import { useRouter } from "next/router"
+import { USER } from "../../../../services/api"
+import { toast } from "react-toastify"
 
 export const ProfileTab = () => {
   const { user } = useAppSelector((state) => state.main)
@@ -27,8 +29,22 @@ export const ProfileTab = () => {
   }
 
   const isChangeButtonAvailable = useMemo(() => {
-    return (JSON.stringify(formState) === JSON.stringify(user)) || repeatPassword === password
+    return JSON.stringify(formState) === JSON.stringify(user)
   }, [formState, user, password, repeatPassword])
+
+  const handleUpdateInfo = () => {
+    if (user) {
+      USER.updateInfo(user.username, formState).then(() => {
+        USER.getCurrent().then((res) => {
+          dispatch(setUser(res.data))
+
+          toast("Вы успешно изменили информацию", {
+            type: "success"
+          })
+        })
+      })
+    }
+  }
 
   return (
     <section className={"flex flex-col px-[20px] md:px-[40px] bg-white"}>
@@ -106,6 +122,7 @@ export const ProfileTab = () => {
             </Button>
 
             <Button
+              onClick={handleUpdateInfo}
               disabled={isChangeButtonAvailable}
               theme={"blue"}
               size={"md"}

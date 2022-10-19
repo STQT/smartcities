@@ -67,6 +67,10 @@ export const mainSlice = createSlice({
       window.localStorage.setItem("user", JSON.stringify(action.payload))
     },
 
+    setUser: (state, action: PayloadAction<User>) => {
+      state.user = action.payload
+    },
+
     logOut: (state) => {
       window.localStorage.removeItem("user")
       clearAuthTokens()
@@ -78,6 +82,6 @@ export const mainSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setLoggedIn, logOut } = mainSlice.actions
+export const { setLoggedIn, logOut, setUser } = mainSlice.actions
 
 export default mainSlice.reducer

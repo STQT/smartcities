@@ -1,9 +1,6 @@
-interface NotificationProps {
-  label: string
-  receivedAt: string
-}
+import { Notification as TNotification } from "shared/types"
 
-export const Notification = ({ label, receivedAt }: NotificationProps) => {
+export const Notification = ({ title, description }: TNotification) => {
   return (
     <article
       className={"px-[40px] py-[20px] border-b-[0.5px] border-gray-300/30"}>
@@ -12,13 +9,15 @@ export const Notification = ({ label, receivedAt }: NotificationProps) => {
           <div className={"w-[10px] h-[10px] bg-blue rounded-full"} />
 
           <div className={"flex flex-col"}>
-            <h2 className={"text-[18px]"}>{label}</h2>
-            <span className={"text-gray-400"}>{receivedAt}</span>
+            <h2
+              className={"text-[18px]"}
+              dangerouslySetInnerHTML={{ __html: title }}
+            />
+            <span
+              className={"text-gray-400"}
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
           </div>
-        </section>
-
-        <section>
-          <button></button>
         </section>
       </section>
     </article>

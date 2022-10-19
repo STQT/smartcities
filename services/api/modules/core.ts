@@ -1,4 +1,5 @@
 import { request } from "../config"
+import { User } from "../../../shared/types"
 
 interface RegisterFormState {
   first_name: string
@@ -19,6 +20,10 @@ export const USER = {
 
   getCurrent() {
     return request.get("/users/me")
+  },
+
+  updateInfo(username: string, payload: Partial<User>) {
+    return request.put(`/users/${username}/`, payload)
   }
 }
 

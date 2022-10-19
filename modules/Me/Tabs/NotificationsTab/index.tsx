@@ -1,9 +1,21 @@
-import { useState } from "react"
-import { Switch } from "shared/components/atoms"
+import { useEffect, useState } from "react"
+
+import { NOTIFICATIONS } from "services/api"
 import { Notification } from "modules/Me/components/templates"
+import { EmptyState } from "shared/components/atoms/EmptyState"
+import { Notification as TNotification } from "shared/types"
+import { PostLoading } from "../../../../shared/components/atoms/PostLoading"
 
 export const NotificationsTab = () => {
-  const [isNotificationsDisabled, setNotificationsDisabled] = useState(false)
+  const [isLoading, setLoading] = useState(true)
+  const [notifications, setNotifications] = useState<TNotification[]>([])
+
+  useEffect(() => {
+    NOTIFICATIONS.getList().then((res) => {
+      setNotifications(res.data.results)
+      setLoading(false)
+    })
+  }, [])
 
   return (
     <section className={"flex flex-col bg-white"}>
@@ -15,31 +27,19 @@ export const NotificationsTab = () => {
           <h2 className={"text-[24px] font-semibold text-black"}>
             Уведомления
           </h2>
-
-          <div className={"flex gap-[20px] items-center"}>
-            <span className={"text-gray-400 text-[16px]"}>Не беспокоить</span>
-
-            <Switch
-              value={isNotificationsDisabled}
-              setValue={setNotificationsDisabled}
-            />
-          </div>
         </div>
       </div>
 
       <div className={"flex flex-col"}>
-        <Notification label={"Lorem"} receivedAt={"4 Hours ago"} />
-        <Notification label={"Lorem"} receivedAt={"4 Hours ago"} />
-        <Notification label={"Lorem"} receivedAt={"4 Hours ago"} />
-        <Notification label={"Lorem"} receivedAt={"4 Hours ago"} />
-        <Notification label={"Lorem"} receivedAt={"4 Hours ago"} />
+        <PostLoading isLoading={isLoading} />
 
-        <button
-          className={
-            "py-[40px] flex items-center justify-center bg-gray-[#FCFCFF] text-[18px] font-semibold text-blue"
-          }>
-          Посмотреть все
-        </button>
+        {!isLoading && notifications?.length === 0 && (
+          <EmptyState isEmpty={true} caption={"Уведомлений нет"} />
+        )}
+
+        {notifications.map((notification) => (
+          <Notification key={notification.id} {...notification} />
+        ))}
       </div>
     </section>
   )

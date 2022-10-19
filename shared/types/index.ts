@@ -12,6 +12,13 @@ export interface Theme {
   parent: number
 }
 
+export interface Notification {
+  id: number
+  description: string
+  is_read: boolean
+  title: string
+}
+
 export interface Comment {
   id: number
   comment: string
