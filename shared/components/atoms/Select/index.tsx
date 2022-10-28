@@ -2,6 +2,8 @@ import { Fragment } from "react"
 import { Listbox, Transition } from "@headlessui/react"
 import { ChevronDownIcon } from "@heroicons/react/20/solid"
 import cn from "classnames"
+import ReactCountryFlag from "react-country-flag"
+import { LanguageSwitcher } from "next-export-i18n"
 
 interface Option {
   label: string
@@ -12,20 +14,24 @@ interface SelectProps {
   selected?: Option
   placeholder?: string
   hint?: string
+  isCountrySelect?: boolean
 
   size?: "sm" | "md"
   selectPosition?: "top" | "bottom"
   onChange?: (option: Option) => void
+  isLanguageSwitcher?: boolean
 }
 
 export const Select = ({
   selected,
   options,
+  isLanguageSwitcher,
   placeholder,
   size = "md",
   hint,
   selectPosition = "bottom",
-  onChange
+  onChange,
+  isCountrySelect
 }: SelectProps) => {
   const classes = cn(
     "relative bg-gray-100 w-full px-[20px] border border-gray-200 rounded-[10px] outline-none text-left",
@@ -53,7 +59,19 @@ export const Select = ({
         <div className="relative">
           <Listbox.Button className={classes}>
             {selected?.value && selected?.label && (
-              <span className="block truncate pr-4">{selected.label}</span>
+              <span className="block truncate pr-4">
+                {isCountrySelect && (
+                  <ReactCountryFlag
+                    className={"mr-3"}
+                    style={{
+                      fontSize: "1.5rem"
+                    }}
+                    svg={true}
+                    countryCode={selected.value as string}
+                  />
+                )}
+                {selected.label}
+              </span>
             )}
 
             {placeholder && !selected && (
@@ -73,23 +91,78 @@ export const Select = ({
             leaveTo="opacity-0">
             <Listbox.Options className={optionsClasses}>
               {options.map((option) => (
-                <Listbox.Option
-                  key={option.value}
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-4 pr-4 ${
-                      active ? "bg-amber-100 text-amber-900" : "text-gray-900"
-                    }`
-                  }
-                  value={option}>
-                  {({ selected }) => (
-                    <span
-                      className={`block truncate ${
-                        selected ? "font-medium" : "font-normal text-gray-400"
-                      }`}>
-                      {option.label}
-                    </span>
+                <>
+                  {isLanguageSwitcher && (
+                    <LanguageSwitcher
+                      lang={(option.value as string).toLowerCase()}>
+                      <Listbox.Option
+                        key={option.value}
+                        className={({ active }) =>
+                          `relative cursor-default select-none py-2 pl-4 pr-4 ${
+                            active
+                              ? "bg-amber-100 text-amber-900"
+                              : "text-gray-900"
+                          }`
+                        }
+                        value={option}>
+                        {({ selected }) => (
+                          <span
+                            className={`block truncate ${
+                              selected
+                                ? "font-medium"
+                                : "font-normal text-gray-400"
+                            }`}>
+                            {isCountrySelect && (
+                              <ReactCountryFlag
+                                className={"mr-3"}
+                                style={{
+                                  fontSize: "1.5rem"
+                                }}
+                                svg={true}
+                                countryCode={option.value as string}
+                              />
+                            )}
+                            {option.label}
+                          </span>
+                        )}
+                      </Listbox.Option>
+                    </LanguageSwitcher>
                   )}
-                </Listbox.Option>
+
+                  {!isLanguageSwitcher && (
+                    <Listbox.Option
+                      key={option.value}
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2 pl-4 pr-4 ${
+                          active
+                            ? "bg-amber-100 text-amber-900"
+                            : "text-gray-900"
+                        }`
+                      }
+                      value={option}>
+                      {({ selected }) => (
+                        <span
+                          className={`block truncate ${
+                            selected
+                              ? "font-medium"
+                              : "font-normal text-gray-400"
+                          }`}>
+                          {isCountrySelect && (
+                            <ReactCountryFlag
+                              className={"mr-3"}
+                              style={{
+                                fontSize: "1.5rem"
+                              }}
+                              svg={true}
+                              countryCode={option.value as string}
+                            />
+                          )}
+                          {option.label}
+                        </span>
+                      )}
+                    </Listbox.Option>
+                  )}
+                </>
               ))}
             </Listbox.Options>
           </Transition>

@@ -5,9 +5,11 @@ import { Notification } from "modules/Me/components/templates"
 import { EmptyState } from "shared/components/atoms/EmptyState"
 import { Notification as TNotification } from "shared/types"
 import { PostLoading } from "../../../../shared/components/atoms/PostLoading"
+import { useTranslation } from "next-export-i18n"
 
 export const NotificationsTab = () => {
   const [isLoading, setLoading] = useState(true)
+  const {t} = useTranslation()
   const [notifications, setNotifications] = useState<TNotification[]>([])
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export const NotificationsTab = () => {
             "w-full flex flex-col md:flex-row justify-between gap-5 items-center px-[20px] md:px-[40px]"
           }>
           <h2 className={"text-[24px] font-semibold text-black"}>
-            Уведомления
+            {t("notifications")}
           </h2>
         </div>
       </div>

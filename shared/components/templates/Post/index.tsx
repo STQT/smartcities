@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { useRouter } from "next/router"
-import Image from "next/image"
+import CountryFlag from "react-country-flag"
 
 import {
   Avatar,
@@ -16,6 +16,7 @@ import { addBaseURL } from "shared/utils"
 
 import { ARTICLE, QUESTION, NEWS, BOOKMARKS } from "services/api"
 import moment from "moment"
+import { useTranslation } from "next-export-i18n"
 
 interface PostProps {
   targetPost: TPost
@@ -24,6 +25,7 @@ interface PostProps {
 export const Post = ({ targetPost }: PostProps) => {
   const [post, setPost] = useState(targetPost)
   const router = useRouter()
+  const { t } = useTranslation()
 
   const imageURL = useMemo(() => post && addBaseURL(post.image), [post])
 
@@ -88,16 +90,24 @@ export const Post = ({ targetPost }: PostProps) => {
     <article className={"rounded-[20px] bg-white px-[20px] py-[32px]"}>
       <section className={"flex flex-col mb-[20px]"}>
         <div className={"flex gap-2 items-center select-none"}>
-          <Avatar size={40} />
+          <Avatar src={post.user.image} size={40} />
           <span className={"text-[14px]"}>
             {post.user.first_name && post.user.last_name
               ? `${post.user.first_name} ${post.user.last_name}`
               : `@${post.user.username}`}
           </span>
 
-          <span className={"ml-2 text-gray-400 text-[14px]"}>
+          <span className={"mx-2 text-gray-400 text-[14px]"}>
             {moment(post.created_at).calendar()}
           </span>
+
+          <CountryFlag
+            countryCode={post.user.country_code}
+            svg={true}
+            style={{
+              fontSize: "1.5rem"
+            }}
+          />
         </div>
       </section>
       <section className={"flex flex-col"}>
@@ -118,16 +128,8 @@ export const Post = ({ targetPost }: PostProps) => {
           </div>
         )}
 
-        {post.description && (
-          <div
-            className={"text-[16px] mb-[20px]"}
-            dangerouslySetInnerHTML={{
-              __html:
-                post.description.length > 300
-                  ? `${post.description.slice(0, 300)}...`
-                  : post.description
-            }}
-          />
+        {post.subtitle && (
+          <div className={"text-[16px] mb-[20px]"}>{post.subtitle}</div>
         )}
 
         {post.tags.length > 0 && (
@@ -168,7 +170,7 @@ export const Post = ({ targetPost }: PostProps) => {
             className={
               "hidden md:block px-[20px] py-[16px] text-blue border border-blue rounded-[10px] transition-all hover:bg-blue hover:text-white"
             }>
-            Читать далее
+            {t("read_more")}
           </button>
         </section>
       </section>

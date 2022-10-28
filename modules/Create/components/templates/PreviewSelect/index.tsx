@@ -1,11 +1,13 @@
 import { PhotoIcon } from "@heroicons/react/24/outline"
 import { ChangeEvent, useEffect, useState } from "react"
+import { useTranslation } from "next-export-i18n"
 
 interface PreviewSelectProps {
   onChange: (file: File) => void
 }
 
 export const PreviewSelect = ({ onChange }: PreviewSelectProps) => {
+  const { t } = useTranslation()
   const [image, setImage] = useState<{ file: File; preview: string } | null>(
     null
   )
@@ -28,7 +30,7 @@ export const PreviewSelect = ({ onChange }: PreviewSelectProps) => {
   return (
     <section className={"flex flex-col"}>
       <span className={"ml-4 mb-[4px] text-[16px] text-gray-400 font-semibold"}>
-        Превью
+        {t("preview_image")}
       </span>
       <div
         className={
@@ -51,7 +53,7 @@ export const PreviewSelect = ({ onChange }: PreviewSelectProps) => {
             className={
               "px-3 py-3 text-[12px] md:text-[16px] bg-blue text-white rounded-[10px]"
             }>
-            Кликните чтобы выбрать изображение
+            {t("click_to_choose_image")}
           </label>
         </form>
       </div>

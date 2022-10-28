@@ -7,16 +7,20 @@ import { Page } from "shared/components/templates"
 import { useAppSelector } from "store"
 
 import { NewsTab, ArticlesTab, QuestionsTab } from "./components/templates"
+import { useTranslation } from "next-export-i18n"
 
-const TABS: Record<string, string> = {
-  news: "Новости",
-  articles: "Статьи",
-  questions: "Вопросы"
-}
 
 export const FlowPage = () => {
   const router = useRouter()
+  const {t} = useTranslation()
   const { flows } = useAppSelector((state) => state.main)
+
+  const TABS: Record<string, string> = {
+    news: t("news"),
+    articles: t("articles"),
+    questions: t("questions")
+  }
+
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]
 

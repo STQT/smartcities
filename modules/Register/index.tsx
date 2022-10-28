@@ -5,34 +5,69 @@ import { toast } from "react-toastify"
 import { AxiosResponse } from "axios"
 import { User } from "shared/types"
 
-import { Button, Input, Logo, Password } from "shared/components/atoms"
+import {
+  Button,
+  CountrySelect,
+  GenderRadio,
+  Input,
+  Logo,
+  Password,
+  PhoneInput
+} from "shared/components/atoms"
 import { Page, SignInWith } from "shared/components/templates"
 import { Dialog } from "shared/components/molecules"
 import { USER } from "services/api"
 
 import { setLoggedIn } from "store/slices/main"
 import { useAppDispatch } from "store"
+import cn from "classnames"
+import { PencilIcon } from "@heroicons/react/24/solid"
+import FormData from "form-data"
+import { useTranslation } from "next-export-i18n"
+import { setAuthTokens } from "axios-jwt"
 
 export const RegisterPage = () => {
   const router = useRouter()
-
   const [isDialogOpen, setDialogOpen] = useState(false)
   const [code, setCode] = useState("")
+
+  const [image, setImage] = useState<{ file: File; preview: string } | null>(
+    null
+  )
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target && e.target.files && e.target.files[0]) {
+      setImage({
+        file: e.target.files[0],
+        preview: URL.createObjectURL(e.target.files[0])
+      })
+    }
+  }
 
   const dispatch = useAppDispatch()
 
   const [isRulesChecked, setRulesChecked] = useState(false)
   const [formState, setFormState] = useState({
+    username: "",
     first_name: "",
     last_name: "",
-    username: "",
-    password: "",
-    email: ""
+    email: "",
+    gender: true,
+    organization_name: "",
+    phone: "",
+    work_name: "",
+    image: "",
+    country_code: "",
+    country: "",
+    birthday_date: "",
+    password: ""
   })
 
   const [repeatPassword, setRepeatPassword] = useState("")
 
   const [userData, setUserData] = useState<User | null>(null)
+
+  const { t } = useTranslation()
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormState({ ...formState, [e.target.name]: e.target.value })
@@ -43,13 +78,34 @@ export const RegisterPage = () => {
   }
 
   const handleRegisterClick = () => {
-    USER.register(formState).then((res: AxiosResponse<User>) => {
+    USER.register({
+      first_name: formState.first_name,
+      last_name: formState.last_name,
+      email: formState.email,
+      username: formState.username,
+      password: formState.password
+    }).then((res: AxiosResponse<User>) => {
       setUserData(res.data)
       setDialogOpen(true)
     })
   }
 
   const handleVerifyClick = () => {
+    const userFormData = new FormData()
+
+    userFormData.append("username", formState.username)
+    userFormData.append("email", formState.email)
+    userFormData.append("work_name", formState.work_name)
+    userFormData.append("country_code", formState.country_code)
+    userFormData.append("organization_name", formState.organization_name)
+    userFormData.append("phone", formState.phone)
+    userFormData.append("birthday_date", formState.birthday_date)
+    userFormData.append("gender", formState.gender)
+
+    if (image?.file) {
+      userFormData.append("image", image!.file)
+    }
+
     if (userData) {
       USER.verify(code, userData.id)
         .then((res) => {
@@ -58,8 +114,16 @@ export const RegisterPage = () => {
           window.localStorage.setItem("accessToken", access)
           window.localStorage.setItem("refreshToken", refresh)
 
-          dispatch(setLoggedIn(userData))
-
+          setAuthTokens({
+            accessToken: access,
+            refreshToken: refresh
+          })
+        })
+        .then(() => {
+          USER.updateInfo(userData.username, userFormData)
+        })
+        .then(() => {
+          dispatch(setLoggedIn())
           router.push("/feed")
         })
         .catch(() => {
@@ -72,16 +136,29 @@ export const RegisterPage = () => {
 
   const isRegisterButtonAvailable = useMemo(() => {
     return (
+      formState.username &&
       formState.first_name &&
       formState.last_name &&
-      formState.username &&
-      formState.password &&
       formState.email &&
-      repeatPassword &&
-      repeatPassword === formState.password &&
+      formState.organization_name &&
+      formState.phone &&
+      formState.work_name &&
+      formState.image &&
+      formState.country_code &&
+      formState.birthday_date &&
       isRulesChecked
     )
   }, [formState, isRulesChecked, repeatPassword])
+
+  const profileImage = useMemo(() => {
+    if (!Boolean(image?.preview)) {
+      return "/svg/icons/user-placeholder.svg"
+    }
+
+    if (Boolean(image?.preview)) {
+      return image?.preview
+    }
+  }, [image])
 
   return (
     <>
@@ -95,55 +172,168 @@ export const RegisterPage = () => {
               Регистрация
             </h1>
 
+            <section className={"flex mb-[40px] items-center gap-[40px]"}>
+              <div
+                className={
+                  "w-[120px] h-[120px] bg-[#F5F6FA] flex items-center justify-center border border-[#D9DCE5] rounded-full relative"
+                }>
+                <img
+                  src={profileImage}
+                  alt={"image"}
+                  className={cn("rounded-full object-cover", {
+                    "w-[120px] h-[120px]":
+                      formState?.image || Boolean(image?.preview),
+                    "w-[40px] h-[40px]": !Boolean(image?.preview)
+                  })}
+                />
+
+                <input
+                  onChange={handleImageChange}
+                  accept="image/png, image/jpeg"
+                  id={"preview_profile"}
+                  className={"hidden"}
+                  type={"file"}
+                />
+
+                <label
+                  htmlFor={"preview_profile"}
+                  className={
+                    "absolute hover:opacity-90 transition-all w-[30px] shadow-md h-[30px] bg-blue flex justify-center items-center rounded-full top-0 right-0"
+                  }>
+                  <PencilIcon className={"w-[15px] h-[15px] text-white"} />
+                </label>
+              </div>
+
+              <div className={"flex flex-col gap-1"}>
+                <h3 className={"text-[18px] font-bold"}>
+                  {formState.first_name} {formState.last_name}
+                </h3>
+
+                {formState.work_name && formState.organization_name && (
+                  <div
+                    className={"text-[16px] font-semibold items-center flex"}>
+                    <span>{formState.work_name}</span>
+                    <div
+                      className={
+                        "w-[5px] h-[5px] mx-[10px] bg-[#4D85CF] rounded-full"
+                      }
+                    />
+                    <span>{formState.organization_name}</span>
+                  </div>
+                )}
+              </div>
+            </section>
+
             <section
               className={
-                "grid grid-cols-1 md:grid-cols-2 gap-x-[40px] gap-y-[20px] mb-[60px]"
+                "grid grid-cols-1 lg:grid-cols-2 gap-x-[40px] gap-y-[20px] mb-[60px]"
               }>
               <Input
                 onChange={handleInputChange}
-                size={"md"}
+                value={formState.first_name}
                 name={"first_name"}
-                placeholder={"Имя"}
-                hint={"Имя"}
-              />
-              <Input
-                onChange={handleInputChange}
                 size={"md"}
-                name={"last_name"}
-                placeholder={"Фамилия"}
-                hint={"Фамилия"}
+                placeholder={t("name")}
+                hint={t("name")}
               />
 
               <Input
                 onChange={handleInputChange}
+                value={formState.last_name}
+                name={"last_name"}
+                size={"md"}
+                placeholder={t("surname")}
+                hint={t("surname")}
+              />
+
+              <GenderRadio
+                hint={t("gender")}
+                isMale={Boolean(formState.gender)}
+                onChange={(isMale) => {
+                  setFormState({
+                    ...formState,
+                    gender: isMale === "true"
+                  })
+                }}
+              />
+
+              <Input
+                max={new Date().toLocaleDateString("en-ca")}
+                onChange={handleInputChange}
+                value={formState.birthday_date}
+                name={"birthday_date"}
+                type={"date"}
+                size={"md"}
+                placeholder={t("birth_date")}
+                hint={t("birth_date")}
+              />
+
+              <Input
+                onChange={handleInputChange}
+                value={formState.organization_name}
+                name={"organization_name"}
+                size={"md"}
+                placeholder={t("work_place")}
+                hint={t("work_place")}
+              />
+
+              <Input
+                onChange={handleInputChange}
+                value={formState.work_name}
+                name={"work_name"}
+                size={"md"}
+                placeholder={t("job_position")}
+                hint={t("job_position")}
+              />
+
+              <CountrySelect
+                hint={t("country")}
+                onChange={(code) =>
+                  setFormState({ ...formState, country_code: code })
+                }
+                selected={formState.country_code as string}
+              />
+
+              <Input
+                onChange={handleInputChange}
+                value={formState.email}
+                name={"email"}
+                size={"md"}
+                placeholder={t("email")}
+                hint={t("email")}
+              />
+
+              <PhoneInput
+                onChange={(value) =>
+                  setFormState({ ...formState, phone: value })
+                }
+                value={formState.phone ?? ""}
+                name={"phone"}
+                hint={"Phone"}
+              />
+
+              <Input
+                onChange={handleInputChange}
+                value={formState.username}
                 name={"username"}
                 size={"md"}
-                placeholder={"Имя пользователя"}
-                hint={"Имя пользователя"}
-              />
-
-              <Input
-                onChange={handleInputChange}
-                name={"email"}
-                type={"email"}
-                placeholder={"Электронная почта"}
-                hint={"Электронная почта"}
-                size={"md"}
+                placeholder={t("username")}
+                hint={t("username")}
               />
 
               <Password
                 onChange={handleInputChange}
                 name={"password"}
-                hint={"Пароль"}
-                placeholder={"Пароль"}
                 size={"md"}
+                placeholder={t("password")}
+                hint={t("password")}
               />
 
               <Password
                 onChange={(e) => setRepeatPassword(e.target.value)}
-                hint={"Повторите пароль"}
-                placeholder={"Пароль"}
                 size={"md"}
+                placeholder={t("repeat_password")}
+                hint={t("repeat_password")}
               />
             </section>
 
@@ -163,15 +353,15 @@ export const RegisterPage = () => {
               </div>
 
               <Button
-                disabled={!isRegisterButtonAvailable}
+                // disabled={!isRegisterButtonAvailable}
                 onClick={handleRegisterClick}
                 size={"md"}>
-                Зарегистрироваться
+                {t("register")}
               </Button>
 
               <div className={"flex flex-col gap-[20px]"}>
                 <h3 className={"font-semibold text-[16px]"}>
-                  Или войдите с помощью других сервисов
+                  {t("or_sign_in_with_other_services")}
                 </h3>
 
                 <SignInWith />
@@ -184,9 +374,9 @@ export const RegisterPage = () => {
               "max-w-[862px] w-full bg-white rounded-[10px] my-[40px] flex items-center justify-center py-[33px] mx-auto"
             }>
             <p className={"text-[16px] md:text-[18px]"}>
-              Уже зарегистрированы?{" "}
+              {t("already_registered?")}{" "}
               <button className={"text-blue"} onClick={handleLoginClick}>
-                Войдите
+                {t("login")}
               </button>
             </p>
           </section>

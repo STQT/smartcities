@@ -11,6 +11,7 @@ import { ARTICLE, NEWS, QUESTION } from "services/api"
 import Editor from "react-medium-editor"
 import "medium-editor/dist/css/medium-editor.css"
 import "medium-editor/dist/css/themes/default.css"
+import { useTranslation } from "next-export-i18n"
 
 const Comment = ({ user, comment, created_at }: TComment) => {
   return (
@@ -49,6 +50,7 @@ export const Comments = ({
 }: CommentsProps) => {
   const { user, isLoggedIn } = useAppSelector((state) => state.main)
   const [comments, setComments] = useState<TComment[]>([])
+  const { t } = useTranslation()
   const [myComment, setMyComment] = useState("")
 
   const [page, setPage] = useState(1)
@@ -184,7 +186,7 @@ export const Comments = ({
       }>
       <section className={"p-[20px]"}>
         <h2 className={"text-blue text-[18px]"}>
-          Комментарии {comments_count}
+          {t("comments")} {comments_count}
         </h2>
       </section>
 
@@ -197,14 +199,14 @@ export const Comments = ({
 
         {comments.length < comments_count && (
           <Button className={"px-4"} onClick={handleLoadMore}>
-            Загрузить еще
+            {t("load_more")}
           </Button>
         )}
 
         {comments?.length === 0 && (
           <div className={"flex py-6 items-center justify-center"}>
             <p className={"text-[20px] font-semibold"}>
-              Комментарии не найдены
+              {t("comments_not_found")}
             </p>
           </div>
         )}
@@ -225,7 +227,7 @@ export const Comments = ({
               toolbar: { buttons: ["bold", "italic", "underline"] },
               spellcheck: false,
               placeholder: {
-                text: "Написать комментарий..."
+                text: `${t("write_comment")}...`
               }
             }}
             onChange={(e: string) => {
@@ -237,7 +239,7 @@ export const Comments = ({
             onClick={publishComment}
             disabled={!Boolean(myComment && !myComment.includes("<p><br></p>"))}
             className={"px-[20px]"}>
-            Опубликовать
+            {t("publish")}
           </Button>
         </section>
       )}

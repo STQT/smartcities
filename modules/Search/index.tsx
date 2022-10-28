@@ -6,16 +6,19 @@ import { useRouter } from "next/router"
 import { NewsTab, ArticlesTab, QuestionsTab } from "./components/templates"
 import { Input } from "../../shared/components/atoms"
 import debouce from "lodash.debounce"
-
-const TABS: Record<string, string> = {
-  news: "Новости",
-  articles: "Статьи",
-  questions: "Вопросы"
-}
+import { useTranslation } from "next-export-i18n"
 
 export const SearchPage = () => {
   const router = useRouter()
   const [query, setQuery] = useState("")
+  const { t } = useTranslation()
+
+  const TABS: Record<string, string> = {
+    news: t("news"),
+    articles: t("articles"),
+    questions: t("questions")
+  }
+
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]

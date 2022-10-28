@@ -1,17 +1,9 @@
 import { request } from "../config"
-import { User } from "../../../shared/types"
-
-interface RegisterFormState {
-  first_name: string
-  last_name: string
-  username: string
-  password: string
-  email: string
-}
+import { User } from "shared/types"
 
 export const USER = {
-  register(formState: RegisterFormState) {
-    return request.post("/register/", formState)
+  register(commonData: Partial<User>) {
+    return request.post("/register/", commonData)
   },
 
   verify(number: string, userID: number) {
@@ -22,7 +14,7 @@ export const USER = {
     return request.get("/users/me")
   },
 
-  updateInfo(username: string, payload: Partial<User>) {
+  updateInfo(username: string, payload: any) {
     return request.put(`/users/${username}/`, payload)
   }
 }

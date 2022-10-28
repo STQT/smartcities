@@ -1,0 +1,81 @@
+{
+  "welcome": "Welcome",
+  "search": "Search",
+  "feed": "Feed",
+  "know_more": "Know more",
+  "rules": "Rules",
+  "reading_now": "Reading now",
+  "login_0": "Login",
+  "read_more": "Read more",
+  "all_threads": "All threads",
+
+  "news": "News",
+
+  "articles": "Articles",
+  "article": "Article",
+
+  "questions": "Questions",
+  "question": "Question",
+
+  "comments": "Comments",
+  "write_comment": "Write comment",
+  "publish": "Publish",
+
+  "comments_not_found": "Comments not found",
+  "news_not_found": "News not found",
+  "articles_not_found": "Articles not found",
+  "questions_not_found": "Questions not found",
+
+  "name": "Name",
+  "surname": "Surname",
+  "username": "Username",
+  "password": "Password",
+  "repeat_password": "Repeat password",
+  "email": "E-Mail",
+
+  "register": "Register",
+  "already_registered?": "Already registered?",
+
+  "profile": "Profile",
+  "notifications": "Notifications",
+  "publications": "Publications",
+  "saves": "Saves",
+  "how_to_become_author": "How to become author?",
+
+  "exit": "Exit",
+  "change": "Change",
+
+  "create": "Create",
+  "settings": "Settings",
+
+  "forgot_password": "Forgot password?",
+
+  "or_sign_in_with_other_services": "Or sign in with other services",
+  "load_more": "Load more",
+  "delete": "Delete",
+
+  "choose_thread": "Choose thread",
+  "choose": "Choose",
+  "thread": "Thread",
+
+  "title": "Title",
+  "subtitle": "Subtitle",
+  "post_type": "Post type",
+  "create_port": "Create post",
+  "choose_tags": "Choose tags",
+  "create_tag": "Create tag",
+  "tags": "Tags",
+  "preview_image": "Preview image",
+  "click_to_choose_image": "Click to choose image",
+
+  "work_place": "Work place",
+  "job_position": "Job position",
+  "country": "Country",
+  "choose_country": "Choose country",
+  "save": "Save",
+  "birth_date": "Birth date",
+
+  "male": "Male",
+  "female": "Female",
+  "gender": "Gender"
+}

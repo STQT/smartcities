@@ -12,6 +12,7 @@ import {
 } from "@heroicons/react/24/outline"
 import { logOut } from "store/slices/main"
 import cn from "classnames"
+import { useTranslation } from "next-export-i18n"
 
 interface MenuItemProps {
   Icon: JSX.Element
@@ -42,6 +43,7 @@ export const MenuItem = ({
 export const Menu = () => {
   const { isLoggedIn, user } = useAppSelector((state) => state.main)
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
 
   const router = useRouter()
 
@@ -76,19 +78,12 @@ export const Menu = () => {
         <Logo onClick={() => router.push("/feed")} />
 
         <div className={"mt-[30px] flex flex-col gap-4"}>
-          <MenuItem
-            isActive={router.asPath.includes("/search")}
-            Icon={<MagnifyingGlassIcon className={"w-[20px] h-[20px]"} />}
-            onClick={handleMoveToSearch}
-            label={"Поиск"}
-          />
-
           {isLoggedIn && (
             <MenuItem
               isActive={router.asPath.includes("?tab=notifications")}
               Icon={<BellIcon className={"w-[20px] h-[20px]"} />}
               onClick={handleMoveToNotifications}
-              label={"Уведомления"}
+              label={t("notifications")}
             />
           )}
 
@@ -96,7 +91,7 @@ export const Menu = () => {
             <MenuItem
               Icon={<PlusIcon className={"w-[20px] h-[20px]"} />}
               onClick={handleMoveToCreate}
-              label={"Создать"}
+              label={t("create")}
             />
           )}
         </div>
@@ -114,12 +109,12 @@ export const Menu = () => {
               Icon={<Cog6ToothIcon className={"w-[20px] h-[20px]"} />}
               isActive={router.asPath.includes("?tab=profile")}
               onClick={handleMoveToProfile}
-              label={"Настройки"}
+              label={t("settings")}
             />
           )}
           <MenuItem
             Icon={<QuestionMarkCircleIcon className={"w-[20px] h-[20px]"} />}
-            label={"Правила"}
+            label={t("rules")}
             onClick={() => {}}
           />
         </section>
@@ -130,7 +125,7 @@ export const Menu = () => {
           <div
             onClick={handleMoveToProfile}
             className={"flex cursor-pointer gap-[15px] items-center"}>
-            <Avatar size={50} />
+            <Avatar src={user?.image} size={50} />
             <div className={"flex flex-col"}>
               <span className={"text-[12px] font-semibold text-black"}>
                 {user?.first_name}

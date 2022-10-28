@@ -5,10 +5,12 @@ import { QUESTION } from "services/api"
 
 import { EmptyState, PostLoading } from "shared/components/molecules"
 import { Post } from "shared/components/templates"
+import { useTranslation } from "next-export-i18n"
 
 export const QuestionsTab = ({ query }: { query: string }) => {
   const [questions, setQuestions] = useState<TPost[]>([])
   const [isLoading, setLoading] = useState(true)
+  const { t } = useTranslation()
 
   const isEmpty = useMemo(() => {
     return questions.length === 0
@@ -37,7 +39,7 @@ export const QuestionsTab = ({ query }: { query: string }) => {
       <PostLoading className={"mt-6"} isLoading={isLoading} />
       {!isLoading && (
         <EmptyState
-          caption={"Нету вопросов"}
+          caption={t("questions_not_found")}
           className={"mt-6"}
           isEmpty={isEmpty}
         />

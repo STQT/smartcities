@@ -8,10 +8,12 @@ import { EmptyState, PostLoading } from "shared/components/molecules"
 import { Post } from "shared/components/templates"
 import type { Post as TPost } from "shared/types"
 import { Button } from "../../../../../shared/components/atoms"
+import { useTranslation } from "next-export-i18n"
 
 export const QuestionsTab = () => {
   const [questions, setQuestions] = useState<TPost[]>([])
   const [isLoading, setLoading] = useState(true)
+  const { t } = useTranslation()
 
   const [questionsCount, setQuestionsCount] = useState(0)
   const [page, setPage] = useState(1)
@@ -53,7 +55,7 @@ export const QuestionsTab = () => {
       <PostLoading className={"mt-6"} isLoading={isLoading} />
       {!isLoading && (
         <EmptyState
-          caption={"Нету вопросов"}
+          caption={t("questions_not_found")}
           className={"mt-6"}
           isEmpty={isEmpty}
         />
@@ -68,7 +70,7 @@ export const QuestionsTab = () => {
       )}
 
       {questions.length < questionsCount && (
-        <Button onClick={handleLoadMore}>Загрузить еще</Button>
+        <Button onClick={handleLoadMore}>{t("load_more")}</Button>
       )}
     </main>
   )

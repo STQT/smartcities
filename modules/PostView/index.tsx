@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { Page } from "shared/components/templates"
 import { Post } from "shared/types"
-import Image from "next/image"
 
 import {
   Avatar,
@@ -15,6 +14,7 @@ import { Comments } from "shared/components/templates"
 
 import { ARTICLE, BOOKMARKS, NEWS, QUESTION } from "services/api"
 import moment from "moment/moment"
+import CountryFlag from "react-country-flag"
 
 interface PostViewProps {
   post: Post
@@ -85,16 +85,24 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
             <section className={"px-[20px] flex flex-col border-b pb-4"}>
               <section className={"flex flex-col mb-[20px]"}>
                 <div className={"flex gap-2 items-center select-none"}>
-                  <Avatar size={40} />
+                  <Avatar src={post.user.image} size={40} />
                   <span className={"text-[14px]"}>
                     {post.user.first_name && post.user.last_name
                       ? `${post.user.first_name} ${post.user.last_name}`
                       : `@${post.user.username}`}
                   </span>
 
-                  <span className={"ml-2 text-gray-400 text-[14px]"}>
+                  <span className={"mx-2 text-gray-400 text-[14px]"}>
                     {moment(post.created_at).calendar()}
                   </span>
+
+                  <CountryFlag
+                    countryCode={post.user.country_code}
+                    svg={true}
+                    style={{
+                      fontSize: "1.5rem"
+                    }}
+                  />
                 </div>
               </section>
 
@@ -120,9 +128,11 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
                   className={
                     "max-w-full transition-all my-[20px] flex justify-center rounded-[10px] overflow-hidden relative"
                   }>
-
-                  <img className={"rounded-[10px]"} src={`https://api.smartcities.uz${post.image}`} alt={post.title} />
-
+                  <img
+                    className={"rounded-[10px]"}
+                    src={`https://api.smartcities.uz${post.image}`}
+                    alt={post.title}
+                  />
                 </section>
               )}
 

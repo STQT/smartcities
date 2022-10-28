@@ -1,9 +1,7 @@
 import { useAppDispatch } from "store"
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google"
-import { SOCIALS, USER } from "services/api"
+import { SOCIALS } from "services/api"
 import { setAuthTokens } from "axios-jwt"
-import { AxiosResponse } from "axios"
-import { User } from "../../../types"
 import { setLoggedIn } from "store/slices/main"
 import { useRouter } from "next/router"
 
@@ -20,10 +18,8 @@ export const SignInWith = () => {
         })
       })
       .then(() => {
-        USER.getCurrent().then((res: AxiosResponse<User>) => {
-          dispatch(setLoggedIn(res.data))
-          router.push("/feed")
-        })
+        dispatch(setLoggedIn())
+        router.push("/feed")
       })
   }
 

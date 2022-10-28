@@ -11,16 +11,18 @@ import {
   SavingsTab
 } from "./Tabs"
 import { isLoggedIn } from "axios-jwt"
-
-const TABS: Record<string, string> = {
-  profile: "Профиль",
-  notifications: "Уведомления",
-  posts: "Публикации",
-  saved: "Закладки"
-}
+import { useTranslation } from "next-export-i18n"
 
 export const ProfilePage = () => {
   const router = useRouter()
+  const { t } = useTranslation()
+
+  const TABS: Record<string, string> = {
+    profile: t("profile"),
+    notifications: t("notifications"),
+    posts: t("publications"),
+    saved: t("saves")
+  }
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]

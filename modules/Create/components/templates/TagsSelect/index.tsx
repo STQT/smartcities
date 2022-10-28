@@ -5,6 +5,7 @@ import { TAGS } from "../../../../../services/api"
 import { useAppDispatch, useAppSelector } from "../../../../../store"
 import { fetchTags } from "../../../../../store/slices/main"
 import { toast } from "react-toastify"
+import { useTranslation } from "next-export-i18n"
 
 interface TagsSelectProps {
   options: Tag[]
@@ -12,8 +13,7 @@ interface TagsSelectProps {
 }
 
 export const TagsSelect = ({ options, onChange }: TagsSelectProps) => {
-  const dispatch = useAppDispatch()
-  const { tags } = useAppSelector((state) => state.main)
+  const { t } = useTranslation()
 
   const reducedOptions = useMemo(
     () => options.map((option) => ({ value: option.id, label: option.name })),
@@ -31,13 +31,13 @@ export const TagsSelect = ({ options, onChange }: TagsSelectProps) => {
   return (
     <section className={"flex flex-col"}>
       <span className={"ml-4 mb-[4px] text-[16px] text-gray-400 font-semibold"}>
-        Теги
+        {t("tags")}
       </span>
 
       <Select
         onCreateOption={handleCreate}
-        placeholder={"Выберите теги"}
-        formatCreateLabel={(value) => `Создать тег "${value}"`}
+        placeholder={t("choose_tags")}
+        formatCreateLabel={(value) => `${t("create_tag")} "${value}"`}
         onChange={onChange}
         isMulti={true}
         isClearable={true}

@@ -60,11 +60,8 @@ export const mainSlice = createSlice({
     })
   },
   reducers: {
-    setLoggedIn: (state, action: PayloadAction<User>) => {
+    setLoggedIn: (state) => {
       state.isLoggedIn = true
-      state.user = action.payload
-
-      window.localStorage.setItem("user", JSON.stringify(action.payload))
     },
 
     setUser: (state, action: PayloadAction<User>) => {
@@ -72,7 +69,6 @@ export const mainSlice = createSlice({
     },
 
     logOut: (state) => {
-      window.localStorage.removeItem("user")
       clearAuthTokens()
 
       state.isLoggedIn = false

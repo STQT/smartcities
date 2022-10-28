@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useMemo, useState } from "react"
 
-import { Button, Input, Select } from "shared/components/atoms"
+import { Button, Input, Select, TextArea } from "shared/components/atoms"
 import { Page } from "shared/components/templates"
 import { Dialog } from "shared/components/molecules"
 import { XMarkIcon } from "@heroicons/react/24/outline"
@@ -19,12 +19,7 @@ import {
 import { toast } from "react-toastify"
 import { useRouter } from "next/router"
 import { isLoggedIn } from "axios-jwt"
-
-const PostTypeOptions: { label: string; value: PostTypes }[] = [
-  { label: "Вопрос", value: "QUESTION" },
-  { label: "Статья", value: "ARTICLE" },
-  { label: "Новость", value: "NEWS" }
-]
+import { useTranslation } from "next-export-i18n"
 
 const generateSuccessCreateToast = (type: string) => {
   return toast(
@@ -44,6 +39,14 @@ interface FormValues {
 
 export const CreatePage = () => {
   const { flows, tags } = useAppSelector((state) => state.main)
+  const { t } = useTranslation()
+
+  const PostTypeOptions: { label: string; value: PostTypes }[] = [
+    { label: t("question"), value: "QUESTION" },
+    { label: t("article"), value: "ARTICLE" },
+    { label: t("news"), value: "NEWS" }
+  ]
+
   const dispatch = useAppDispatch()
   const router = useRouter()
 
@@ -202,7 +205,7 @@ export const CreatePage = () => {
         isOpen={isThemeDialogOpen}
         setOpen={setThemeDialogOpen}>
         <section className={"flex items-center justify-between"}>
-          <h1 className={"text-xl font-semibold"}>Выберите тему</h1>
+          <h1 className={"text-xl font-semibold"}>{t("choose_thread")}</h1>
           {!selectedTheme ? (
             <button
               className={"w-[32px] outline-none h-[32px] text-gray-400"}
@@ -213,7 +216,7 @@ export const CreatePage = () => {
             <Button
               onClick={() => setThemeDialogOpen(false)}
               className={"px-3"}>
-              Выбрать "{selectedTheme.name}"
+              {t("choose")} "{selectedTheme.name}"
             </Button>
           )}
         </section>
@@ -245,7 +248,7 @@ export const CreatePage = () => {
         </section>
       </Dialog>
 
-      <Page withMenu={false} title={"Создать пост"}>
+      <Page withMenu={false} title={t("create_post")}>
         <section
           className={
             "w-full p-[20px] md:p-[40px] rounded-[20px] bg-white flex flex-col gap-[30px]"
@@ -253,15 +256,21 @@ export const CreatePage = () => {
           <Input
             onClick={() => setThemeDialogOpen(true)}
             readOnly={true}
-            hint={"Тема"}
-            placeholder={"Тема"}
+            hint={t("thread")}
+            placeholder={t("thread")}
             value={selectedTheme?.name ?? ""}
           />
           <Input
             name={"title"}
             onChange={handleInputChange}
-            hint={"Заголовок"}
-            placeholder={"Заголовок"}
+            hint={t("title")}
+            placeholder={t("title")}
+          />
+          <TextArea
+            name={"subtitle"}
+            onChange={handleInputChange}
+            hint={t("subtitle")}
+            placeholder={t("subtitle")}
           />
           {tags && <TagsSelect onChange={handleTagSelect} options={tags} />}
 
@@ -276,7 +285,7 @@ export const CreatePage = () => {
           <section
             className={"flex items-center mt-24 md:mt-12 justify-between"}>
             <Select
-              placeholder={"Тип поста"}
+              placeholder={t("post_type")}
               selectPosition={"top"}
               size={"sm"}
               selected={selectedPostType}
@@ -291,7 +300,7 @@ export const CreatePage = () => {
               disabled={!isSubmitAvailable}
               className={"px-5"}
               onClick={handlePublish}>
-              Опубликовать
+              {t("publish")}
             </Button>
           </section>
         </section>

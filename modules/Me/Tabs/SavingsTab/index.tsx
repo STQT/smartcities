@@ -7,12 +7,7 @@ import cn from "classnames"
 import { EmptyState } from "shared/components/atoms/EmptyState"
 import { ChevronRightIcon } from "@heroicons/react/24/outline"
 import { useRouter } from "next/router"
-
-const TABS: Record<string, string> = {
-  news: "Новости",
-  articles: "Статьи",
-  questions: "Вопросы"
-}
+import { useTranslation } from "next-export-i18n"
 
 const Post = ({
   post,
@@ -24,6 +19,7 @@ const Post = ({
   type: PostTypes
 }) => {
   const router = useRouter()
+  const { t } = useTranslation()
 
   const handleOpen = () => {
     router.push({
@@ -66,13 +62,21 @@ const Post = ({
         className={
           "w-full py-[30px] text-blue border-t hover:opacity-80 transition-opacity"
         }>
-        Удалить
+        {t("delete")}
       </button>
     </article>
   )
 }
 
 export const SavingsTab = () => {
+  const { t } = useTranslation()
+
+  const TABS: Record<string, string> = {
+    news: t("news"),
+    articles: t("articles"),
+    questions: t("questions")
+  }
+
   const [posts, setPosts] = useState<{
     news: TPost[]
     questions: TPost[]
@@ -142,7 +146,7 @@ export const SavingsTab = () => {
                 <EmptyState
                   className={"mt-0"}
                   isEmpty={true}
-                  caption={"Не найдено сохраненных новостей"}
+                  caption={t("news_not_found")}
                 />
               </section>
             )}
@@ -168,7 +172,7 @@ export const SavingsTab = () => {
                 <EmptyState
                   className={"mt-0"}
                   isEmpty={true}
-                  caption={"Не найдено сохраненных статей"}
+                  caption={t("articles_not_found")}
                 />
               </section>
             )}
@@ -194,7 +198,7 @@ export const SavingsTab = () => {
                 <EmptyState
                   className={"mt-0"}
                   isEmpty={true}
-                  caption={"Не найдено сохраненных вопросов"}
+                  caption={t("questions_not_found")}
                 />
               </section>
             )}

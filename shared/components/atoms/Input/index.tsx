@@ -10,10 +10,11 @@ interface InputProps {
   size?: "sm" | "md"
   hint?: string
   maxLength?: number
-  type?: "text" | "email" | "number"
+  type?: "text" | "email" | "number" | "date"
   value?: string
   onClick?: () => void
   readOnly?: boolean
+  max?: string
 }
 
 export const Input = ({
@@ -24,6 +25,7 @@ export const Input = ({
   size = "sm",
   placeholder,
   hint,
+  max,
   maxLength,
   type = "text",
   readOnly = false,
@@ -49,6 +51,7 @@ export const Input = ({
         </span>
       )}
       <input
+        max={max}
         readOnly={readOnly}
         onClick={onClick}
         value={value}

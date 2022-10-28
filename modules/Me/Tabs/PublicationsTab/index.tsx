@@ -7,12 +7,7 @@ import Link from "next/link"
 import { Tab } from "@headlessui/react"
 import cn from "classnames"
 import { EmptyState } from "shared/components/atoms/EmptyState"
-
-const TABS: Record<string, string> = {
-  news: "Новости",
-  articles: "Статьи",
-  questions: "Вопросы"
-}
+import { useTranslation } from "next-export-i18n"
 
 const Post = ({ post }: { post: TPost }) => {
   return (
@@ -50,6 +45,14 @@ const Post = ({ post }: { post: TPost }) => {
 
 export const PublicationsTab = () => {
   const [posts, setPosts] = useState<TPost[]>()
+
+  const { t } = useTranslation()
+
+  const TABS: Record<string, string> = {
+    news: t("news"),
+    articles: t("articles"),
+    questions: t("questions")
+  }
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]
@@ -126,7 +129,7 @@ export const PublicationsTab = () => {
                 <EmptyState
                   className={"mt-0"}
                   isEmpty={true}
-                  caption={"Не найдено созданных новостей"}
+                  caption={t("news_not_found")}
                 />
               </section>
             )}
@@ -147,7 +150,7 @@ export const PublicationsTab = () => {
                 <EmptyState
                   className={"mt-0"}
                   isEmpty={true}
-                  caption={"Не найдено созданных статей"}
+                  caption={t("articles_not_found")}
                 />
               </section>
             )}
@@ -168,7 +171,7 @@ export const PublicationsTab = () => {
                 <EmptyState
                   className={"mt-0"}
                   isEmpty={true}
-                  caption={"Не найдено созданных вопросов"}
+                  caption={t("questions_not_found")}
                 />
               </section>
             )}

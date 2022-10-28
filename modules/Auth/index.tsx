@@ -12,9 +12,11 @@ import { USER } from "services/api"
 
 import { setLoggedIn } from "store/slices/main"
 import { useAppDispatch } from "store"
+import { useTranslation } from "next-export-i18n"
 
 export const AuthPage = () => {
   const router = useRouter()
+  const { t } = useTranslation()
 
   const [formState, setFormState] = useState({
     username: "",
@@ -34,8 +36,8 @@ export const AuthPage = () => {
   const handleLoginClick = () => {
     login(formState.username, formState.password, {
       successCb: () => {
-        USER.getCurrent().then((res: AxiosResponse<User>) => {
-          dispatch(setLoggedIn(res.data))
+        USER.getCurrent().then(() => {
+          dispatch(setLoggedIn())
           router.push("/feed")
         })
       },
@@ -61,7 +63,7 @@ export const AuthPage = () => {
             }>
             <Logo type={"sm"} />
             <h2 className={"font-semibold text-[24px] text-center"}>
-              Вход SmartCity
+              {t("login_0")} SmartCity
             </h2>
           </div>
 
@@ -77,22 +79,22 @@ export const AuthPage = () => {
             <Password
               onChange={handleInputChange}
               name={"password"}
-              placeholder={"Пароль"}
+              placeholder={t("password")}
             />
 
             <button
               className={"font-semibold self-start text-[14px] text-blue"}>
-              Забыли пароль?
+              {t("forgot_password")}
             </button>
 
             <Button onClick={handleLoginClick} size={"sm"} theme={"blue"}>
-              Войти
+              {t("login_0")}
             </Button>
           </div>
 
           <div className={"flex flex-col gap-[20px]"}>
             <h2 className={"text-[14px] font-semibold"}>
-              Или войдите с помощью других сервисов
+              {t("or_sign_in_with_other_services")}
             </h2>
 
             <SignInWith />
@@ -104,14 +106,16 @@ export const AuthPage = () => {
             "bg-white mb-[40px] rounded-[10px] mx-auto max-w-[400px] p-[30px] mt-[20px] flex flex-col gap-[10px]"
           }>
           <Button onClick={handleRegisterClick} size={"sm"} theme={"green"}>
-            Зарегистрироваться
+            {t("register")}
           </Button>
 
           <p className={"text-gray-200 text-[14px] text-center"}>
             После регистрации вы получите доступ ко всем возможностям SmartCity
           </p>
 
-          <button className={"self-center text-[14px]"}>Узнать больше</button>
+          <button className={"self-center text-[14px]"}>
+            {t("know_more")}
+          </button>
         </section>
 
         <footer
