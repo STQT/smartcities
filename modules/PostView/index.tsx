@@ -15,6 +15,7 @@ import { Comments } from "shared/components/templates"
 import { ARTICLE, BOOKMARKS, NEWS, QUESTION } from "services/api"
 import moment from "moment/moment"
 import CountryFlag from "react-country-flag"
+import { addBaseURL } from "../../shared/utils"
 
 interface PostViewProps {
   post: Post
@@ -77,6 +78,8 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
     }
   }
 
+  console.log(post)
+
   return (
     <Page title={post?.title as string}>
       <main className={"flex-1 w-full rounded-[20px]"}>
@@ -85,7 +88,7 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
             <section className={"px-[20px] flex flex-col border-b pb-4"}>
               <section className={"flex flex-col mb-[20px]"}>
                 <div className={"flex gap-2 items-center select-none"}>
-                  <Avatar src={post.user.image} size={40} />
+                  <Avatar src={addBaseURL(post.user.image)} size={40} />
                   <span className={"text-[14px]"}>
                     {post.user.first_name && post.user.last_name
                       ? `${post.user.first_name} ${post.user.last_name}`

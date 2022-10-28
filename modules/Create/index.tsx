@@ -35,6 +35,7 @@ interface FormValues {
   tags_ids: number[]
   image: null | File
   description: string
+  subtitle: string
 }
 
 export const CreatePage = () => {
@@ -70,7 +71,8 @@ export const CreatePage = () => {
     title: "",
     tags_ids: [],
     description: "",
-    image: null
+    image: null,
+    subtitle: ""
   })
 
   const handleInputChange = (
@@ -162,6 +164,7 @@ export const CreatePage = () => {
       publicationFormData.append("theme", String(selectedTheme?.id))
       publicationFormData.append("image", formValues.image as File)
       publicationFormData.append("tags_ids", formValues.tags_ids.join(","))
+      publicationFormData.append("subtitle", formValues.subtitle)
 
       const POST_TYPE = {
         ARTICLE,

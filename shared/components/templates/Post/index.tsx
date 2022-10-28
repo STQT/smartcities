@@ -129,7 +129,10 @@ export const Post = ({ targetPost }: PostProps) => {
         )}
 
         {post.subtitle && (
-          <div className={"text-[16px] mb-[20px]"}>{post.subtitle}</div>
+          <div
+            className={"text-[16px] mb-[20px]"}
+            dangerouslySetInnerHTML={{ __html: post.subtitle }}
+          />
         )}
 
         {post.tags.length > 0 && (

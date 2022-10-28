@@ -3,15 +3,11 @@ import { useRouter } from "next/router"
 import cn from "classnames"
 
 import { Avatar, Logo, Select } from "shared/components/atoms"
-import { useAppDispatch, useAppSelector } from "store"
+import { useAppSelector } from "store"
 import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/24/outline"
 import { MobileMenu } from "../MobileMenu"
 import { useScrollBlock } from "../../../hooks"
-import {
-  LanguageSwitcher,
-  useSelectedLanguage,
-  useTranslation
-} from "next-export-i18n"
+import { useSelectedLanguage, useTranslation } from "next-export-i18n"
 
 const languages = [
   {
@@ -46,7 +42,7 @@ const languages = [
 ]
 
 export const Header = () => {
-  const { lang, setLang } = useSelectedLanguage()
+  const { lang } = useSelectedLanguage()
   const headerRef = useRef<HTMLElement>(null)
   const [hasScrolled, setScrolled] = useState(false)
   const [isMenuOpened, setMenuOpen] = useState(false)
@@ -122,12 +118,7 @@ export const Header = () => {
               className={"w-full h-full outline-none bg-[#F5F6FA]"}
             />
           </div>
-          <LanguageSwitcher shallow={true} lang={"us"}>
-            US
-          </LanguageSwitcher>
-          <LanguageSwitcher shallow={true} lang={"az"}>
-            AZ
-          </LanguageSwitcher>
+
           <Select
             isLanguageSwitcher={true}
             size={"sm"}

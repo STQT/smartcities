@@ -7,5 +7,13 @@ export const SOCIALS = {
         auth_token: code
       })
     }
+  },
+
+  LINKEDIN: {
+    login(code: string) {
+      return request.post("/social/linked-in", {
+        auth_token: code
+      })
+    }
   }
 }
