@@ -51,7 +51,7 @@ export const SignInWith = () => {
   })
 
   const handleFacebookLogin = (token: string) => {
-    SOCIALS.FACEBOOK.login(e.accessToken)
+    SOCIALS.FACEBOOK.login(token)
       .then((res) => {
         setAuthTokens({
           accessToken: res.data.access,
