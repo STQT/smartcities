@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { Avatar, Logo } from "../../atoms"
+import { Avatar, Button, Logo } from "../../atoms"
 import {
   ArrowUturnRightIcon,
   Bars3Icon,
@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "store"
 import { MainFlows } from "../../molecules"
 import { Fragment } from "react"
 import { Transition } from "@headlessui/react"
+import { useTranslation } from "next-export-i18n"
 
 interface MobileMenuProps {
   closeMenu: () => void
@@ -24,6 +25,7 @@ interface MobileMenuProps {
 export const MobileMenu = ({ closeMenu, isMenuOpened }: MobileMenuProps) => {
   const { isLoggedIn, user } = useAppSelector((state) => state.main)
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
 
   const router = useRouter()
 
@@ -67,7 +69,10 @@ export const MobileMenu = ({ closeMenu, isMenuOpened }: MobileMenuProps) => {
           className={
             "fixed top-0 left-0 w-full h-full z-[500] backdrop-blur-sm bg-blue/30"
           }>
-          <aside className={"w-[70%] pt-[40px] h-full bg-white rounded-r-3xl"}>
+          <aside
+            className={
+              "w-[70%] pt-[40px] h-full overflow-y-auto bg-white rounded-r-3xl"
+            }>
             <section
               className={
                 "px-[20px] border-b-[0.5px] border-gray-300/30 pb-[30px]"
@@ -86,27 +91,19 @@ export const MobileMenu = ({ closeMenu, isMenuOpened }: MobileMenuProps) => {
               </section>
 
               <div className={"mt-[30px] flex flex-col gap-4"}>
-                <MenuItem
-                  isActive={router.asPath.includes("/search")}
-                  Icon={<MagnifyingGlassIcon className={"w-[20px] h-[20px]"} />}
-                  onClick={handleMoveToSearch}
-                  label={"Поиск"}
-                />
+                {isLoggedIn && (
+                  <Button onClick={handleMoveToCreate}>
+                    <span className={"mr-2"}>{t("create_post")}</span>{" "}
+                    <PlusIcon className={"w-[20px] h-[20px]"} />
+                  </Button>
+                )}
 
                 {isLoggedIn && (
                   <MenuItem
                     isActive={router.asPath.includes("?tab=notifications")}
                     Icon={<BellIcon className={"w-[20px] h-[20px]"} />}
                     onClick={handleMoveToNotifications}
-                    label={"Уведомления"}
-                  />
-                )}
-
-                {isLoggedIn && (
-                  <MenuItem
-                    Icon={<PlusIcon className={"w-[20px] h-[20px]"} />}
-                    onClick={handleMoveToCreate}
-                    label={"Создать"}
+                    label={t("notifications")}
                   />
                 )}
               </div>
@@ -128,14 +125,14 @@ export const MobileMenu = ({ closeMenu, isMenuOpened }: MobileMenuProps) => {
                     Icon={<Cog6ToothIcon className={"w-[20px] h-[20px]"} />}
                     isActive={router.asPath.includes("?tab=profile")}
                     onClick={handleMoveToProfile}
-                    label={"Настройки"}
+                    label={t("settings")}
                   />
                 )}
                 <MenuItem
                   Icon={
                     <QuestionMarkCircleIcon className={"w-[20px] h-[20px]"} />
                   }
-                  label={"Правила"}
+                  label={t("rules")}
                   onClick={() => {}}
                 />
               </section>

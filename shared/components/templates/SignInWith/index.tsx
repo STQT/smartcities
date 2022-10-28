@@ -22,7 +22,7 @@ export const SignInWith = () => {
       })
       .then(() => {
         dispatch(setLoggedIn())
-        router.push("/feed")
+        router.push("/me")
       })
   }
 
@@ -42,13 +42,27 @@ export const SignInWith = () => {
         })
         .then(() => {
           dispatch(setLoggedIn())
-          router.push("/feed")
+          router.push("/me")
         })
     },
     onError: (error) => {
       console.log(error)
     }
   })
+
+  const handleFacebookLogin = (token: string) => {
+    SOCIALS.FACEBOOK.login(e.accessToken)
+      .then((res) => {
+        setAuthTokens({
+          accessToken: res.data.access,
+          refreshToken: res.data.refresh
+        })
+      })
+      .then(() => {
+        dispatch(setLoggedIn())
+        router.push("/me")
+      })
+  }
 
   return (
     <section className={"w-full flex flex-col"}>
@@ -59,10 +73,9 @@ export const SignInWith = () => {
       <FacebookLogin
         appId="1870845873123224"
         autoLoad={true}
-        fields="name"
-        callback={(e) => {
-          console.log(e)
-        }}
+        fields={"name"}
+        // @ts-ignore
+        callback={(res) => handleFacebookLogin(res!.accessToken as string)}
       />
     </section>
   )

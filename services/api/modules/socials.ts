@@ -15,5 +15,13 @@ export const SOCIALS = {
         auth_token: code
       })
     }
+  },
+
+  FACEBOOK: {
+    login(code: string) {
+      return request.post("/social/facebook", {
+        auth_token: code
+      })
+    }
   }
 }

@@ -102,9 +102,12 @@ export const Header = () => {
 
     return (
       <>
-        <h1 className={"hidden md:block text-[24px] font-semibold"}>
-          {t("welcome")}, {user?.first_name}
-        </h1>
+        <section className={"hidden md:flex gap-[20px] items-center"}>
+          <Logo type={"xs"} />
+          <h1 className={"text-[18px] lg:text-[24px] font-semibold"}>
+            {t("welcome")}, {user?.first_name}
+          </h1>
+        </section>
 
         <button onClick={handleMenuOpen} className={"block md:hidden"}>
           <Bars3Icon className={"w-[30px] text-blue h-[30px]"} />
@@ -113,7 +116,7 @@ export const Header = () => {
         <section className={"flex gap-[30px] items-center"}>
           <div
             className={
-              "w-[360px] h-[40px] rounded-[100px] bg-[#F5F6FA] overflow-hidden pl-[17px] flex items-center"
+              "w-full md:w-[360px] ml-4 h-[40px] rounded-[100px] bg-[#F5F6FA] overflow-hidden pl-[17px] flex items-center"
             }>
             <MagnifyingGlassIcon
               className={"w-[20px] h-[20px] text-[#858585] mr-2"}

@@ -1,4 +1,4 @@
-import { Avatar, Logo } from "../../atoms"
+import { Avatar, Button, Logo } from "../../atoms"
 import { MainFlows } from "../../molecules"
 import { useAppDispatch, useAppSelector } from "store"
 import { useRouter } from "next/router"
@@ -6,7 +6,6 @@ import {
   ArrowUturnRightIcon,
   BellIcon,
   Cog6ToothIcon,
-  MagnifyingGlassIcon,
   PlusIcon,
   QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline"
@@ -79,19 +78,18 @@ export const Menu = () => {
 
         <div className={"mt-[30px] flex flex-col gap-4"}>
           {isLoggedIn && (
+            <Button onClick={handleMoveToCreate}>
+              <span className={"mr-2"}>{t("create_post")}</span>{" "}
+              <PlusIcon className={"w-[20px] h-[20px]"} />
+            </Button>
+          )}
+
+          {isLoggedIn && (
             <MenuItem
               isActive={router.asPath.includes("?tab=notifications")}
               Icon={<BellIcon className={"w-[20px] h-[20px]"} />}
               onClick={handleMoveToNotifications}
               label={t("notifications")}
-            />
-          )}
-
-          {isLoggedIn && (
-            <MenuItem
-              Icon={<PlusIcon className={"w-[20px] h-[20px]"} />}
-              onClick={handleMoveToCreate}
-              label={t("create")}
             />
           )}
         </div>

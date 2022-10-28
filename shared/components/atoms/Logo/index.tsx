@@ -2,7 +2,7 @@ import Image from "next/image"
 import cn from "classnames"
 
 interface LogoProps {
-  type?: "sm" | "lg"
+  type?: "xs" | "sm" | "lg"
   onClick?: () => void
 }
 
@@ -13,6 +13,16 @@ export const Logo = ({ type = "lg", onClick }: LogoProps) => {
 
   return (
     <>
+      {type === "xs" && (
+        <Image
+          className={classes}
+          onClick={onClick}
+          src={"/svg/logo/icon.svg"}
+          width={"30px"}
+          height={"30px"}
+        />
+      )}
+
       {type === "sm" && (
         <Image
           className={classes}
