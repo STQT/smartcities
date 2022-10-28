@@ -5,10 +5,14 @@ import { setAuthTokens } from "axios-jwt"
 import { setLoggedIn } from "store/slices/main"
 import { useRouter } from "next/router"
 import { useLinkedIn } from "react-linkedin-login-oauth2"
-import { Button } from "../../atoms"
 import FacebookLogin from "react-facebook-login"
+import cn from "classnames"
 
-export const SignInWith = () => {
+interface SignInWithProps {
+  isRegister?: boolean
+}
+
+export const SignInWith = ({ isRegister }: SignInWithProps) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
 
@@ -65,13 +69,32 @@ export const SignInWith = () => {
   }
 
   return (
-    <section className={"w-full flex flex-col"}>
+    <section
+      className={cn("w-full gap-3", {
+        "flex flex-col": !isRegister,
+        "grid grid-cols-3": isRegister
+      })}>
       <GoogleLogin onSuccess={handleGoogleLogin} />
 
-      <Button onClick={linkedInLogin}>LinkedIn</Button>
+      <button
+        onClick={linkedInLogin}
+        className={
+          "w-full h-[40px] bg-blue text-white font-semibold rounded-[5px] text-[14px]"
+        }>
+        LinkedIn
+      </button>
 
       <FacebookLogin
+        size={"small"}
         appId="1870845873123224"
+        buttonStyle={{
+          width: "100%",
+          height: "40px",
+          borderRadius: "5px",
+          fontSize: "14px",
+          outline: "none",
+          border: "none"
+        }}
         autoLoad={true}
         fields={"name"}
         // @ts-ignore

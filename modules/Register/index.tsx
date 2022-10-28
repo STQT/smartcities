@@ -364,7 +364,7 @@ export const RegisterPage = () => {
                   {t("or_sign_in_with_other_services")}
                 </h3>
 
-                <SignInWith />
+                <SignInWith isRegister={true} />
               </div>
             </section>
           </section>
