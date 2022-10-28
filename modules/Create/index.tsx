@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useMemo, useState } from "react"
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
 
 import { Button, Input, Select, TextArea } from "shared/components/atoms"
 import { Page } from "shared/components/templates"
@@ -7,19 +7,15 @@ import { XMarkIcon } from "@heroicons/react/24/outline"
 
 import { useAppDispatch, useAppSelector } from "store"
 import { fetchFlows, fetchTags } from "store/slices/main"
-import { PostTypes, Theme } from "shared/types"
-import { ARTICLE, BASE, NEWS, QUESTION } from "services/api"
+import { Language, PostTypes, Theme } from "shared/types"
+import { ARTICLE, NEWS, QUESTION } from "services/api"
 
-import {
-  PreviewSelect,
-  TagsSelect,
-  ThemesSection,
-  Editor
-} from "./components/templates"
+import { PreviewSelect, TagsSelect, Editor } from "./components/templates"
 import { toast } from "react-toastify"
 import { useRouter } from "next/router"
 import { isLoggedIn } from "axios-jwt"
-import { useTranslation } from "next-export-i18n"
+import { useSelectedLanguage, useTranslation } from "next-export-i18n"
+import { addBaseURL } from "../../shared/utils"
 
 const generateSuccessCreateToast = (type: string) => {
   return toast(
@@ -42,6 +38,8 @@ export const CreatePage = () => {
   const { flows, tags } = useAppSelector((state) => state.main)
   const { t } = useTranslation()
 
+  const { lang } = useSelectedLanguage()
+
   const PostTypeOptions: { label: string; value: PostTypes }[] = [
     { label: t("question"), value: "QUESTION" },
     { label: t("article"), value: "ARTICLE" },
@@ -53,14 +51,6 @@ export const CreatePage = () => {
 
   const [isThemeDialogOpen, setThemeDialogOpen] = useState(false)
   const [selectedFlow, setSelectedFlow] = useState<Theme>()
-
-  // Current Selected Theme
-  const [selectedTheme, setSelectedTheme] = useState<Theme>()
-
-  // Themes by Level
-  const [firstLevelThemes, setFirstLevelThemes] = useState<Theme[]>()
-  const [secondLevelThemes, setSecondLevelThemes] = useState<Theme[]>()
-  const [thirdLevelThemes, setThirdLevelThemes] = useState<Theme[]>()
 
   const [selectedPostType, setSelectedPostType] = useState<{
     label: string
@@ -87,24 +77,18 @@ export const CreatePage = () => {
     setFormValues((prev) => ({ ...prev, description: value }))
   }
 
-  const clearThemes = () => {
-    setFirstLevelThemes([])
-    setSecondLevelThemes([])
-    setThirdLevelThemes([])
+  const caption = useCallback(
+    (flow?: Theme) => {
+      if (flow) {
+        return lang === "us"
+          ? flow.name
+          : flow[`name_${lang as Exclude<Language, "en">}`]
+      }
 
-    setSelectedTheme(undefined)
-  }
-
-  useEffect(() => {
-    if (selectedFlow) {
-      BASE.getThemeByTreeId(selectedFlow.id).then((res) => {
-        setFirstLevelThemes(res.data)
-        setSelectedTheme(selectedFlow)
-      })
-    }
-
-    clearThemes()
-  }, [selectedFlow])
+      return ""
+    },
+    [lang]
+  )
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -114,26 +98,7 @@ export const CreatePage = () => {
 
   const handleFlowSelect = (flow: Theme) => {
     setSelectedFlow(flow)
-  }
-
-  const handleFirstLevelThemeSelect = (theme: Theme) => {
-    setSelectedTheme(theme)
-
-    BASE.getThemeByTreeId(theme.id).then((res) => {
-      setSecondLevelThemes(res.data)
-    })
-  }
-
-  const handleSecondLevelThemeSelect = (theme: Theme) => {
-    setSelectedTheme(theme)
-
-    BASE.getThemeByTreeId(theme.id).then((res) => {
-      setThirdLevelThemes(res.data)
-    })
-  }
-
-  const handleThirdLevelThemeSelect = (theme: Theme) => {
-    setSelectedTheme(theme)
+    setThemeDialogOpen(false)
   }
 
   const handleTagSelect = (value: any) => {
@@ -151,7 +116,7 @@ export const CreatePage = () => {
       formValues.description &&
       selectedPostType &&
       selectedPostType.value &&
-      (selectedTheme || selectedFlow)
+      selectedFlow
     )
   }, [formValues, selectedPostType])
 
@@ -161,7 +126,7 @@ export const CreatePage = () => {
 
       publicationFormData.append("title", formValues.title)
       publicationFormData.append("description", formValues.description)
-      publicationFormData.append("theme", String(selectedTheme?.id))
+      publicationFormData.append("theme", String(selectedFlow?.id))
       publicationFormData.append("image", formValues.image as File)
       publicationFormData.append("tags_ids", formValues.tags_ids.join(","))
       publicationFormData.append("subtitle", formValues.subtitle)
@@ -203,51 +168,27 @@ export const CreatePage = () => {
   return (
     <>
       <Dialog
-        className={"h-[586px]"}
         width={"max-w-7xl"}
         isOpen={isThemeDialogOpen}
         setOpen={setThemeDialogOpen}>
-        <section className={"flex items-center justify-between"}>
-          <h1 className={"text-xl font-semibold"}>{t("choose_thread")}</h1>
-          {!selectedTheme ? (
-            <button
-              className={"w-[32px] outline-none h-[32px] text-gray-400"}
-              onClick={() => setThemeDialogOpen(false)}>
-              <XMarkIcon />
-            </button>
-          ) : (
-            <Button
-              onClick={() => setThemeDialogOpen(false)}
-              className={"px-3"}>
-              {t("choose")} "{selectedTheme.name}"
-            </Button>
-          )}
-        </section>
+        <section className={"flex flex-col"}>
+          <h1 className={"text-xl font-semibold mb-[30px]"}>
+            {t("choose_thread")}
+          </h1>
 
-        <section className={"flex mt-[30px] gap-[10px] w-full"}>
-          <ThemesSection
-            themes={flows}
-            handleThemeSelect={handleFlowSelect}
-            selectedTheme={selectedFlow}
-          />
-
-          <ThemesSection
-            themes={firstLevelThemes}
-            handleThemeSelect={handleFirstLevelThemeSelect}
-            selectedTheme={selectedTheme}
-          />
-
-          <ThemesSection
-            themes={secondLevelThemes}
-            handleThemeSelect={handleSecondLevelThemeSelect}
-            selectedTheme={selectedTheme}
-          />
-
-          <ThemesSection
-            themes={thirdLevelThemes}
-            handleThemeSelect={handleThirdLevelThemeSelect}
-            selectedTheme={selectedTheme}
-          />
+          <section className={"grid grid-cols-3 gap-3"}>
+            {flows.map((flow, idx) => (
+              <button
+                onClick={() => handleFlowSelect(flow)}
+                key={idx}
+                className={
+                  "h-[100px] px-[20px] bg-[#F0F4FD] opacity-80 transition-all hover:opacity-100 text-[16px] flex gap-[20px] items-center rounded-[10px]"
+                }>
+                <img alt={""} src={addBaseURL(flow.preview_icon)} />
+                {caption(flow)}
+              </button>
+            ))}
+          </section>
         </section>
       </Dialog>
 
@@ -261,7 +202,7 @@ export const CreatePage = () => {
             readOnly={true}
             hint={t("thread")}
             placeholder={t("thread")}
-            value={selectedTheme?.name ?? ""}
+            value={caption(selectedFlow) ?? ""}
           />
           <Input
             name={"title"}
@@ -299,12 +240,23 @@ export const CreatePage = () => {
               options={PostTypeOptions}
             />
 
-            <Button
-              disabled={!isSubmitAvailable}
-              className={"px-5"}
-              onClick={handlePublish}>
-              {t("publish")}
-            </Button>
+            <section className={"flex gap-4"}>
+              <Button
+                theme={"gray"}
+                className={"px-5"}
+                onClick={() => {
+                  router.push("/")
+                }}>
+                {t("back")}
+              </Button>
+
+              <Button
+                disabled={!isSubmitAvailable}
+                className={"px-5"}
+                onClick={handlePublish}>
+                {t("publish")}
+              </Button>
+            </section>
           </section>
         </section>
       </Page>

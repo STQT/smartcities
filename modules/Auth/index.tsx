@@ -43,7 +43,7 @@ export const AuthPage = () => {
       },
 
       failureCb: () => {
-        toast("Неправильный пароль или логин", {
+        toast(t("wrong_password_or_login"), {
           type: "error"
         })
       }
@@ -71,7 +71,7 @@ export const AuthPage = () => {
             <Input
               onChange={handleInputChange}
               name={"username"}
-              placeholder={"Телефон или электронная почта"}
+              placeholder={t("login_1")}
               className={"w-full"}
               size={"sm"}
             />
@@ -110,7 +110,7 @@ export const AuthPage = () => {
           </Button>
 
           <p className={"text-gray-200 text-[14px] text-center"}>
-            После регистрации вы получите доступ ко всем возможностям SmartCity
+            {t("access_to_all_features_after_login")}
           </p>
 
           <button className={"self-center text-[14px]"}>

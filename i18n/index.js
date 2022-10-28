@@ -6,8 +6,10 @@ const i18n = {
     us,
     az
   },
-  defaultLang: "us",
-  useBrowserDefault: true
+  defaultLang:
+    typeof window !== "undefined" && localStorage.getItem("lang")
+      ? localStorage.getItem("lang")
+      : "us"
 }
 
 module.exports = i18n

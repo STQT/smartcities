@@ -127,7 +127,7 @@ export const RegisterPage = () => {
           router.push("/feed")
         })
         .catch(() => {
-          toast("Вы ввели неправильный код", {
+          toast(t("wrong_code"), {
             type: "error"
           })
         })
@@ -169,7 +169,7 @@ export const RegisterPage = () => {
               "max-w-[862px] w-full bg-white rounded-[10px] md:mt-[80px] py-[30px] md:py-[60px] px-[24px] md:px-[62px] mx-auto"
             }>
             <h1 className={"text-blue text-[24px] font-semibold mb-[60px]"}>
-              Регистрация
+              {t("register")}
             </h1>
 
             <section className={"flex mb-[40px] items-center gap-[40px]"}>
@@ -345,9 +345,9 @@ export const RegisterPage = () => {
                   type={"checkbox"}
                 />
                 <span className={"text-[16px]"}>
-                  Я принимаю условия{" "}
+                  {t("i_agree_with")}{" "}
                   <a href={"#"} className={"text-blue"}>
-                    Пользовательского соглашения
+                    {t("terms_of_service")}
                   </a>
                 </span>
               </div>
@@ -403,14 +403,14 @@ export const RegisterPage = () => {
           </div>
 
           <h2 className={"text-[24px] font-semibold text-center mt-[30px]"}>
-            Введите код
+            {t("enter_code")}
           </h2>
 
           <p
             className={
               "text-[14px] text-gray-300 max-w-[280px] text-center mt-2"
             }>
-            Ваш номер телефона будет использоваться для входа в аккаунт
+            {t("use_login_to_enter")}
           </p>
 
           <Input
@@ -421,16 +421,16 @@ export const RegisterPage = () => {
           />
 
           <Button onClick={handleVerifyClick} className={"w-full mt-16"}>
-            Продолжать
+            {t("continue")}
           </Button>
 
-          <p
-            className={
-              "text-[14px] w-full text-gray-300 text-center mt-[20px]"
-            }>
-            Нажимая «Продолжить», вы принимаете пользовательское соглашение и
-            политику конфиденциальности
-          </p>
+          {/*<p*/}
+          {/*  className={*/}
+          {/*    "text-[14px] w-full text-gray-300 text-center mt-[20px]"*/}
+          {/*  }>*/}
+          {/*  Нажимая «Продолжить», вы принимаете пользовательское соглашение и*/}
+          {/*  политику конфиденциальности*/}
+          {/*</p>*/}
         </section>
       </Dialog>
     </>

@@ -10,6 +10,7 @@ export type Language = "en" | "uz" | "tu" | "az" | "kz" | "kr"
 export interface Theme {
   id: number
   icon: string
+  preview_icon: string
 
   name: string
   name_az: string

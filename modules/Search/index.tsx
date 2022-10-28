@@ -7,10 +7,12 @@ import { NewsTab, ArticlesTab, QuestionsTab } from "./components/templates"
 import { Input } from "../../shared/components/atoms"
 import debouce from "lodash.debounce"
 import { useTranslation } from "next-export-i18n"
+import { useAppSelector } from "../../store"
 
 export const SearchPage = () => {
   const router = useRouter()
-  const [query, setQuery] = useState("")
+  const { searchTerm } = useAppSelector((state) => state.main)
+  const [query, setQuery] = useState(searchTerm ?? "")
   const { t } = useTranslation()
 
   const TABS: Record<string, string> = {
@@ -18,7 +20,6 @@ export const SearchPage = () => {
     articles: t("articles"),
     questions: t("questions")
   }
-
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]
@@ -79,7 +80,11 @@ export const SearchPage = () => {
       <main className={"flex-1"}>
         <div
           className={"flex flex-col p-[24px] pb-0 rounded-t-[20px] bg-white"}>
-          <Input onChange={debouncedResults} placeholder={"Поиск"} />
+          <Input
+            value={searchTerm}
+            onChange={debouncedResults}
+            placeholder={"Поиск"}
+          />
         </div>
         <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
           <Tab.List

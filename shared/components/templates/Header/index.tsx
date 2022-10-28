@@ -3,11 +3,12 @@ import { useRouter } from "next/router"
 import cn from "classnames"
 
 import { Avatar, Logo, Select } from "shared/components/atoms"
-import { useAppSelector } from "store"
+import { useAppDispatch, useAppSelector } from "store"
 import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/24/outline"
 import { MobileMenu } from "../MobileMenu"
 import { useScrollBlock } from "../../../hooks"
 import { useSelectedLanguage, useTranslation } from "next-export-i18n"
+import { setSearchTerm } from "../../../../store/slices/main"
 
 const languages = [
   {
@@ -46,6 +47,7 @@ export const Header = () => {
   const headerRef = useRef<HTMLElement>(null)
   const [hasScrolled, setScrolled] = useState(false)
   const [isMenuOpened, setMenuOpen] = useState(false)
+  const dispatch = useAppDispatch()
 
   const [blockScroll, allowScroll] = useScrollBlock()
 
@@ -89,6 +91,10 @@ export const Header = () => {
     [lang, languages]
   )
 
+  useEffect(() => {
+    localStorage.setItem("lang", lang)
+  }, [lang])
+
   const LoggedInState = useMemo(() => {
     const handleMenuOpen = () => {
       setMenuOpen(true)
@@ -113,6 +119,12 @@ export const Header = () => {
               className={"w-[20px] h-[20px] text-[#858585] mr-2"}
             />
             <input
+              onKeyDown={(e) => {
+                if (e.keyCode === 13) {
+                  router.push("/search")
+                }
+              }}
+              onChange={(e) => dispatch(setSearchTerm(e.target.value))}
               placeholder={"Search"}
               spellCheck={false}
               className={"w-full h-full outline-none bg-[#F5F6FA]"}
@@ -142,11 +154,21 @@ export const Header = () => {
       <section className={"flex items-center w-full justify-between"}>
         <Logo onClick={() => router.push("/feed")} />
 
-        <button
-          onClick={() => router.push("/auth")}
-          className={"text-[18px] text-blue font-semibold"}>
-          {t("login_0")}
-        </button>
+        <section className={"flex items-center gap-5"}>
+          <Select
+            isLanguageSwitcher={true}
+            size={"sm"}
+            isCountrySelect={true}
+            selected={selectedLanguage}
+            options={languages}
+          />
+
+          <button
+            onClick={() => router.push("/auth")}
+            className={"text-[18px] text-blue font-semibold"}>
+            {t("login_0")}
+          </button>
+        </section>
       </section>
     )
   }, [])

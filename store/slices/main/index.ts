@@ -7,6 +7,7 @@ import { Post, Tag, Theme, User } from "shared/types"
 
 import { AxiosListResponse } from "services/api/config"
 import { BASE, TAGS } from "services/api"
+import { stat } from "fs"
 
 export interface MainState {
   user: User | null
@@ -17,6 +18,7 @@ export interface MainState {
   readingNow: Post[]
 
   tags: Tag[]
+  searchTerm?: string
 }
 
 const initialState: MainState = {
@@ -24,7 +26,8 @@ const initialState: MainState = {
   isLoggedIn: false,
   flows: [],
   readingNow: [],
-  tags: []
+  tags: [],
+  searchTerm: ""
 }
 
 export const fetchFlows = createAsyncThunk("flows/fetchFlows", () =>
@@ -73,11 +76,15 @@ export const mainSlice = createSlice({
 
       state.isLoggedIn = false
       state.user = null
+    },
+
+    setSearchTerm: (state, action: PayloadAction<string>) => {
+      state.searchTerm = action.payload
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { setLoggedIn, logOut, setUser } = mainSlice.actions
+export const { setLoggedIn, logOut, setUser, setSearchTerm } = mainSlice.actions
 
 export default mainSlice.reducer

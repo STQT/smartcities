@@ -13,6 +13,12 @@ const Article: NextPage = () => {
   const { id } = router.query
 
   useEffect(() => {
+    router.replace({
+      query: { ...router.query, lang: localStorage.getItem("lang") }
+    })
+  }, [])
+
+  useEffect(() => {
     if (id) {
       QUESTION.getFull(id as string).then((res) => {
         setPost(res.data)

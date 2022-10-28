@@ -6,6 +6,7 @@
   "rules": "Rules",
   "reading_now": "Reading now",
   "login_0": "Login",
+  "login_1": "Login",
   "read_more": "Read more",
   "all_threads": "All threads",
 
@@ -77,5 +78,16 @@
 
   "male": "Male",
   "female": "Female",
-  "gender": "Gender"
+  "gender": "Gender",
+
+  "back": "Back",
+
+  "wrong_password_or_login": "Wrong password or login",
+  "access_to_all_features_after_login": "After authorization, you will get access to all the features of Hub SmartCities",
+  "wrong_code": "Wrong code",
+  "terms_of_service": "Terms of Service",
+  "i_agree_with": "I agree with",
+  "enter_code": "Enter code",
+  "use_login_to_enter": "Use login to login your account",
+  "continue": "Continue"
 }

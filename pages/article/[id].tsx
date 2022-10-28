@@ -15,6 +15,12 @@ const Article: NextPage = () => {
   const { id } = router.query
 
   useEffect(() => {
+    router.replace({
+      query: { ...router.query, lang: localStorage.getItem("lang") }
+    })
+  }, [])
+
+  useEffect(() => {
     if (id) {
       ARTICLE.getFull(id as string).then((res: AxiosResponse<Post>) => {
         setPost(res.data)

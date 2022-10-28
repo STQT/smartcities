@@ -6,7 +6,7 @@ import { setLoggedIn } from "store/slices/main"
 import { useRouter } from "next/router"
 import { useLinkedIn } from "react-linkedin-login-oauth2"
 import { Button } from "../../atoms"
-import { LinkedIn } from "react-linkedin-login-oauth2"
+import FacebookLogin from "react-facebook-login"
 
 export const SignInWith = () => {
   const router = useRouter()
@@ -55,6 +55,15 @@ export const SignInWith = () => {
       <GoogleLogin onSuccess={handleGoogleLogin} />
 
       <Button onClick={linkedInLogin}>LinkedIn</Button>
+
+      <FacebookLogin
+        appId="1870845873123224"
+        autoLoad={true}
+        fields="name"
+        callback={(e) => {
+          console.log(e)
+        }}
+      />
     </section>
   )
 }

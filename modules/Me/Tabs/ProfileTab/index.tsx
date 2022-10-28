@@ -240,6 +240,12 @@ export const ProfileTab = () => {
           hint={t("username")}
         />
 
+        <div />
+        <div />
+        <button
+          className={"text-[18px] justify-self-start text-blue font-semibold"}>
+          {t("how_to_become_author")}
+        </button>
         <Button onClick={handleUpdateInfo}>{t("save")}</Button>
       </section>
     </section>

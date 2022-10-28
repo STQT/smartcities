@@ -78,8 +78,6 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
     }
   }
 
-  console.log(post)
-
   return (
     <Page title={post?.title as string}>
       <main className={"flex-1 w-full rounded-[20px]"}>
