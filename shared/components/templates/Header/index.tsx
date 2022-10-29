@@ -95,11 +95,11 @@ export const Header = () => {
     localStorage.setItem("lang", lang)
   }, [lang])
 
-  const LoggedInState = useMemo(() => {
-    const handleMenuOpen = () => {
-      setMenuOpen(true)
-    }
+  const handleMenuOpen = () => {
+    setMenuOpen(true)
+  }
 
+  const LoggedInState = useMemo(() => {
     return (
       <>
         <section className={"hidden md:flex gap-[20px] items-center"}>
@@ -123,7 +123,7 @@ export const Header = () => {
             />
             <input
               onKeyDown={(e) => {
-                if (e.keyCode === 13) {
+                if (e.key === "Enter") {
                   router.push("/search")
                 }
               }}
@@ -155,9 +155,35 @@ export const Header = () => {
   const NotLoggedInState = useMemo(() => {
     return (
       <section className={"flex items-center w-full justify-between"}>
-        <Logo onClick={() => router.push("/feed")} />
+        <div className={"hidden md:flex h-full items-center"}>
+          <Logo type={"xs"} onClick={() => router.push("/feed")} />
+        </div>
+
+        <button onClick={handleMenuOpen} className={"block md:hidden"}>
+          <Bars3Icon className={"w-[30px] text-blue h-[30px]"} />
+        </button>
 
         <section className={"flex items-center gap-5"}>
+          <div
+            className={
+              "w-full md:w-[360px] ml-4 h-[40px] rounded-[100px] bg-[#F5F6FA] overflow-hidden pl-[17px] flex items-center"
+            }>
+            <MagnifyingGlassIcon
+              className={"w-[20px] h-[20px] text-[#858585] mr-2"}
+            />
+            <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  router.push("/search")
+                }
+              }}
+              onChange={(e) => dispatch(setSearchTerm(e.target.value))}
+              placeholder={"Search"}
+              spellCheck={false}
+              className={"w-full h-full outline-none bg-[#F5F6FA]"}
+            />
+          </div>
+
           <Select
             isLanguageSwitcher={true}
             size={"sm"}

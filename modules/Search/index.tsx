@@ -75,15 +75,18 @@ export const SearchPage = () => {
     }
   })
 
+  const [isClicked, setClicked] = useState(false)
+
   return (
     <Page title={"Flow"}>
       <main className={"flex-1"}>
         <div
           className={"flex flex-col p-[24px] pb-0 rounded-t-[20px] bg-white"}>
           <Input
-            value={searchTerm}
+            onClick={() => setClicked(true)}
+            value={isClicked ? undefined : searchTerm ?? undefined}
             onChange={debouncedResults}
-            placeholder={"Поиск"}
+            placeholder={t("search")}
           />
         </div>
         <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>

@@ -95,7 +95,6 @@ export const SignInWith = ({ isRegister }: SignInWithProps) => {
           outline: "none",
           border: "none"
         }}
-        autoLoad={true}
         fields={"name"}
         // @ts-ignore
         callback={(res) => handleFacebookLogin(res!.accessToken as string)}

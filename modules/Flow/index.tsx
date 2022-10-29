@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/router"
 import { Tab } from "@headlessui/react"
 import cn from "classnames"
@@ -7,13 +7,14 @@ import { Page } from "shared/components/templates"
 import { useAppSelector } from "store"
 
 import { NewsTab, ArticlesTab, QuestionsTab } from "./components/templates"
-import { useTranslation } from "next-export-i18n"
-
+import { useSelectedLanguage, useTranslation } from "next-export-i18n"
+import { Language, Theme } from "../../shared/types"
 
 export const FlowPage = () => {
   const router = useRouter()
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const { flows } = useAppSelector((state) => state.main)
+  const { lang } = useSelectedLanguage()
 
   const TABS: Record<string, string> = {
     news: t("news"),
@@ -27,6 +28,14 @@ export const FlowPage = () => {
   const flow = useMemo(
     () => flows.find((f) => f.id === Number(router.query.id)),
     [router]
+  )
+
+  const caption = useCallback(
+    (flow: Theme) =>
+      lang === "us"
+        ? flow.name
+        : flow[`name_${lang as Exclude<Language, "en">}`],
+    [lang]
   )
 
   const [selectedTab, setSelectedTab] = useState<number>(
@@ -71,15 +80,14 @@ export const FlowPage = () => {
       <main className={"flex-1"}>
         <div
           className={"flex flex-col p-[24px] pb-0 rounded-t-[20px] bg-white"}>
-          <h1 className={"font-semibold text-[24px]"}>{flow?.name}</h1>
-          <p className={"text-[14px]"}>
-            Методология разработки программного обеспечения
-          </p>
+          <h1 className={"font-semibold text-[24px]"}>
+            {flow && caption(flow)}
+          </h1>
         </div>
         <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
           <Tab.List
             className={
-              "flex pt-[32px] bg-white px-[40px] gap-[20px] border-b-[0.5px] border-gray-300/30 w-full"
+              "flex pt-[20px] bg-white px-[40px] gap-[20px] border-b-[0.5px] border-gray-300/30 w-full"
             }>
             {Object.entries(TABS).map(([key, value]) => (
               <Tab className={({ selected }) => tabClasses(selected)} key={key}>
