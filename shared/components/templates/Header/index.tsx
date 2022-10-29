@@ -103,7 +103,7 @@ export const Header = () => {
     return (
       <>
         <section className={"hidden md:flex gap-[20px] items-center"}>
-          <Logo type={"xs"} />
+          <Logo type={"xs"} onClick={() => router.push("/feed")} />
           <h1 className={"text-[18px] lg:text-[24px] font-semibold"}>
             {t("welcome")}, {user?.first_name}
           </h1>

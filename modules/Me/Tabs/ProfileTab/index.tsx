@@ -78,18 +78,26 @@ export const ProfileTab = () => {
   }
 
   const profileImage = useMemo(() => {
-    if (!formState.image && !Boolean(image?.preview)) {
-      return "/svg/icons/user-placeholder.svg"
-    }
-
-    if (!formState.image && Boolean(image?.preview)) {
+    if (formState.image && Boolean(image?.preview)) {
       return image?.preview
-    }
-
-    if (formState.image && !Boolean(image?.preview)) {
+    } else {
       return formState.image
     }
-  }, [formState.image])
+  }, [formState.image, image?.preview])
+
+  const isSaveButtonAvailable = useMemo(() => {
+    return (
+      formState.username &&
+      formState.first_name &&
+      formState.last_name &&
+      formState.email &&
+      formState.organization_name &&
+      formState.phone &&
+      formState.work_name &&
+      formState.country_code &&
+      formState.birthday_date
+    )
+  }, [formState, image])
 
   return (
     <section
@@ -246,7 +254,9 @@ export const ProfileTab = () => {
           className={"text-[18px] justify-self-start text-blue font-semibold"}>
           {t("how_to_become_author")}
         </button>
-        <Button onClick={handleUpdateInfo}>{t("save")}</Button>
+        <Button disabled={!isSaveButtonAvailable} onClick={handleUpdateInfo}>
+          {t("save")}
+        </Button>
       </section>
     </section>
   )

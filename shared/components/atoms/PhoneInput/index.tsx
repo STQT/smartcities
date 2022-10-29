@@ -27,8 +27,12 @@ export const PhoneInput = ({
           "h-[62px] bg-[#F5F6FA] flex items-center pl-[15px] outline-none rounded-[10px] w-full border border-gray-200"
         }>
         <IntlTelInput
+          formatOnInit={true}
+          format={true}
           value={value}
-          onPhoneNumberChange={(isValid, value) => onChange?.(value)}
+          onPhoneNumberChange={(isValid, value, d, fullNumber) =>
+            onChange?.(fullNumber)
+          }
           fieldName={name}
           inputClassName={"bg-[#F5F6FA] outline-none h-full"}
         />

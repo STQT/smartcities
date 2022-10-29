@@ -143,12 +143,16 @@ export const RegisterPage = () => {
       formState.organization_name &&
       formState.phone &&
       formState.work_name &&
-      formState.image &&
+      image &&
+      image.preview &&
+      image.file &&
       formState.country_code &&
       formState.birthday_date &&
+      formState.password &&
+      formState.password === repeatPassword &&
       isRulesChecked
     )
-  }, [formState, isRulesChecked, repeatPassword])
+  }, [formState, isRulesChecked, repeatPassword, image])
 
   const profileImage = useMemo(() => {
     if (!Boolean(image?.preview)) {
@@ -353,7 +357,7 @@ export const RegisterPage = () => {
               </div>
 
               <Button
-                // disabled={!isRegisterButtonAvailable}
+                disabled={!isRegisterButtonAvailable}
                 onClick={handleRegisterClick}
                 size={"md"}>
                 {t("register")}
