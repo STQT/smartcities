@@ -7,13 +7,19 @@ import { NewsTab, ArticlesTab, QuestionsTab } from "./components/templates"
 import { Input } from "../../shared/components/atoms"
 import debouce from "lodash.debounce"
 import { useTranslation } from "next-export-i18n"
-import { useAppSelector } from "../../store"
+import { useAppDispatch, useAppSelector } from "../../store"
+import { setSearchTerm } from "../../store/slices/main"
 
 export const SearchPage = () => {
   const router = useRouter()
   const { searchTerm } = useAppSelector((state) => state.main)
-  const [query, setQuery] = useState(searchTerm ?? "")
+  const [query, setQuery] = useState("")
+  const dispatch = useAppDispatch()
   const { t } = useTranslation()
+
+  useEffect(() => {
+    searchTerm && setQuery(searchTerm)
+  }, [searchTerm])
 
   const TABS: Record<string, string> = {
     news: t("news"),
@@ -83,7 +89,10 @@ export const SearchPage = () => {
         <div
           className={"flex flex-col p-[24px] pb-0 rounded-t-[20px] bg-white"}>
           <Input
-            onClick={() => setClicked(true)}
+            onClick={() => {
+              setClicked(true)
+              dispatch(setSearchTerm(""))
+            }}
             value={isClicked ? undefined : searchTerm ?? undefined}
             onChange={debouncedResults}
             placeholder={t("search")}
