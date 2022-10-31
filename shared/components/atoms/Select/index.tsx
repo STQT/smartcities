@@ -16,7 +16,7 @@ interface SelectProps {
   hint?: string
   isCountrySelect?: boolean
 
-  size?: "sm" | "md"
+  size?: "xs" | "sm" | "md"
   selectPosition?: "top" | "bottom"
   onChange?: (option: Option) => void
   isLanguageSwitcher?: boolean
@@ -38,7 +38,8 @@ export const Select = ({
     "transition-all focus:bg-blue-pale focus:border-blue",
     {
       "py-[13px] text-[14px]": size === "sm",
-      "py-[18px] text-[16px]": size === "md"
+      "py-[18px] text-[16px]": size === "md",
+      "py-[8px]  text-[12px]": size === "xs"
     }
   )
 
@@ -59,16 +60,20 @@ export const Select = ({
         <div className="relative">
           <Listbox.Button className={classes}>
             {selected?.value && selected?.label && (
-              <span className="block truncate pr-4">
+              <span className="block flex items-center truncate pr-4">
                 {isCountrySelect && (
-                  <ReactCountryFlag
-                    className={"mr-3"}
-                    style={{
-                      fontSize: "1.5rem"
-                    }}
-                    svg={true}
-                    countryCode={selected.value as string}
-                  />
+                  <div
+                    className={cn("mr-3", {
+                      "hidden md:block": isLanguageSwitcher
+                    })}>
+                    <ReactCountryFlag
+                      style={{
+                        fontSize: "1.5rem"
+                      }}
+                      svg={true}
+                      countryCode={selected.value as string}
+                    />
+                  </div>
                 )}
                 {selected.label}
               </span>
@@ -107,20 +112,24 @@ export const Select = ({
                         value={option}>
                         {({ selected }) => (
                           <span
-                            className={`block truncate ${
+                            className={`flex truncate ${
                               selected
                                 ? "font-medium"
                                 : "font-normal text-gray-400"
                             }`}>
                             {isCountrySelect && (
-                              <ReactCountryFlag
-                                className={"mr-3"}
-                                style={{
-                                  fontSize: "1.5rem"
-                                }}
-                                svg={true}
-                                countryCode={option.value as string}
-                              />
+                              <div
+                                className={cn("mr-3", {
+                                  "hidden md:block": isLanguageSwitcher
+                                })}>
+                                <ReactCountryFlag
+                                  style={{
+                                    fontSize: "1.5rem"
+                                  }}
+                                  svg={true}
+                                  countryCode={option.value as string}
+                                />
+                              </div>
                             )}
                             {option.label}
                           </span>

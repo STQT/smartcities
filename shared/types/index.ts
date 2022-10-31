@@ -5,7 +5,7 @@ export interface Tag {
 
 export type PostTypes = "ARTICLE" | "NEWS" | "QUESTION"
 
-export type Language = "en" | "uz" | "tu" | "az" | "kz" | "kr"
+export type Language = "gb" | "uz" | "tu" | "az" | "kz" | "kr"
 
 export interface Theme {
   id: number

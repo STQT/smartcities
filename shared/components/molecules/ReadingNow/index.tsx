@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "store"
 import { fetchReadingNow } from "store/slices/main"
 import { ARTICLE, NEWS, QUESTION } from "services/api"
 import { useTranslation } from "next-export-i18n"
+import { FireIcon } from "@heroicons/react/24/outline"
 
 const Post = ({ targetPost }: { targetPost: TPost }) => {
   const [post, setPost] = useState(targetPost)
@@ -72,7 +73,7 @@ const Post = ({ targetPost }: { targetPost: TPost }) => {
 }
 
 export const ReadingNow = () => {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const { readingNow } = useAppSelector((state) => state.main)
   const dispatch = useAppDispatch()
 
@@ -83,8 +84,11 @@ export const ReadingNow = () => {
   return (
     <section className={"bg-white rounded-[20px] w-full"}>
       <div className={"py-[20px] border-b-[0.5px] border-gray-300/30"}>
-        <h2 className={"text-blue text-[18px] ml-[20px] font-semibold"}>
-          {t("reading_now")}
+        <h2
+          className={
+            "text-blue text-[18px] flex gap-2 items-center ml-[20px] font-semibold"
+          }>
+          {t("reading_now")} <FireIcon width={24} />
         </h2>
       </div>
 

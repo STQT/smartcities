@@ -43,16 +43,16 @@ export const MainFlows = ({ onItemClick }: MainFlowsProps) => {
 
   const caption = useCallback(
     (flow: Theme) =>
-      lang === "us"
+      lang === "gb"
         ? flow.name
-        : flow[`name_${lang as Exclude<Language, "en">}`],
+        : flow[`name_${lang as Exclude<Language, "gb">}`],
     [lang]
   )
 
   return (
     <section className={"mb-[28px] px-[20px]"}>
       <span className={"text-[18px] text-blue font-semibold"}>
-        {t("all_threads")}
+        {t("categories")}
       </span>
       <div className={"mt-[8px] flex flex-col gap-1"}>
         {flows &&

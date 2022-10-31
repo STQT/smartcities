@@ -1,5 +1,6 @@
 import IntlTelInput from "react-intl-tel-input"
 import "react-intl-tel-input/dist/main.css"
+import cn from "classnames"
 
 interface PhoneInputProps {
   hint: string
@@ -23,16 +24,18 @@ export const PhoneInput = ({
         </span>
       )}
       <div
-        className={
-          "h-[62px] bg-[#F5F6FA] flex items-center pl-[15px] outline-none rounded-[10px] w-full border border-gray-200"
-        }>
+        className={cn(
+          "h-[62px] border-gray-200 focus:bg-blue-pale focus:border-blue bg-[#F5F6FA] flex items-center pl-[15px] outline-none rounded-[10px] w-full border"
+        )}>
         <IntlTelInput
           formatOnInit={true}
           format={true}
           value={value}
-          onPhoneNumberChange={(isValid, value, d, fullNumber) =>
+          defaultCountry={"uz"}
+          useMobileFullscreenDropdown={true}
+          onPhoneNumberChange={(isValid, value, d, fullNumber) => {
             onChange?.(fullNumber)
-          }
+          }}
           fieldName={name}
           inputClassName={"bg-[#F5F6FA] outline-none h-full"}
         />

@@ -1,9 +1,7 @@
 import { ChangeEvent, useState } from "react"
 import { useRouter } from "next/router"
-import { AxiosResponse } from "axios"
 
 import { toast } from "react-toastify"
-import { User } from "shared/types"
 
 import { Input, Password, Button, Logo } from "shared/components/atoms"
 import { Page, SignInWith } from "shared/components/templates"
@@ -122,10 +120,9 @@ export const AuthPage = () => {
           className={
             "flex gap-[10px] md:gap-[40px] flex-wrap text-gray-400 text-[14px] md:text-[16px] list-none mx-auto justify-center mb-[40px]"
           }>
-          <li>Русский</li>
-          <li>О сервисе</li>
-          <li>Обратная связь</li>
-          <li>Соглашение</li>
+          <li>{t("about_us")}</li>
+          <li>{t("feedback")}</li>
+          <li>{t("agreement")}</li>
         </footer>
       </main>
     </Page>

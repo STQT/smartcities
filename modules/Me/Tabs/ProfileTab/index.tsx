@@ -15,6 +15,7 @@ import { useTranslation } from "next-export-i18n"
 import { PencilIcon } from "@heroicons/react/24/solid"
 import cn from "classnames"
 import FormData from "form-data"
+import { AxiosError } from "axios"
 
 export const ProfileTab = () => {
   const { user } = useAppSelector((state) => state.main)
@@ -65,15 +66,38 @@ export const ProfileTab = () => {
         userFormData.append("image", image!.file)
       }
 
-      USER.updateInfo(user.username, userFormData).then(() => {
-        USER.getCurrent().then((res) => {
-          dispatch(setUser(res.data))
+      USER.updateInfo(user.username, userFormData)
+        .then(() => {
+          USER.getCurrent().then((res) => {
+            dispatch(setUser(res.data))
 
-          toast("Вы успешно изменили информацию", {
-            type: "success"
+            toast(t("info_successfuly_changed"), {
+              type: "success"
+            })
           })
         })
-      })
+        .catch((e: AxiosError) => {
+          /* @ts-ignore*/
+          const { email, username } = e.response?.data
+
+          if (email?.[0] === "Enter a valid email address.") {
+            toast(t("invalid_email_address"), {
+              type: "error"
+            })
+          }
+
+          if (email?.[0] === "user with this email address already exists.") {
+            toast(t("user_with_this_email_address_already_exists"), {
+              type: "error"
+            })
+          }
+
+          if (username?.[0] === "A user with that username already exists.") {
+            toast(t("a_user_with_that_username_already_exists"), {
+              type: "error"
+            })
+          }
+        })
     }
   }
 
@@ -158,6 +182,9 @@ export const ProfileTab = () => {
           "grid grid-cols-1 lg:grid-cols-2 gap-x-[40px] gap-y-[20px] mb-[60px]"
         }>
         <Input
+          validate={(e) => {
+            if (e.target.value === "") return t("this_field_is_required")
+          }}
           onChange={handleInputChange}
           value={formState.first_name}
           name={"first_name"}
@@ -167,6 +194,9 @@ export const ProfileTab = () => {
         />
 
         <Input
+          validate={(e) => {
+            if (e.target.value === "") return t("this_field_is_required")
+          }}
           onChange={handleInputChange}
           value={formState.last_name}
           name={"last_name"}
@@ -187,6 +217,9 @@ export const ProfileTab = () => {
         />
 
         <Input
+          validate={(e) => {
+            if (e.target.value === "") return t("this_field_is_required")
+          }}
           max={new Date().toLocaleDateString("en-ca")}
           onChange={handleInputChange}
           value={formState.birthday_date}
@@ -198,6 +231,9 @@ export const ProfileTab = () => {
         />
 
         <Input
+          validate={(e) => {
+            if (e.target.value === "") return t("this_field_is_required")
+          }}
           onChange={handleInputChange}
           value={formState.organization_name}
           name={"organization_name"}
@@ -207,6 +243,9 @@ export const ProfileTab = () => {
         />
 
         <Input
+          validate={(e) => {
+            if (e.target.value === "") return t("this_field_is_required")
+          }}
           onChange={handleInputChange}
           value={formState.work_name}
           name={"work_name"}
@@ -224,6 +263,9 @@ export const ProfileTab = () => {
         />
 
         <Input
+          validate={(e) => {
+            if (e.target.value === "") return t("this_field_is_required")
+          }}
           onChange={handleInputChange}
           value={formState.email}
           name={"email"}
@@ -240,6 +282,9 @@ export const ProfileTab = () => {
         />
 
         <Input
+          validate={(e) => {
+            if (e.target.value === "") return t("this_field_is_required")
+          }}
           onChange={handleInputChange}
           value={formState.username}
           name={"username"}

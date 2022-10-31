@@ -8,7 +8,7 @@
   "login_0": "Login",
   "login_1": "Login",
   "read_more": "Read more",
-  "all_threads": "All threads",
+  "categories": "Categories",
 
   "news": "News",
 
@@ -90,5 +90,15 @@
   "enter_code": "Enter code",
   "use_login_to_enter": "Use login to login your account",
   "continue": "Continue",
-  "create_post": "Create post"
+  "create_post": "Create post",
+  "this_field_is_required": "This field is required",
+  "minimum_length_is_6_symbols": "Minimum length is 6 symbols",
+  "passwords_not_match": "Passwords not match",
+  "invalid_email_address": "Invalid email address",
+  "user_with_this_email_address_already_exists": "User with this email address already exists",
+  "a_user_with_that_username_already_exists": "A user with that username already exists",
+  "info_successfuly_changed": "Information successfuly changed",
+  "about_us": "About Us",
+  "feedback": "Feedback",
+  "agreement": "Agreement"
 }

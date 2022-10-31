@@ -2,7 +2,7 @@ import { ChangeEvent, useMemo, useState } from "react"
 import { useRouter } from "next/router"
 
 import { toast } from "react-toastify"
-import { AxiosResponse } from "axios"
+import { AxiosError, AxiosResponse } from "axios"
 import { User } from "shared/types"
 
 import {
@@ -84,10 +84,33 @@ export const RegisterPage = () => {
       email: formState.email,
       username: formState.username,
       password: formState.password
-    }).then((res: AxiosResponse<User>) => {
-      setUserData(res.data)
-      setDialogOpen(true)
     })
+      .then((res: AxiosResponse<User>) => {
+        setUserData(res.data)
+        setDialogOpen(true)
+      })
+      .catch((e: AxiosError) => {
+        /* @ts-ignore*/
+        const { email, username } = e.response?.data
+
+        if (email?.[0] === "Enter a valid email address.") {
+          toast(t("invalid_email_address"), {
+            type: "error"
+          })
+        }
+
+        if (email?.[0] === "user with this email address already exists.") {
+          toast(t("user_with_this_email_address_already_exists"), {
+            type: "error"
+          })
+        }
+
+        if (username?.[0] === "A user with that username already exists.") {
+          toast(t("a_user_with_that_username_already_exists"), {
+            type: "error"
+          })
+        }
+      })
   }
 
   const handleVerifyClick = () => {
@@ -233,6 +256,9 @@ export const RegisterPage = () => {
                 "grid grid-cols-1 lg:grid-cols-2 gap-x-[40px] gap-y-[20px] mb-[60px]"
               }>
               <Input
+                validate={(e) => {
+                  if (e.target.value === "") return t("this_field_is_required")
+                }}
                 onChange={handleInputChange}
                 value={formState.first_name}
                 name={"first_name"}
@@ -242,6 +268,9 @@ export const RegisterPage = () => {
               />
 
               <Input
+                validate={(e) => {
+                  if (e.target.value === "") return t("this_field_is_required")
+                }}
                 onChange={handleInputChange}
                 value={formState.last_name}
                 name={"last_name"}
@@ -262,6 +291,9 @@ export const RegisterPage = () => {
               />
 
               <Input
+                validate={(e) => {
+                  if (e.target.value === "") return t("this_field_is_required")
+                }}
                 max={new Date().toLocaleDateString("en-ca")}
                 onChange={handleInputChange}
                 value={formState.birthday_date}
@@ -273,6 +305,9 @@ export const RegisterPage = () => {
               />
 
               <Input
+                validate={(e) => {
+                  if (e.target.value === "") return t("this_field_is_required")
+                }}
                 onChange={handleInputChange}
                 value={formState.organization_name}
                 name={"organization_name"}
@@ -282,6 +317,9 @@ export const RegisterPage = () => {
               />
 
               <Input
+                validate={(e) => {
+                  if (e.target.value === "") return t("this_field_is_required")
+                }}
                 onChange={handleInputChange}
                 value={formState.work_name}
                 name={"work_name"}
@@ -299,6 +337,9 @@ export const RegisterPage = () => {
               />
 
               <Input
+                validate={(e) => {
+                  if (e.target.value === "") return t("this_field_is_required")
+                }}
                 onChange={handleInputChange}
                 value={formState.email}
                 name={"email"}
@@ -317,6 +358,9 @@ export const RegisterPage = () => {
               />
 
               <Input
+                validate={(e) => {
+                  if (e.target.value === "") return t("this_field_is_required")
+                }}
                 onChange={handleInputChange}
                 value={formState.username}
                 name={"username"}
@@ -326,6 +370,11 @@ export const RegisterPage = () => {
               />
 
               <Password
+                validate={(e) => {
+                  if (e.target.value === "") return t("this_field_is_required")
+                  if (e.target.value.length <= 6)
+                    return t("minimum_length_is_6_symbols")
+                }}
                 onChange={handleInputChange}
                 name={"password"}
                 size={"md"}
@@ -334,6 +383,10 @@ export const RegisterPage = () => {
               />
 
               <Password
+                validate={(e) => {
+                  if (e.target.value !== formState.password)
+                    return t("passwords_not_match")
+                }}
                 onChange={(e) => setRepeatPassword(e.target.value)}
                 size={"md"}
                 placeholder={t("repeat_password")}
@@ -380,7 +433,7 @@ export const RegisterPage = () => {
             <p className={"text-[16px] md:text-[18px]"}>
               {t("already_registered?")}{" "}
               <button className={"text-blue"} onClick={handleLoginClick}>
-                {t("login")}
+                {t("login_0")}
               </button>
             </p>
           </section>
@@ -389,10 +442,9 @@ export const RegisterPage = () => {
             className={
               "flex gap-[10px] md:gap-[40px] flex-wrap text-gray-400 text-[14px] md:text-[16px] list-none mx-auto justify-center mb-[40px]"
             }>
-            <li>Русский</li>
-            <li>О сервисе</li>
-            <li>Обратная связь</li>
-            <li>Соглашение</li>
+            <li>{t("about_us")}</li>
+            <li>{t("feedback")}</li>
+            <li>{t("agreement")}</li>
           </footer>
         </main>
       </Page>

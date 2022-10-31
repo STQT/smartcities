@@ -1,10 +1,11 @@
-import { ChangeEvent, MouseEventHandler } from "react"
+import { ChangeEvent, useState } from "react"
 import cn from "classnames"
 
 interface InputProps {
   className?: string
   name?: string
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
+  validate?: (e: ChangeEvent<HTMLInputElement>) => string | undefined
   placeholder?: string
 
   size?: "sm" | "md"
@@ -29,18 +30,29 @@ export const Input = ({
   maxLength,
   type = "text",
   readOnly = false,
+  validate,
   onClick
 }: InputProps) => {
+  const [error, setError] = useState("")
+
   const classes = cn(
-    "bg-gray-100 px-[20px] border border-gray-200 rounded-[10px] outline-none",
-    "transition-all focus:bg-blue-pale focus:border-blue",
+    "bg-gray-100 px-[20px] border rounded-[10px] outline-none",
+    "transition-all",
     {
       "py-[13px] text-[14px]": size === "sm",
       "py-[18px] text-[16px]": size === "md",
-      "cursor-pointer": readOnly
+      "cursor-pointer": readOnly,
+      "border-gray-200 focus:bg-blue-pale focus:border-blue": !error,
+      "border-[#E74D4D] bg-[#FFF2F2]": error
     },
     className
   )
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const validateResult = validate?.(e) ?? ""
+    onChange?.(e)
+    setError(validateResult)
+  }
 
   return (
     <div className={"flex flex-col"}>
@@ -61,8 +73,16 @@ export const Input = ({
         placeholder={placeholder}
         className={classes}
         name={name}
-        onChange={onChange}
+        onChange={handleChange}
       />
+
+      <span
+        className={cn("text-sm transition-all mt-1 h-2 text-[#E74D4D]", {
+          "opacity-100": error,
+          "opacity-0": !error
+        })}>
+        {error}
+      </span>
     </div>
   )
 }

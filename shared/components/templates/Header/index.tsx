@@ -4,7 +4,11 @@ import cn from "classnames"
 
 import { Avatar, Logo, Select } from "shared/components/atoms"
 import { useAppDispatch, useAppSelector } from "store"
-import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/24/outline"
+import {
+  ArrowRightOnRectangleIcon,
+  Bars3Icon,
+  MagnifyingGlassIcon
+} from "@heroicons/react/24/outline"
 import { MobileMenu } from "../MobileMenu"
 import { useScrollBlock } from "../../../hooks"
 import { useSelectedLanguage, useTranslation } from "next-export-i18n"
@@ -12,8 +16,8 @@ import { setSearchTerm } from "../../../../store/slices/main"
 
 const languages = [
   {
-    label: "US",
-    value: "US"
+    label: "EN",
+    value: "GB"
   },
 
   {
@@ -136,7 +140,7 @@ export const Header = () => {
 
           <Select
             isLanguageSwitcher={true}
-            size={"sm"}
+            size={"xs"}
             isCountrySelect={true}
             selected={selectedLanguage}
             options={languages}
@@ -186,7 +190,7 @@ export const Header = () => {
 
           <Select
             isLanguageSwitcher={true}
-            size={"sm"}
+            size={"xs"}
             isCountrySelect={true}
             selected={selectedLanguage}
             options={languages}
@@ -194,7 +198,10 @@ export const Header = () => {
 
           <button
             onClick={() => router.push("/auth")}
-            className={"text-[18px] text-blue font-semibold"}>
+            className={
+              "text-[18px] flex gap-2 items-center text-blue font-semibold"
+            }>
+            <ArrowRightOnRectangleIcon width={24} />
             {t("login_0")}
           </button>
         </section>
