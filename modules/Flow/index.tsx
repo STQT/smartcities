@@ -32,9 +32,9 @@ export const FlowPage = () => {
 
   const caption = useCallback(
     (flow: Theme) =>
-      lang === "us"
+      lang === "gb"
         ? flow.name
-        : flow[`name_${lang as Exclude<Language, "en">}`],
+        : flow[`name_${lang as Exclude<Language, "gb">}`],
     [lang]
   )
 

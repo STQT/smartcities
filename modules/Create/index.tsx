@@ -80,9 +80,9 @@ export const CreatePage = () => {
   const caption = useCallback(
     (flow?: Theme) => {
       if (flow) {
-        return lang === "us"
+        return lang === "gb"
           ? flow.name
-          : flow[`name_${lang as Exclude<Language, "en">}`]
+          : flow[`name_${lang as Exclude<Language, "gb">}`]
       }
 
       return ""

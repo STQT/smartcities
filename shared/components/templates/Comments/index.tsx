@@ -177,6 +177,8 @@ export const Comments = ({
         commentPostedCallback?.()
       })
     }
+
+    setMyComment("")
   }
 
   return (
@@ -214,6 +216,12 @@ export const Comments = ({
 
       {isLoggedIn && (
         <section
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && myComment !== "") {
+              publishComment()
+              setMyComment("")
+            }
+          }}
           className={
             "p-[20px] border-t relative gap-[10px] bg-white flex items-center"
           }>

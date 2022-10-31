@@ -1,5 +1,6 @@
 import cn from "classnames"
 import Image from "next/image"
+import { addBaseURL } from "../../../utils"
 
 interface AvatarProps {
   src?: string
@@ -22,7 +23,7 @@ export const Avatar = ({ src, size, onClick }: AvatarProps) => {
     <Image
       onClick={onClick}
       className={classes}
-      src={src}
+      src={addBaseURL(src) as string}
       width={size}
       height={size}
     />
