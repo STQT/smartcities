@@ -12,7 +12,7 @@ import {
 import { MobileMenu } from "../MobileMenu"
 import { useScrollBlock } from "../../../hooks"
 import { useSelectedLanguage, useTranslation } from "next-export-i18n"
-import { setSearchTerm } from "../../../../store/slices/main"
+import { setSearchTerm } from "store/slices/main"
 
 const languages = [
   {

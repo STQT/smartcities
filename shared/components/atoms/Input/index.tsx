@@ -15,6 +15,7 @@ interface InputProps {
   value?: string
   onClick?: () => void
   readOnly?: boolean
+  isShowcase?: boolean
   max?: string
 }
 
@@ -31,17 +32,20 @@ export const Input = ({
   type = "text",
   readOnly = false,
   validate,
+  isShowcase = false,
   onClick
 }: InputProps) => {
   const [error, setError] = useState("")
 
   const classes = cn(
-    "bg-gray-100 px-[20px] border rounded-[10px] outline-none",
+    "px-[20px] outline-none",
     "transition-all",
     {
       "py-[13px] text-[14px]": size === "sm",
       "py-[18px] text-[16px]": size === "md",
-      "cursor-pointer": readOnly,
+      "cursor-pointer": readOnly && !isShowcase,
+      "bg-white focus:bg-white focus:border-none cursor-normal": isShowcase,
+      "bg-gray-100  border rounded-[10px]": !isShowcase,
       "border-gray-200 focus:bg-blue-pale focus:border-blue": !error,
       "border-[#E74D4D] bg-[#FFF2F2]": error
     },

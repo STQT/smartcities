@@ -3,7 +3,12 @@ import { Tab } from "@headlessui/react"
 import cn from "classnames"
 import { ChangeEvent, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/router"
-import { NewsTab, ArticlesTab, QuestionsTab } from "./components/templates"
+import {
+  NewsTab,
+  ArticlesTab,
+  QuestionsTab,
+  UsersTab
+} from "./components/templates"
 import { Input } from "../../shared/components/atoms"
 import debouce from "lodash.debounce"
 import { useTranslation } from "next-export-i18n"
@@ -24,7 +29,8 @@ export const SearchPage = () => {
   const TABS: Record<string, string> = {
     news: t("news"),
     articles: t("articles"),
-    questions: t("questions")
+    questions: t("questions"),
+    users: "Users"
   }
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
@@ -120,6 +126,10 @@ export const SearchPage = () => {
 
             <Tab.Panel>
               <QuestionsTab query={query} />
+            </Tab.Panel>
+
+            <Tab.Panel>
+              <UsersTab query={query} />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
