@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { ReactNode, useEffect, useMemo, useState } from "react"
 import { Tab } from "@headlessui/react"
 import cn from "classnames"
 import { useRouter } from "next/router"
@@ -12,16 +12,34 @@ import {
 } from "./Tabs"
 import { isLoggedIn } from "axios-jwt"
 import { useTranslation } from "next-export-i18n"
+import {
+  BellIcon,
+  BookmarkIcon,
+  PencilSquareIcon,
+  UserCircleIcon
+} from "@heroicons/react/24/outline"
 
 export const ProfilePage = () => {
   const router = useRouter()
   const { t } = useTranslation()
 
-  const TABS: Record<string, string> = {
-    profile: t("profile"),
-    notifications: t("notifications"),
-    posts: t("publications"),
-    saved: t("saves")
+  const TABS: Record<string, { label: string; icon: ReactNode }> = {
+    profile: {
+      label: t("profile"),
+      icon: <UserCircleIcon height={20} />
+    },
+    notifications: {
+      label: t("notifications"),
+      icon: <BellIcon height={20} />
+    },
+    posts: {
+      label: t("publications"),
+      icon: <PencilSquareIcon height={20} />
+    },
+    saved: {
+      label: t("saves"),
+      icon: <BookmarkIcon height={20} />
+    }
   }
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
@@ -57,10 +75,10 @@ export const ProfilePage = () => {
 
   const tabClasses = (isSelected: boolean) =>
     cn(
-      "uppercase text-[14px] font-semibold transition-all border-b-2 pb-[12px] outline-none",
+      "flex-1 flex gap-2 justify-center items-center uppercase text-[14px] font-semibold transition-all border-b-2 pb-[12px] outline-none",
       {
         "border-blue": isSelected,
-        "border-[transparent]": !isSelected
+        "border-[transparent] text-gray-400": !isSelected
       }
     )
 
@@ -79,7 +97,7 @@ export const ProfilePage = () => {
   }, [router])
 
   return (
-    <Page title={TABS[getTabKeyByIdx(selectedTab)]}>
+    <Page title={TABS[getTabKeyByIdx(selectedTab)].label}>
       <main className={"flex-1 flex flex-col overflow-hidden rounded-[20px]"}>
         <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
           <Tab.List
@@ -88,7 +106,7 @@ export const ProfilePage = () => {
             }>
             {Object.entries(TABS).map(([key, value]) => (
               <Tab className={({ selected }) => tabClasses(selected)} key={key}>
-                {value}
+                {value.icon} {value.label}
               </Tab>
             ))}
           </Tab.List>

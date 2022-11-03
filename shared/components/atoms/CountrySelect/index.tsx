@@ -6,7 +6,7 @@ import { useTranslation } from "next-export-i18n"
 interface CountrySelectProps {
   selected: string
   hint: string
-  onChange: (code: string) => void
+  onChange?: (code: string) => void
 }
 
 export const CountrySelect = ({
@@ -29,7 +29,6 @@ export const CountrySelect = ({
       hint={hint}
       isCountrySelect={true}
       selected={countries.find((country) => country.value === selected)}
-      onChange={(option) => onChange(option.value as string)}
       placeholder={t("choose_country")}
       options={countries}
     />

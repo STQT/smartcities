@@ -59,7 +59,7 @@ export const ProfileTab = () => {
       userFormData.append("email", formState.email)
       userFormData.append("phone", formState.phone)
       userFormData.append("username", formState.username)
-      userFormData.append("birthday_date", "2002-10-07")
+      userFormData.append("birthday_date", formState.birthday_date)
       userFormData.append("gender", formState.gender)
 
       if (image?.file) {

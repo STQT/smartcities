@@ -11,7 +11,7 @@ interface AvatarProps {
 
 export const Avatar = ({ src, size, onClick }: AvatarProps) => {
   const classes = cn(
-    "rounded-full bg-gray-100 border-none outline-none flex items-center select-none justify-center overflow-hidden",
+    "rounded-full bg-gray-100 object-cover border-none outline-none flex items-center select-none justify-center overflow-hidden",
     {
       "w-[50px] h-[50px]": size === 50,
       "w-[40px] h-[40px]": size === 40,

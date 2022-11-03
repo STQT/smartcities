@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { Post as TPost } from "shared/types"
 import { ARTICLE, NEWS, QUESTION } from "services/api"
 import { AxiosListResponse } from "services/api/config"
@@ -8,6 +8,11 @@ import { Tab } from "@headlessui/react"
 import cn from "classnames"
 import { EmptyState } from "shared/components/atoms/EmptyState"
 import { useTranslation } from "next-export-i18n"
+import {
+  NewspaperIcon,
+  PencilIcon,
+  QuestionMarkCircleIcon
+} from "@heroicons/react/24/outline"
 
 const Post = ({ post }: { post: TPost }) => {
   return (
@@ -48,10 +53,19 @@ export const PublicationsTab = () => {
 
   const { t } = useTranslation()
 
-  const TABS: Record<string, string> = {
-    news: t("news"),
-    articles: t("articles"),
-    questions: t("questions")
+  const TABS: Record<string, { label: string; icon: ReactNode }> = {
+    questions: {
+      label: t("questions"),
+      icon: <QuestionMarkCircleIcon height={20} />
+    },
+    news: {
+      label: t("news"),
+      icon: <NewspaperIcon height={20} />
+    },
+    articles: {
+      label: t("articles"),
+      icon: <PencilIcon height={20} />
+    }
   }
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
@@ -72,13 +86,13 @@ export const PublicationsTab = () => {
   }, [])
 
   useEffect(() => {
-    if (getTabKeyByIdx(selectedTab) === "news") {
+    if (getTabKeyByIdx(selectedTab) === "questions") {
       NEWS.getMine().then((res: AxiosListResponse<TPost>) => {
         setPosts(res.data.results)
       })
     }
 
-    if (getTabKeyByIdx(selectedTab) === "articles") {
+    if (getTabKeyByIdx(selectedTab) === "questions") {
       ARTICLE.getMine().then((res: AxiosListResponse<TPost>) => {
         setPosts(res.data.results)
       })
@@ -93,10 +107,10 @@ export const PublicationsTab = () => {
 
   const tabClasses = (isSelected: boolean) =>
     cn(
-      "uppercase text-[14px] font-semibold transition-all border-b-2 pb-[12px] outline-none",
+      "flex gap-2 justify-center items-center uppercase text-[14px] font-semibold transition-all border-b-2 pb-[12px] outline-none",
       {
         "border-blue": isSelected,
-        "border-[transparent]": !isSelected
+        "border-[transparent] text-gray-400": !isSelected
       }
     )
 
@@ -105,11 +119,11 @@ export const PublicationsTab = () => {
       <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
         <Tab.List
           className={
-            "flex pt-[20px] rounded-[20px] rounded-t-none bg-white px-[40px] gap-[20px] border-b-[0.5px] border-gray-300/30 w-full"
+            "grid grid-cols-3 flex pt-[20px] rounded-[20px] rounded-t-none bg-white px-[40px] gap-[20px] border-b-[0.5px] border-gray-300/30 w-full"
           }>
           {Object.entries(TABS).map(([key, value]) => (
             <Tab className={({ selected }) => tabClasses(selected)} key={key}>
-              {value}
+              {value.icon} {value.label}
             </Tab>
           ))}
         </Tab.List>

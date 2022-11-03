@@ -17,7 +17,7 @@ const Comment = ({ user, comment, created_at }: TComment) => {
   return (
     <article className={"flex flex-col"}>
       <div className={"flex gap-2 items-center mb-[20px]"}>
-        <Avatar size={40} />
+        <Avatar src={user.image} size={40} />
 
         <div className={"flex text-blue text-[18px] items-center"}>
           {user.first_name} {user.last_name}
@@ -225,7 +225,7 @@ export const Comments = ({
           className={
             "p-[20px] border-t relative gap-[10px] bg-white flex items-center"
           }>
-          <Avatar size={40} />
+          <Avatar size={40} src={user?.image} />
 
           <Editor
             spellCheck={false}

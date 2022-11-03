@@ -1,7 +1,7 @@
 import { Page } from "shared/components/templates"
 import { Tab } from "@headlessui/react"
 import cn from "classnames"
-import { ChangeEvent, useEffect, useMemo, useState } from "react"
+import { ChangeEvent, ReactNode, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/router"
 import {
   NewsTab,
@@ -14,6 +14,12 @@ import debouce from "lodash.debounce"
 import { useTranslation } from "next-export-i18n"
 import { useAppDispatch, useAppSelector } from "../../store"
 import { setSearchTerm } from "../../store/slices/main"
+import {
+  NewspaperIcon,
+  PencilIcon,
+  QuestionMarkCircleIcon,
+  UserCircleIcon
+} from "@heroicons/react/24/outline"
 
 export const SearchPage = () => {
   const router = useRouter()
@@ -26,11 +32,23 @@ export const SearchPage = () => {
     searchTerm && setQuery(searchTerm)
   }, [searchTerm])
 
-  const TABS: Record<string, string> = {
-    news: t("news"),
-    articles: t("articles"),
-    questions: t("questions"),
-    users: "Users"
+  const TABS: Record<string, { label: string; icon: ReactNode }> = {
+    questions: {
+      label: t("questions"),
+      icon: <QuestionMarkCircleIcon height={20} />
+    },
+    news: {
+      label: t("news"),
+      icon: <NewspaperIcon height={20} />
+    },
+    articles: {
+      label: t("articles"),
+      icon: <PencilIcon height={20} />
+    },
+    users: {
+      label: "Users",
+      icon: <UserCircleIcon height={20} />
+    }
   }
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
@@ -52,10 +70,10 @@ export const SearchPage = () => {
 
   const tabClasses = (isSelected: boolean) =>
     cn(
-      "uppercase text-[14px] font-semibold transition-all border-b-2 pb-[12px] outline-none",
+      "flex-1 flex gap-2 justify-center items-center uppercase text-[14px] font-semibold transition-all border-b-2 pb-[12px] outline-none",
       {
         "border-blue": isSelected,
-        "border-[transparent]": !isSelected
+        "border-[transparent] text-gray-400": !isSelected
       }
     )
 
@@ -63,11 +81,11 @@ export const SearchPage = () => {
     if (Object.keys(TABS).includes(router?.query?.tab as string)) {
       setSelectedTab(getTabIdxByKey(router.query?.tab as string))
     } else {
-      setSelectedTab(getTabIdxByKey("news"))
+      setSelectedTab(getTabIdxByKey("questions"))
 
       router
         .replace({
-          query: { ...router.query, tab: "news" }
+          query: { ...router.query, tab: "questions" }
         })
         .catch(console.error)
     }
@@ -111,7 +129,7 @@ export const SearchPage = () => {
             }>
             {Object.entries(TABS).map(([key, value]) => (
               <Tab className={({ selected }) => tabClasses(selected)} key={key}>
-                {value}
+                {value.icon} {value.label}
               </Tab>
             ))}
           </Tab.List>

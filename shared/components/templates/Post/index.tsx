@@ -25,6 +25,7 @@ interface PostProps {
 export const Post = ({ targetPost }: PostProps) => {
   const [post, setPost] = useState(targetPost)
   const router = useRouter()
+
   const { t } = useTranslation()
 
   const imageURL = useMemo(() => post && addBaseURL(post.image), [post])
@@ -33,6 +34,15 @@ export const Post = ({ targetPost }: PostProps) => {
     router.push({
       pathname: `/${post.type.toLowerCase()}/[id]`,
       query: { id: post.id }
+    })
+  }
+
+  const handleOpenProfile = () => {
+    router.push({
+      pathname: "/profile/[id]",
+      query: {
+        id: post.user.username
+      }
     })
   }
 
@@ -91,7 +101,9 @@ export const Post = ({ targetPost }: PostProps) => {
       <section className={"flex flex-col mb-[20px]"}>
         <div className={"flex gap-2 items-center select-none"}>
           <Avatar src={post.user.image} size={40} />
-          <span className={"text-[14px]"}>
+          <span
+            onClick={handleOpenProfile}
+            className={"text-[14px] hover:text-blue transition-all"}>
             {post.user.first_name && post.user.last_name
               ? `${post.user.first_name} ${post.user.last_name}`
               : `@${post.user.username}`}

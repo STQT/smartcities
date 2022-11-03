@@ -16,6 +16,10 @@ export const USER = {
 
   updateInfo(username: string, payload: any) {
     return request.put(`/users/${username}/`, payload)
+  },
+
+  getInfo(username: string) {
+    return request.get(`/users/${username}`)
   }
 }
 

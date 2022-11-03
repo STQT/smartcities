@@ -3,7 +3,7 @@ import { useTranslation } from "next-export-i18n"
 interface GenderRadioProps {
   hint: string
   isMale: boolean
-  onChange: (isMale: "true" | "false") => void
+  onChange?: (isMale: "true" | "false") => void
 }
 
 export const GenderRadio = ({ hint, isMale, onChange }: GenderRadioProps) => {

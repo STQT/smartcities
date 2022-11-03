@@ -20,6 +20,7 @@ interface SelectProps {
   selectPosition?: "top" | "bottom"
   onChange?: (option: Option) => void
   isLanguageSwitcher?: boolean
+  readOnly?: boolean
 }
 
 export const Select = ({
