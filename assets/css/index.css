@@ -9,7 +9,7 @@
   body {
     font-family: "Inter", sans-serif;
     @apply text-gray-500;
-    background: url("../../public/svg/bg.svg");
+    background: url("/svg/bg.svg");
   }
 }
 
