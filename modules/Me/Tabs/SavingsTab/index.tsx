@@ -56,11 +56,12 @@ const Post = ({
       </div>
 
       <div
-        className={"p-[12px] lg:p-[32px]"}
-        dangerouslySetInnerHTML={{
-          __html: post.subtitle
-        }}
-      />
+        onClick={handleOpen}
+        className={
+          "p-[12px] lg:p-[32px] hover:text-blue transition-all cursor-pointer"
+        }>
+        {post.title}
+      </div>
 
       <button
         onClick={() => onDelete(post.id, type)}
@@ -112,7 +113,7 @@ export const SavingsTab = () => {
       <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
         <Tab.List
           className={
-            "grid grid-cols-3 flex pt-[20px] rounded-[20px] rounded-t-none bg-white px-[40px] gap-[20px] border-b-[0.5px] border-gray-300/30 w-full"
+            "grid grid-cols-3  border-r border-l flex pt-[20px] rounded-[20px] rounded-t-none bg-white px-[40px] gap-[20px] border-b w-full"
           }>
           {Object.entries(TABS).map(([key, value]) => (
             <Tab className={({ selected }) => tabClasses(selected)} key={key}>

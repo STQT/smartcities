@@ -77,7 +77,9 @@ export const FlowPage = () => {
     <Page title={"Flow"}>
       <main className={"flex-1"}>
         <div
-          className={"flex flex-col p-[24px] pb-0 rounded-t-[20px] bg-white"}>
+          className={
+            "flex flex-col p-6 border-t border-r border-l rounded-t-[20px] bg-white"
+          }>
           <h1 className={"font-semibold text-[24px]"}>
             {flow && caption(flow)}
           </h1>
@@ -85,7 +87,7 @@ export const FlowPage = () => {
         <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
           <Tab.List
             className={
-              "pt-[20px] bg-white px-[40px] grid rounded-b-[20px] grid-cols-3 border-b-[0.5px] border-gray-300/30 w-full"
+              "pt-[20px] border bg-white px-[40px] grid rounded-b-[20px] grid-cols-3 border-b-[0.5px] w-full"
             }>
             {Object.entries(TABS).map(([key, value]) => (
               <Tab className={({ selected }) => tabClasses(selected)} key={key}>

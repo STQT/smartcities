@@ -1,92 +1,98 @@
-import { ReactNode, useEffect, useMemo, useState } from "react"
-import { Post as TPost } from "shared/types"
-import { ARTICLE, NEWS, QUESTION } from "services/api"
+import { useEffect, useMemo, useState } from "react"
+import { Post as TPost, PostTypes } from "shared/types"
+
+import { TAGS } from "services/api"
 import { AxiosListResponse } from "services/api/config"
-import { Comment, Like, Views } from "shared/components/atoms"
-import Link from "next/link"
+
 import { Tab } from "@headlessui/react"
 import cn from "classnames"
 import { EmptyState } from "shared/components/atoms/EmptyState"
 import { useTranslation } from "next-export-i18n"
 import { POST_TABS } from "shared/constants"
+import moment from "moment"
+import { useRouter } from "next/router"
 
-const Post = ({ post }: { post: TPost }) => {
+const Post = ({
+  created_at,
+  id,
+  title,
+  type
+}: {
+  created_at: string
+  id: number
+  title: string
+  type: PostTypes
+}) => {
+  const router = useRouter()
+
+  const handlePostClick = () => {
+    router.push({
+      pathname: `/${type.toLowerCase()}/[id]`,
+      query: {
+        id
+      }
+    })
+  }
+
   return (
-    <article className={"bg-white rounded-[20px] flex flex-col"}>
-      <div className={"px-[20px] py-[20px] border-b"}>
-        <Link href={`/${post.type.toLowerCase()}/${post.id}`}>
-          <span className={"text-[18px] cursor-pointer hover:text-blue"}>
-            {post.title}
-          </span>
-        </Link>
-      </div>
-
-      <div
-        className={"py-[20px] px-[20px]"}
-        dangerouslySetInnerHTML={{
-          __html: post.subtitle
-        }}
-      />
-
-      <div className={"px-[20px] py-[20px] flex gap-4"}>
-        <Like
-          is_liked={post.is_liked}
-          like_count={post.like_count}
-          isClickable={false}
-          toggleLike={() => {}}
-        />
-
-        <Views views_count={post.view_count} />
-
-        <Comment comments_count={post.comments_count} />
-      </div>
+    <article
+      className={
+        "w-full bg-white border p-4 rounded-[20px] flex flex-col justify-center"
+      }>
+      <h2
+        onClick={handlePostClick}
+        className={"text-xl hover:text-blue transition-all cursor-pointer"}>
+        {title}
+      </h2>
+      <span className={"text-sm text-gray-400 mt-2"}>
+        {moment(created_at).calendar()}
+      </span>
     </article>
   )
 }
 
-export const PublicationsTab = () => {
+interface PublicationsSectionProps {
+  tag_id: string
+}
+
+export const PublicationsSection = ({ tag_id }: PublicationsSectionProps) => {
   const [posts, setPosts] = useState<TPost[]>()
 
   const { t } = useTranslation()
 
   const TABS = useMemo(() => POST_TABS(t), [t])
 
-  const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]
 
-  const [selectedTab, setSelectedTab] = useState<number>(
-    getTabIdxByKey("profile")
-  )
+  const [selectedTab, setSelectedTab] = useState<number>(0)
 
-  const handleTabChange = (id: number) => {
-    setSelectedTab(id)
-  }
+  const handleTabChange = (id: number) => setSelectedTab(id)
 
   useEffect(() => {
-    NEWS.getMine().then((res: AxiosListResponse<TPost>) => {
-      setPosts(res.data.results)
-    })
-  }, [])
+    if (getTabKeyByIdx(selectedTab) === "questions") {
+      TAGS.getPublications(tag_id, "question").then(
+        (res: AxiosListResponse<TPost>) => {
+          setPosts(res.data.results)
+        }
+      )
+    }
 
-  useEffect(() => {
     if (getTabKeyByIdx(selectedTab) === "news") {
-      NEWS.getMine().then((res: AxiosListResponse<TPost>) => {
-        setPosts(res.data.results)
-      })
+      TAGS.getPublications(tag_id, "news").then(
+        (res: AxiosListResponse<TPost>) => {
+          setPosts(res.data.results)
+        }
+      )
     }
 
     if (getTabKeyByIdx(selectedTab) === "articles") {
-      ARTICLE.getMine().then((res: AxiosListResponse<TPost>) => {
-        setPosts(res.data.results)
-      })
+      TAGS.getPublications(tag_id, "article").then(
+        (res: AxiosListResponse<TPost>) => {
+          setPosts(res.data.results)
+        }
+      )
     }
-
-    if (getTabKeyByIdx(selectedTab) === "questions") {
-      QUESTION.getMine().then((res: AxiosListResponse<TPost>) => {
-        setPosts(res.data.results)
-      })
-    }
-  }, [selectedTab])
+  }, [selectedTab, tag_id])
 
   const tabClasses = (isSelected: boolean) =>
     cn(
@@ -102,7 +108,7 @@ export const PublicationsTab = () => {
       <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
         <Tab.List
           className={
-            "grid grid-cols-3 border-r border-l flex pt-[20px] rounded-[20px] rounded-t-none bg-white px-[40px] gap-[20px] border-b  w-full"
+            "grid grid-cols-3 border-r border-l flex pt-[20px] rounded-[20px] border-t rounded-t-none bg-white px-[40px] gap-[20px] border-b-[0.5px] w-full"
           }>
           {Object.entries(TABS).map(([key, value]) => (
             <Tab className={({ selected }) => tabClasses(selected)} key={key}>
@@ -117,7 +123,7 @@ export const PublicationsTab = () => {
                 "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
               }>
               {posts?.map((post) => (
-                <Post key={post.id} post={post} />
+                <Post key={post.id} {...post} />
               ))}
             </section>
 
@@ -138,7 +144,7 @@ export const PublicationsTab = () => {
                 "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
               }>
               {posts?.map((post) => (
-                <Post key={post.id} post={post} />
+                <Post key={post.id} {...post} />
               ))}
             </section>
 
@@ -159,7 +165,7 @@ export const PublicationsTab = () => {
                 "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
               }>
               {posts?.map((post) => (
-                <Post key={post.id} post={post} />
+                <Post key={post.id} {...post} />
               ))}
             </section>
 

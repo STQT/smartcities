@@ -37,7 +37,7 @@ const Post = ({
   return (
     <article
       className={
-        "w-full bg-white p-4 rounded-[20px] flex flex-col justify-center"
+        "w-full border bg-white p-4 rounded-[20px] flex flex-col justify-center"
       }>
       <h2
         onClick={handlePostClick}
@@ -108,7 +108,7 @@ export const PublicationsSection = ({ username }: PublicationsSectionProps) => {
       <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
         <Tab.List
           className={
-            "grid grid-cols-3 flex pt-[20px] rounded-[20px] border-t rounded-t-none bg-white px-[40px] gap-[20px] border-b-[0.5px] border-gray-300/30 w-full"
+            "grid grid-cols-3 border-r border-l flex pt-[20px] rounded-[20px] border-t rounded-t-none bg-white px-[40px] gap-[20px] border-b-[0.5px]  w-full"
           }>
           {Object.entries(TABS).map(([key, value]) => (
             <Tab className={({ selected }) => tabClasses(selected)} key={key}>

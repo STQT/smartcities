@@ -28,7 +28,7 @@ export const ProfileSection = ({ username }: ProfileSectionProps) => {
   return (
     <section
       className={
-        "flex flex-col px-[20px] py-[40px] outline-none md:px-[40px] bg-white"
+        "flex flex-col border-t rounded-t-[20px] border-r border-l px-[20px] py-[40px] outline-none md:px-[40px] bg-white"
       }>
       <section className={"flex items-center gap-[40px]"}>
         <div

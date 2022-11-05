@@ -8,8 +8,8 @@ interface ProfilePageProps {
 export const ProfilePage = ({ username }: ProfilePageProps) => {
   return (
     <Page title={username}>
-      <main className={"flex-1 flex flex-col overflow-hidden rounded-t-[20px]"}>
-        <section className={"rounded-t-[20px] overflow-hidden"}>
+      <main className={"flex-1 flex flex-col"}>
+        <section className={"rounded-t-[20px]"}>
           <ProfileSection username={username} />
         </section>
 

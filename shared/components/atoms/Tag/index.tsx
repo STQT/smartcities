@@ -1,7 +1,17 @@
 import type { Tag as ITag } from "shared/types"
+import { useRouter } from "next/router"
 
 export const Tag = ({ name, id }: ITag) => {
-  const handleTagClick = () => {}
+  const router = useRouter()
+
+  const handleTagClick = () => {
+    router.push({
+      pathname: "/tag/[id]",
+      query: {
+        id
+      }
+    })
+  }
 
   return (
     <button

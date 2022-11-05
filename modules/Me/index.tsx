@@ -76,11 +76,11 @@ export const ProfilePage = () => {
 
   return (
     <Page title={TABS[getTabKeyByIdx(selectedTab)].label}>
-      <main className={"flex-1 flex flex-col overflow-hidden rounded-[20px]"}>
+      <main className={"flex-1 flex flex-col"}>
         <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
           <Tab.List
             className={
-              "flex overflow-x-auto pt-[40px] bg-white px-[40px] gap-[20px] border-b-[0.5px] border-gray-300/30 w-full"
+              "flex border-t rounded-t-[20px] border-l border-r overflow-x-auto pt-[40px] bg-white px-[40px] gap-[20px] border-b  w-full"
             }>
             {Object.entries(TABS).map(([key, value]) => (
               <Tab className={({ selected }) => tabClasses(selected)} key={key}>
