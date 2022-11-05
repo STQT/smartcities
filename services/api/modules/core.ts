@@ -19,7 +19,21 @@ export const USER = {
   },
 
   getInfo(username: string) {
-    return request.get(`/users/${username}`)
+    return request.get(`/users/${username}/`)
+  },
+
+  getPublications(
+    username: string,
+    type: "news" | "article" | "question",
+    page?: number
+  ) {
+    return request.get(`/user/publications`, {
+      params: {
+        username,
+        type,
+        page
+      }
+    })
   }
 }
 

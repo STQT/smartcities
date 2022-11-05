@@ -4,12 +4,12 @@ import { NOTIFICATIONS } from "services/api"
 import { Notification } from "modules/Me/components/templates"
 import { EmptyState } from "shared/components/atoms/EmptyState"
 import { Notification as TNotification } from "shared/types"
-import { PostLoading } from "../../../../shared/components/atoms/PostLoading"
+import { PostLoading } from "shared/components/atoms/PostLoading"
 import { useTranslation } from "next-export-i18n"
 
 export const NotificationsTab = () => {
   const [isLoading, setLoading] = useState(true)
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const [notifications, setNotifications] = useState<TNotification[]>([])
 
   useEffect(() => {

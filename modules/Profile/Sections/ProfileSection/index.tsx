@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
-import { useTranslation } from "next-export-i18n"
 import cn from "classnames"
 import moment from "moment"
 
-import { User } from "shared/types"
+import type { User } from "shared/types"
 import { USER } from "services/api"
 
 import {
@@ -13,13 +12,11 @@ import {
   PhoneIcon
 } from "@heroicons/react/24/outline"
 
-interface ProfileTabProps {
+interface ProfileSectionProps {
   username: string
 }
 
-export const ProfileTab = ({ username }: ProfileTabProps) => {
-  const { t } = useTranslation()
-
+export const ProfileSection = ({ username }: ProfileSectionProps) => {
   const [user, setUser] = useState<User>()
 
   useEffect(() => {

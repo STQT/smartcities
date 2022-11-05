@@ -100,13 +100,13 @@ export const Post = ({ targetPost }: PostProps) => {
     <article className={"rounded-[20px] bg-white px-[20px] py-[32px]"}>
       <section className={"flex flex-col mb-[20px]"}>
         <div className={"flex gap-2 items-center select-none"}>
-          <Avatar src={post.user.image} size={40} />
+          <Avatar src={post.user?.image} size={40} />
           <span
             onClick={handleOpenProfile}
             className={"text-[14px] hover:text-blue transition-all"}>
-            {post.user.first_name && post.user.last_name
+            {post.user?.first_name && post?.user.last_name
               ? `${post.user.first_name} ${post.user.last_name}`
-              : `@${post.user.username}`}
+              : `@${post.user?.username}`}
           </span>
 
           <span className={"mx-2 text-gray-400 text-[14px]"}>
@@ -114,7 +114,7 @@ export const Post = ({ targetPost }: PostProps) => {
           </span>
 
           <CountryFlag
-            countryCode={post.user.country_code}
+            countryCode={post.user?.country_code}
             svg={true}
             style={{
               fontSize: "1.5rem"

@@ -9,9 +9,10 @@ import { AxiosListResponse } from "services/api/config"
 import { NEWS, USER } from "services/api"
 import { Button } from "../../shared/components/atoms"
 import { useTranslation } from "next-export-i18n"
-import { useAppDispatch } from "../../store"
 import { isLoggedIn } from "axios-jwt"
-import { setLoggedIn, setUser } from "../../store/slices/main"
+
+import { setLoggedIn, setUser } from "store/slices/main"
+import { useAppDispatch } from "store"
 
 export const FeedPage = () => {
   const dispatch = useAppDispatch()

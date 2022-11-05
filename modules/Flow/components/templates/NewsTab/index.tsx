@@ -50,8 +50,6 @@ export const NewsTab = () => {
 
   return (
     <main>
-      <section className={"h-6 rounded-b-[20px] bg-white"}></section>
-
       <PostLoading className={"mt-6"} isLoading={isLoading} />
       {!isLoading && (
         <EmptyState

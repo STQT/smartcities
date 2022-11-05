@@ -73,3 +73,9 @@ export interface Post {
   saved_count: number
   type: PostTypes
 }
+
+export interface Posts {
+  news: Post[]
+  questions: Post[]
+  articles: Post[]
+}

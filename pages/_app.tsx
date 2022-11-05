@@ -4,7 +4,7 @@ import "assets/css/index.css"
 import { store, useAppDispatch } from "store"
 
 import { useEffect } from "react"
-import { setLoggedIn, setUser } from "../store/slices/main"
+import { logOut, setLoggedIn, setUser } from "../store/slices/main"
 import { isLoggedIn } from "axios-jwt"
 
 import { ToastContainer } from "react-toastify"
@@ -15,7 +15,7 @@ import "moment/locale/ru"
 
 import { GoogleOAuthProvider } from "@react-oauth/google"
 import { GOOGLE_CLIENT_ID } from "../shared/constants"
-import { USER } from "../services/api"
+import { USER } from "services/api"
 
 moment.locale("ru")
 
@@ -29,6 +29,8 @@ const AuthChecker = () => {
       USER.getCurrent().then((res) => {
         dispatch(setUser(res.data))
       })
+    } else {
+      dispatch(logOut())
     }
   }, [dispatch])
 

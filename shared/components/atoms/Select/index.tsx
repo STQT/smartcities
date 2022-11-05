@@ -100,9 +100,9 @@ export const Select = ({
                 <>
                   {isLanguageSwitcher && (
                     <LanguageSwitcher
+                      key={option.value}
                       lang={(option.value as string).toLowerCase()}>
                       <Listbox.Option
-                        key={option.value}
                         className={({ active }) =>
                           `relative cursor-default select-none py-2 pl-4 pr-4 ${
                             active

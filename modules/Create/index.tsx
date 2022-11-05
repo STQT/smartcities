@@ -3,11 +3,10 @@ import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
 import { Button, Input, Select, TextArea } from "shared/components/atoms"
 import { Page } from "shared/components/templates"
 import { Dialog } from "shared/components/molecules"
-import { XMarkIcon } from "@heroicons/react/24/outline"
 
 import { useAppDispatch, useAppSelector } from "store"
 import { fetchFlows, fetchTags } from "store/slices/main"
-import { Language, PostTypes, Theme } from "shared/types"
+import type { Language, PostTypes, Theme } from "shared/types"
 import { ARTICLE, NEWS, QUESTION } from "services/api"
 
 import { PreviewSelect, TagsSelect, Editor } from "./components/templates"
@@ -15,7 +14,7 @@ import { toast } from "react-toastify"
 import { useRouter } from "next/router"
 import { isLoggedIn } from "axios-jwt"
 import { useSelectedLanguage, useTranslation } from "next-export-i18n"
-import { addBaseURL } from "../../shared/utils"
+import { addBaseURL } from "shared/utils"
 
 const generateSuccessCreateToast = (type: string) => {
   return toast(

@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Tab } from "@headlessui/react"
 import cn from "classnames"
 import { useRouter } from "next/router"
@@ -12,35 +12,13 @@ import {
 } from "./Tabs"
 import { isLoggedIn } from "axios-jwt"
 import { useTranslation } from "next-export-i18n"
-import {
-  BellIcon,
-  BookmarkIcon,
-  PencilSquareIcon,
-  UserCircleIcon
-} from "@heroicons/react/24/outline"
+import { ME_TABS } from "shared/constants"
 
 export const ProfilePage = () => {
   const router = useRouter()
   const { t } = useTranslation()
 
-  const TABS: Record<string, { label: string; icon: ReactNode }> = {
-    profile: {
-      label: t("profile"),
-      icon: <UserCircleIcon height={20} />
-    },
-    notifications: {
-      label: t("notifications"),
-      icon: <BellIcon height={20} />
-    },
-    posts: {
-      label: t("publications"),
-      icon: <PencilSquareIcon height={20} />
-    },
-    saved: {
-      label: t("saves"),
-      icon: <BookmarkIcon height={20} />
-    }
-  }
+  const TABS = useMemo(() => ME_TABS(t), [t])
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]

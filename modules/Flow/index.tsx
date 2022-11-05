@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/router"
 import { Tab } from "@headlessui/react"
 import cn from "classnames"
@@ -8,13 +8,9 @@ import { useAppSelector } from "store"
 
 import { NewsTab, ArticlesTab, QuestionsTab } from "./components/templates"
 import { useSelectedLanguage, useTranslation } from "next-export-i18n"
-import { Language, Theme } from "../../shared/types"
+import type { Language, Theme } from "shared/types"
 
-import {
-  NewspaperIcon,
-  PencilIcon,
-  QuestionMarkCircleIcon
-} from "@heroicons/react/24/outline"
+import { POST_TABS } from "shared/constants"
 
 export const FlowPage = () => {
   const router = useRouter()
@@ -22,20 +18,7 @@ export const FlowPage = () => {
   const { flows } = useAppSelector((state) => state.main)
   const { lang } = useSelectedLanguage()
 
-  const TABS: Record<string, { label: string; icon: ReactNode }> = {
-    questions: {
-      label: t("questions"),
-      icon: <QuestionMarkCircleIcon height={20} />
-    },
-    news: {
-      label: t("news"),
-      icon: <NewspaperIcon height={20} />
-    },
-    articles: {
-      label: t("articles"),
-      icon: <PencilIcon height={20} />
-    }
-  }
+  const TABS = useMemo(() => POST_TABS(t), [t])
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]
@@ -102,7 +85,7 @@ export const FlowPage = () => {
         <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
           <Tab.List
             className={
-              "pt-[20px] bg-white px-[40px] grid grid-cols-3 border-b-[0.5px] border-gray-300/30 w-full"
+              "pt-[20px] bg-white px-[40px] grid rounded-b-[20px] grid-cols-3 border-b-[0.5px] border-gray-300/30 w-full"
             }>
             {Object.entries(TABS).map(([key, value]) => (
               <Tab className={({ selected }) => tabClasses(selected)} key={key}>
@@ -112,15 +95,15 @@ export const FlowPage = () => {
           </Tab.List>
           <Tab.Panels className={"overflow-hidden rounded-b-[20px]"}>
             <Tab.Panel>
+              <QuestionsTab />
+            </Tab.Panel>
+
+            <Tab.Panel>
               <NewsTab />
             </Tab.Panel>
 
             <Tab.Panel>
               <ArticlesTab />
-            </Tab.Panel>
-
-            <Tab.Panel>
-              <QuestionsTab />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>

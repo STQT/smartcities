@@ -16,6 +16,7 @@ import { ARTICLE, BOOKMARKS, NEWS, QUESTION } from "services/api"
 import moment from "moment/moment"
 import CountryFlag from "react-country-flag"
 import { addBaseURL } from "../../shared/utils"
+import { useRouter } from "next/router"
 
 interface PostViewProps {
   post: Post
@@ -23,6 +24,8 @@ interface PostViewProps {
 
 export const PostView = ({ post: targetPost }: PostViewProps) => {
   const [post, setPost] = useState(targetPost)
+
+  const router = useRouter()
 
   const onCommentPosted = () => {
     setPost((prev) => ({ ...prev, comments_count: prev.comments_count + 1 }))
@@ -78,6 +81,15 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
     }
   }
 
+  const handleOpenProfile = () => {
+    router.push({
+      pathname: "/profile/[id]",
+      query: {
+        id: post.user.username
+      }
+    })
+  }
+
   return (
     <Page title={post?.title as string}>
       <main className={"flex-1 w-full rounded-[20px]"}>
@@ -87,7 +99,11 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
               <section className={"flex flex-col mb-[20px]"}>
                 <div className={"flex gap-2 items-center select-none"}>
                   <Avatar src={addBaseURL(post.user.image)} size={40} />
-                  <span className={"text-[14px]"}>
+                  <span
+                    onClick={handleOpenProfile}
+                    className={
+                      "text-[14px] hover:text-blue transition-all cursor-pointer"
+                    }>
                     {post.user.first_name && post.user.last_name
                       ? `${post.user.first_name} ${post.user.last_name}`
                       : `@${post.user.username}`}
@@ -115,9 +131,7 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
               {post.tags.length > 0 && (
                 <section className={"flex flex-wrap gap-2 mt-4"}>
                   {post.tags
-                    .sort((a, b) => {
-                      return b.name.length - a.name.length
-                    })
+                    .sort((a, b) => b.name.length - a.name.length)
                     .map((tag) => (
                       <Tag key={tag.id} {...tag} />
                     ))}

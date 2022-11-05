@@ -1,7 +1,7 @@
 import { Page } from "shared/components/templates"
 import { Tab } from "@headlessui/react"
 import cn from "classnames"
-import { ChangeEvent, ReactNode, useEffect, useMemo, useState } from "react"
+import { ChangeEvent, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/router"
 import {
   NewsTab,
@@ -9,17 +9,12 @@ import {
   QuestionsTab,
   UsersTab
 } from "./components/templates"
-import { Input } from "../../shared/components/atoms"
+import { Input } from "shared/components/atoms"
 import debouce from "lodash.debounce"
 import { useTranslation } from "next-export-i18n"
 import { useAppDispatch, useAppSelector } from "../../store"
-import { setSearchTerm } from "../../store/slices/main"
-import {
-  NewspaperIcon,
-  PencilIcon,
-  QuestionMarkCircleIcon,
-  UserCircleIcon
-} from "@heroicons/react/24/outline"
+import { setSearchTerm } from "store/slices/main"
+import { SEARCH_TABS } from "shared/constants"
 
 export const SearchPage = () => {
   const router = useRouter()
@@ -32,24 +27,7 @@ export const SearchPage = () => {
     searchTerm && setQuery(searchTerm)
   }, [searchTerm])
 
-  const TABS: Record<string, { label: string; icon: ReactNode }> = {
-    questions: {
-      label: t("questions"),
-      icon: <QuestionMarkCircleIcon height={20} />
-    },
-    news: {
-      label: t("news"),
-      icon: <NewspaperIcon height={20} />
-    },
-    articles: {
-      label: t("articles"),
-      icon: <PencilIcon height={20} />
-    },
-    users: {
-      label: "Users",
-      icon: <UserCircleIcon height={20} />
-    }
-  }
+  const TABS = useMemo(() => SEARCH_TABS(t), [t])
 
   const getTabIdxByKey = (key: string) => Object.keys(TABS).indexOf(key)
   const getTabKeyByIdx = (id: number) => Object.keys(TABS)[id]

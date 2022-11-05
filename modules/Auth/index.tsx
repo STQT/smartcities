@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react"
 import { useRouter } from "next/router"
+import { useTranslation } from "next-export-i18n"
 
 import { toast } from "react-toastify"
 
@@ -8,9 +9,8 @@ import { Page, SignInWith } from "shared/components/templates"
 import { login } from "services/api/config"
 import { USER } from "services/api"
 
-import { setLoggedIn } from "store/slices/main"
 import { useAppDispatch } from "store"
-import { useTranslation } from "next-export-i18n"
+import { setLoggedIn } from "store/slices/main"
 
 export const AuthPage = () => {
   const router = useRouter()
@@ -27,9 +27,7 @@ export const AuthPage = () => {
     setFormState({ ...formState, [e.target.name]: e.target.value })
   }
 
-  const handleRegisterClick = () => {
-    router.push("/register")
-  }
+  const handleRegisterClick = () => router.push("/register")
 
   const handleLoginClick = () => {
     login(formState.username, formState.password, {

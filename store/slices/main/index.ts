@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 import { clearAuthTokens } from "axios-jwt"
-import { AxiosResponse } from "axios"
+import type { AxiosResponse } from "axios"
 
-import { Post, Tag, Theme, User } from "shared/types"
+import type { Post, Tag, Theme, User } from "shared/types"
 
 import { AxiosListResponse } from "services/api/config"
 import { BASE, TAGS } from "services/api"
-import { stat } from "fs"
 
 export interface MainState {
   user: User | null
@@ -84,7 +83,6 @@ export const mainSlice = createSlice({
   }
 })
 
-// Action creators are generated for each case reducer function
 export const { setLoggedIn, logOut, setUser, setSearchTerm } = mainSlice.actions
 
 export default mainSlice.reducer

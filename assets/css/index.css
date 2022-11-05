@@ -8,7 +8,8 @@
 @layer base {
   body {
     font-family: "Inter", sans-serif;
-    @apply text-gray-500 bg-gray-100;
+    @apply text-gray-500;
+    background: url("../svg/bg.svg");
   }
 }
 

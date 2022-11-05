@@ -1,5 +1,5 @@
 import { Page } from "shared/components/templates"
-import { ProfileTab } from "./Tabs"
+import { ProfileSection, PublicationsSection } from "./Sections"
 
 interface ProfilePageProps {
   username: string
@@ -8,9 +8,13 @@ interface ProfilePageProps {
 export const ProfilePage = ({ username }: ProfilePageProps) => {
   return (
     <Page title={username}>
-      <main className={"flex-1 flex flex-col overflow-hidden rounded-[20px]"}>
-        <section className={"rounded-[20px] overflow-hidden"}>
-          <ProfileTab username={username} />
+      <main className={"flex-1 flex flex-col overflow-hidden rounded-t-[20px]"}>
+        <section className={"rounded-t-[20px] overflow-hidden"}>
+          <ProfileSection username={username} />
+        </section>
+
+        <section>
+          <PublicationsSection username={username} />
         </section>
       </main>
     </Page>

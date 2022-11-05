@@ -1,18 +1,18 @@
-import { ReactNode, useEffect, useState } from "react"
-import { Post as TPost, PostTypes } from "shared/types"
+import { useEffect, useMemo, useState } from "react"
+import { Tab } from "@headlessui/react"
+
+import { useTranslation } from "next-export-i18n"
+import { useRouter } from "next/router"
+import cn from "classnames"
+
+import type { Post as TPost, Posts, PostTypes } from "shared/types"
+import { POST_TABS } from "shared/constants"
+
 import { BOOKMARKS } from "services/api"
 import { Avatar } from "shared/components/atoms"
-import { Tab } from "@headlessui/react"
-import cn from "classnames"
+
 import { EmptyState } from "shared/components/atoms/EmptyState"
-import {
-  ChevronRightIcon,
-  NewspaperIcon,
-  PencilIcon,
-  QuestionMarkCircleIcon
-} from "@heroicons/react/24/outline"
-import { useRouter } from "next/router"
-import { useTranslation } from "next-export-i18n"
+import { ChevronRightIcon } from "@heroicons/react/24/outline"
 
 const Post = ({
   post,
@@ -58,7 +58,7 @@ const Post = ({
       <div
         className={"p-[12px] lg:p-[32px]"}
         dangerouslySetInnerHTML={{
-          __html: `${post.description.slice(0, 120)}...`
+          __html: post.subtitle
         }}
       />
 
@@ -76,32 +76,13 @@ const Post = ({
 export const SavingsTab = () => {
   const { t } = useTranslation()
 
-  const TABS: Record<string, { label: string; icon: ReactNode }> = {
-    questions: {
-      label: t("questions"),
-      icon: <QuestionMarkCircleIcon height={20} />
-    },
-    news: {
-      label: t("news"),
-      icon: <NewspaperIcon height={20} />
-    },
-    articles: {
-      label: t("articles"),
-      icon: <PencilIcon height={20} />
-    }
-  }
+  const TABS = useMemo(() => POST_TABS(t), [t])
 
-  const [posts, setPosts] = useState<{
-    news: TPost[]
-    questions: TPost[]
-    articles: TPost[]
-  }>()
+  const [posts, setPosts] = useState<Posts>()
 
   const [selectedTab, setSelectedTab] = useState<number>(0)
 
-  const handleTabChange = (id: number) => {
-    setSelectedTab(id)
-  }
+  const handleTabChange = (id: number) => setSelectedTab(id)
 
   const tabClasses = (isSelected: boolean) =>
     cn(
@@ -150,7 +131,7 @@ export const SavingsTab = () => {
                   key={post.id}
                   onDelete={handleDelete}
                   post={post}
-                  type={"NEWS"}
+                  type={"QUESTION"}
                 />
               ))}
             </section>
@@ -160,7 +141,7 @@ export const SavingsTab = () => {
                 <EmptyState
                   className={"mt-0"}
                   isEmpty={true}
-                  caption={t("news_not_found")}
+                  caption={t("questions_not_found")}
                 />
               </section>
             )}
@@ -176,7 +157,7 @@ export const SavingsTab = () => {
                   key={post.id}
                   onDelete={handleDelete}
                   post={post}
-                  type={"ARTICLE"}
+                  type={"NEWS"}
                 />
               ))}
             </section>
@@ -186,7 +167,7 @@ export const SavingsTab = () => {
                 <EmptyState
                   className={"mt-0"}
                   isEmpty={true}
-                  caption={t("articles_not_found")}
+                  caption={t("news_not_found")}
                 />
               </section>
             )}
@@ -202,7 +183,7 @@ export const SavingsTab = () => {
                   key={post.id}
                   onDelete={handleDelete}
                   post={post}
-                  type={"QUESTION"}
+                  type={"ARTICLE"}
                 />
               ))}
             </section>
@@ -212,7 +193,7 @@ export const SavingsTab = () => {
                 <EmptyState
                   className={"mt-0"}
                   isEmpty={true}
-                  caption={t("questions_not_found")}
+                  caption={t("articles_not_found")}
                 />
               </section>
             )}
