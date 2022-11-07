@@ -193,7 +193,7 @@ export const RegisterPage = () => {
         <main className={"flex w-full flex-col flex-1"}>
           <section
             className={
-              "max-w-[862px] w-full bg-white rounded-[10px] md:mt-[80px] py-[30px] md:py-[60px] px-[24px] md:px-[62px] mx-auto"
+              "max-w-[862px] border w-full bg-white rounded-[10px] md:mt-[80px] py-[30px] md:py-[60px] px-[24px] md:px-[62px] mx-auto"
             }>
             <h1 className={"text-blue text-[24px] font-semibold mb-[60px]"}>
               {t("register")}
@@ -428,7 +428,7 @@ export const RegisterPage = () => {
 
           <section
             className={
-              "max-w-[862px] w-full bg-white rounded-[10px] my-[40px] flex items-center justify-center py-[33px] mx-auto"
+              "max-w-[862px] border w-full bg-white rounded-[10px] my-[40px] flex items-center justify-center py-[33px] mx-auto"
             }>
             <p className={"text-[16px] md:text-[18px]"}>
               {t("already_registered?")}{" "}
@@ -437,15 +437,6 @@ export const RegisterPage = () => {
               </button>
             </p>
           </section>
-
-          <footer
-            className={
-              "flex gap-[10px] md:gap-[40px] flex-wrap text-gray-400 text-[14px] md:text-[16px] list-none mx-auto justify-center mb-[40px]"
-            }>
-            <li>{t("about_us")}</li>
-            <li>{t("feedback")}</li>
-            <li>{t("agreement")}</li>
-          </footer>
         </main>
       </Page>
 
@@ -479,14 +470,6 @@ export const RegisterPage = () => {
           <Button onClick={handleVerifyClick} className={"w-full mt-16"}>
             {t("continue")}
           </Button>
-
-          {/*<p*/}
-          {/*  className={*/}
-          {/*    "text-[14px] w-full text-gray-300 text-center mt-[20px]"*/}
-          {/*  }>*/}
-          {/*  Нажимая «Продолжить», вы принимаете пользовательское соглашение и*/}
-          {/*  политику конфиденциальности*/}
-          {/*</p>*/}
         </section>
       </Dialog>
     </>

@@ -33,14 +33,6 @@ export const ProfilePage = () => {
     }
   }, [])
 
-  const hasTabTransparentBg = useMemo(() => {
-    // TODO: Yes I know, but deadline is soon :)
-    return (
-      selectedTab === getTabIdxByKey("posts") ||
-      selectedTab === getTabIdxByKey("saved")
-    )
-  }, [selectedTab])
-
   const handleTabChange = (id: number) => {
     setSelectedTab(id)
 
@@ -88,15 +80,6 @@ export const ProfilePage = () => {
               </Tab>
             ))}
           </Tab.List>
-
-          <div
-            className={cn(
-              "w-full bg-white",
-              hasTabTransparentBg
-                ? "rounded-b-3xl h-0"
-                : "rounded-none h-[35px]"
-            )}
-          />
 
           <Tab.Panels className={"overflow-hidden rounded-b-[20px]"}>
             <Tab.Panel>

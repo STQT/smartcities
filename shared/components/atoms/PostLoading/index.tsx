@@ -9,7 +9,7 @@ interface PostLoadingProps {
 
 export const PostLoading = ({ isLoading, className }: PostLoadingProps) => {
   const classes = cn(
-    "h-32 rounded-[20px] bg-white flex items-center justify-center",
+    "h-32 border rounded-[20px] bg-white flex items-center justify-center",
     className
   )
 

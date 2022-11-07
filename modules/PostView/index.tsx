@@ -94,7 +94,7 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
     <Page title={post?.title as string}>
       <main className={"flex-1 w-full rounded-[20px]"}>
         {post && (
-          <section className={"bg-white py-[20px] rounded-[20px]"}>
+          <section className={"bg-white border py-[20px] rounded-[20px]"}>
             <section className={"px-[20px] flex flex-col border-b pb-4"}>
               <section className={"flex flex-col mb-[20px]"}>
                 <div className={"flex gap-2 items-center select-none"}>

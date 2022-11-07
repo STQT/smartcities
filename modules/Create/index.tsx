@@ -195,7 +195,7 @@ export const CreatePage = () => {
       <Page withMenu={false} title={t("create_post")}>
         <section
           className={
-            "w-full p-[20px] md:p-[40px] rounded-[20px] bg-white flex flex-col gap-[30px]"
+            "w-full border p-[20px] md:p-[40px] rounded-[20px] bg-white flex flex-col gap-[30px]"
           }>
           <Input
             onClick={() => setThemeDialogOpen(true)}

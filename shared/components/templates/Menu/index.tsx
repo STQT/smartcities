@@ -66,7 +66,7 @@ export const Menu = () => {
   return (
     <aside
       className={
-        "hidden md:block md:w-[30%] max-w-[250px] bg-white self-start pt-[40px] rounded-[20px] overflow-hidden"
+        "hidden border block md:block md:w-[30%] max-w-[250px] bg-white self-start pt-[40px] rounded-[20px] overflow-hidden"
       }>
       <section
         className={cn("px-[20px] border-b-[0.5px] border-gray-300/30", {

@@ -6,7 +6,7 @@ import { useTranslation } from "next-export-i18n"
 interface CountrySelectProps {
   selected: string
   hint: string
-  onChange?: (code: string) => void
+  onChange: (code: string) => void
 }
 
 export const CountrySelect = ({
@@ -25,6 +25,7 @@ export const CountrySelect = ({
 
   return (
     <Select
+      onChange={(option) => onChange(option.value as string)}
       selectPosition={"top"}
       hint={hint}
       isCountrySelect={true}

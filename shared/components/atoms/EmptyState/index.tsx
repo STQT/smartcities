@@ -15,7 +15,7 @@ export const EmptyState = ({
   className
 }: EmptyStateProps) => {
   const classes = cn(
-    "py-[50px] rounded-[20px] mt-6 bg-white flex gap-[20px] flex-col items-center justify-center",
+    "py-[50px] border rounded-[20px] mt-6 bg-white flex gap-[20px] flex-col items-center justify-center",
     className
   )
 

@@ -184,7 +184,7 @@ export const Comments = ({
   return (
     <section
       className={
-        "flex flex-col overflow-hidden max-h-96 bg-white rounded-[20px] mt-4"
+        "flex flex-col border overflow-hidden max-h-96 bg-white rounded-[20px] mt-4"
       }>
       <section className={"p-[20px]"}>
         <h2 className={"text-blue text-[18px]"}>

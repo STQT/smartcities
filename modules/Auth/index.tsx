@@ -51,7 +51,7 @@ export const AuthPage = () => {
       <main className={"flex w-full flex-col justify-center flex-1"}>
         <section
           className={
-            "bg-white max-w-[400px] w-full mx-auto md:mt-12 py-[40px] px-[30px] rounded-[10px]"
+            "bg-white border max-w-[400px] w-full mx-auto md:mt-12 py-[40px] px-[30px] rounded-[10px]"
           }>
           <div
             className={
@@ -99,29 +99,16 @@ export const AuthPage = () => {
 
         <section
           className={
-            "bg-white mb-[40px] rounded-[10px] mx-auto max-w-[400px] p-[30px] mt-[20px] flex flex-col gap-[10px]"
+            "bg-white border mb-[40px] rounded-[10px] mx-auto max-w-[400px] p-[30px] mt-[20px] flex flex-col gap-[10px]"
           }>
           <Button onClick={handleRegisterClick} size={"sm"} theme={"green"}>
             {t("register")}
           </Button>
 
-          <p className={"text-gray-200 text-[14px] text-center"}>
+          <p className={"text-gray-300 text-[14px] text-center"}>
             {t("access_to_all_features_after_login")}
           </p>
-
-          <button className={"self-center text-[14px]"}>
-            {t("know_more")}
-          </button>
         </section>
-
-        <footer
-          className={
-            "flex gap-[10px] md:gap-[40px] flex-wrap text-gray-400 text-[14px] md:text-[16px] list-none mx-auto justify-center mb-[40px]"
-          }>
-          <li>{t("about_us")}</li>
-          <li>{t("feedback")}</li>
-          <li>{t("agreement")}</li>
-        </footer>
       </main>
     </Page>
   )

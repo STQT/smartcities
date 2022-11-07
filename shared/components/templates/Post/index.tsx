@@ -97,7 +97,7 @@ export const Post = ({ targetPost }: PostProps) => {
   }
 
   return (
-    <article className={"rounded-[20px] bg-white px-[20px] py-[32px]"}>
+    <article className={"rounded-[20px] border bg-white px-[20px] py-[32px]"}>
       <section className={"flex flex-col mb-[20px]"}>
         <div className={"flex gap-2 items-center select-none"}>
           <Avatar src={post.user?.image} size={40} />

@@ -28,6 +28,10 @@ export const MainFlows = ({ onItemClick }: MainFlowsProps) => {
     onItemClick?.()
   }
 
+  const handleCategoriesClick = () => {
+    router.push("/")
+  }
+
   const itemClasses = (id: number) =>
     cn(
       "transition-all text-gray-400 hover:text-gray-500 p-[10px] hover:bg-gray-100 flex items-center gap-[10px] rounded-[5px]",
@@ -51,7 +55,9 @@ export const MainFlows = ({ onItemClick }: MainFlowsProps) => {
 
   return (
     <section className={"mb-[28px] px-[20px]"}>
-      <span className={"text-[18px] text-blue font-semibold"}>
+      <span
+        onClick={handleCategoriesClick}
+        className={"text-[18px] text-blue font-semibold cursor-pointer"}>
         {t("categories")}
       </span>
       <div className={"mt-[8px] flex flex-col gap-1"}>

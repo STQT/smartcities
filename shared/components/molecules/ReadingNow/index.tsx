@@ -82,7 +82,7 @@ export const ReadingNow = () => {
   }, [])
 
   return (
-    <section className={"bg-white rounded-[20px] w-full"}>
+    <section className={"bg-white border rounded-[20px] w-full"}>
       <div className={"py-[20px] border-b-[0.5px] border-gray-300/30"}>
         <h2
           className={

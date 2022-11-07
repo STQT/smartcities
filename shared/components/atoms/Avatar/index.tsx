@@ -1,6 +1,7 @@
 import cn from "classnames"
 import Image from "next/image"
 import { addBaseURL } from "../../../utils"
+import { useMemo } from "react"
 
 interface AvatarProps {
   src?: string
@@ -15,15 +16,21 @@ export const Avatar = ({ src, size, onClick }: AvatarProps) => {
     {
       "w-[50px] h-[50px]": size === 50,
       "w-[40px] h-[40px]": size === 40,
+      "w-[150px] h-[150px]": size === 150,
+      "w-[120px] h-[120px]": size === 120,
       "cursor-pointer": onClick
     }
   )
 
-  return src ? (
+  const image = useMemo(() => {
+    return src?.startsWith("/") ? (addBaseURL(src) as string) : src
+  }, [src])
+
+  return image ? (
     <Image
       onClick={onClick}
       className={classes}
-      src={addBaseURL(src) as string}
+      src={image}
       width={size}
       height={size}
     />
@@ -32,8 +39,8 @@ export const Avatar = ({ src, size, onClick }: AvatarProps) => {
       <Image
         src={"/svg/icons/user-placeholder.svg"}
         className={"pointer-events-none"}
-        width={20}
-        height={20}
+        width={size / 2}
+        height={size / 2}
       />
     </div>
   )

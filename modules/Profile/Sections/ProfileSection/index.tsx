@@ -11,6 +11,7 @@ import {
   MapPinIcon,
   PhoneIcon
 } from "@heroicons/react/24/outline"
+import { Avatar } from "../../../../shared/components/atoms"
 
 interface ProfileSectionProps {
   username: string
@@ -31,16 +32,7 @@ export const ProfileSection = ({ username }: ProfileSectionProps) => {
         "flex flex-col border-t rounded-t-[20px] border-r border-l px-[20px] py-[40px] outline-none md:px-[40px] bg-white"
       }>
       <section className={"flex items-center gap-[40px]"}>
-        <div
-          className={
-            "w-[150px] h-[150px] bg-[#F5F6FA] flex items-center justify-center border border-[#D9DCE5] rounded-full relative"
-          }>
-          <img
-            src={user?.image}
-            alt={"image"}
-            className={cn("rounded-full object-cover w-[150px] h-[150px]")}
-          />
-        </div>
+        <Avatar size={150} src={user?.image} />
 
         <div className={"flex flex-col gap-1"}>
           <h3 className={"text-[32px] leading-none font-bold"}>

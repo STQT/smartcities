@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useMemo, useState } from "react"
 import { useAppDispatch, useAppSelector } from "store"
 
 import {
+  Avatar,
   Button,
   CountrySelect,
   GenderRadio,
@@ -125,21 +126,15 @@ export const ProfileTab = () => {
 
   return (
     <section
-      className={"flex flex-col px-[20px] outline-none md:px-[40px] bg-white"}>
+      className={
+        "flex border border-t-0 flex-col pt-[35px] px-[20px] outline-none md:px-[40px] bg-white"
+      }>
       <section className={"flex mb-[40px] items-center gap-[40px]"}>
         <div
           className={
-            "w-[120px] h-[120px] bg-[#F5F6FA] flex items-center justify-center border border-[#D9DCE5] rounded-full relative"
+            "bg-[#F5F6FA] flex items-center justify-center border border-[#D9DCE5] rounded-full relative"
           }>
-          <img
-            src={profileImage}
-            alt={"image"}
-            className={cn("rounded-full object-cover", {
-              "w-[120px] h-[120px]":
-                formState?.image || Boolean(image?.preview),
-              "w-[40px] h-[40px]": !Boolean(image?.preview)
-            })}
-          />
+          <Avatar size={120} src={profileImage} />
 
           <input
             onChange={handleImageChange}

@@ -219,7 +219,7 @@ export const Header = () => {
           borderRadius: hasScrolled ? "0 0 30px 30px" : "100px"
         }}
         className={cn(
-          "w-full sticky top-0 z-50 h-[80px] bg-white mt-[40px] mb-[20px] duration-300 transition-all shadow-gray-300/20",
+          "w-full sticky border top-0 z-50 h-[80px] bg-white mt-[40px] mb-[20px] duration-300 transition-all shadow-gray-300/20",
           hasScrolled ? "shadow-lg" : "shadow-none"
         )}>
         <section
