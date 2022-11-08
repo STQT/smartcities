@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/24/outline"
 import { logOut } from "store/slices/main"
 import cn from "classnames"
-import { useTranslation } from "next-export-i18n"
+import { useLanguageQuery, useTranslation } from "next-export-i18n"
 
 interface MenuItemProps {
   Icon: JSX.Element
@@ -44,23 +44,40 @@ export const Menu = () => {
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
 
+  const [languageQuery] = useLanguageQuery()
+
   const router = useRouter()
 
   const handleLogout = () => {
     dispatch(logOut())
-    router.push("/auth")
+    router.push({ pathname: "/auth", query: languageQuery })
   }
 
   const handleMoveToNotifications = () => {
-    router.push("/me?tab=notifications")
+    router.push({
+      pathname: "/me",
+      query: {
+        ...languageQuery,
+        tab: "notifications"
+      }
+    })
   }
 
   const handleMoveToProfile = () => {
-    router.push("/me?tab=profile")
+    router.push({
+      pathname: "/me",
+      query: {
+        ...languageQuery,
+        tab: "profile"
+      }
+    })
   }
 
   const handleMoveToCreate = () => {
-    router.push("/create")
+    router.push({
+      pathname: "/create",
+      query: languageQuery
+    })
   }
 
   return (
@@ -73,7 +90,11 @@ export const Menu = () => {
           "pb-[30px]": isLoggedIn,
           "pb-[0px]": !isLoggedIn
         })}>
-        <Logo onClick={() => router.push("/feed")} />
+        <Logo
+          onClick={() =>
+            router.push({ pathname: "/feed", query: languageQuery })
+          }
+        />
 
         <div className={"mt-[30px] flex flex-col gap-4"}>
           {isLoggedIn && (

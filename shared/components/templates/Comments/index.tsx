@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useEffect, useMemo, useState } from "react"
 import moment from "moment"
 
 import { Avatar, Button } from "shared/components/atoms"
@@ -11,9 +11,26 @@ import { ARTICLE, NEWS, QUESTION } from "services/api"
 import Editor from "react-medium-editor"
 import "medium-editor/dist/css/medium-editor.css"
 import "medium-editor/dist/css/themes/default.css"
-import { useTranslation } from "next-export-i18n"
+import { useSelectedLanguage, useTranslation } from "next-export-i18n"
+import { Language } from "shared/types"
 
 const Comment = ({ user, comment, created_at }: TComment) => {
+  const { lang: selectedLanguage } = useSelectedLanguage()
+
+  const lang = useMemo(
+    () =>
+      /*@ts-ignore*/
+      ({
+        gb: "en",
+        kz: "kk",
+        kg: "kk",
+        tr: "tr",
+        az: "az",
+        uz: "uz"
+      }[selectedLanguage as Language]),
+    [selectedLanguage]
+  )
+
   return (
     <article className={"flex flex-col"}>
       <div className={"flex gap-2 items-center mb-[20px]"}>
@@ -22,7 +39,9 @@ const Comment = ({ user, comment, created_at }: TComment) => {
         <div className={"flex text-blue text-[18px] items-center"}>
           {user.first_name} {user.last_name}
           <span className={"ml-2 text-[14px] font-normal text-gray-400"}>
-            {moment(created_at).calendar()}
+            {moment(created_at)
+              .locale(lang as Language)
+              .calendar()}
           </span>
         </div>
       </div>

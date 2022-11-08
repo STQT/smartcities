@@ -7,7 +7,7 @@ import { AxiosListResponse } from "services/api/config"
 import { Tab } from "@headlessui/react"
 import cn from "classnames"
 import { EmptyState } from "shared/components/atoms/EmptyState"
-import { useTranslation } from "next-export-i18n"
+import { useLanguageQuery, useTranslation } from "next-export-i18n"
 import { POST_TABS } from "shared/constants"
 import moment from "moment"
 import { useRouter } from "next/router"
@@ -25,10 +25,13 @@ const Post = ({
 }) => {
   const router = useRouter()
 
+  const [languageQuery] = useLanguageQuery()
+
   const handlePostClick = () => {
     router.push({
       pathname: `/${type.toLowerCase()}/[id]`,
       query: {
+        ...languageQuery,
         id
       }
     })

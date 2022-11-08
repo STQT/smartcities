@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { Page } from "shared/components/templates"
-import { Post } from "shared/types"
+import { Language, Post } from "shared/types"
 
 import {
   Avatar,
@@ -17,6 +17,7 @@ import moment from "moment/moment"
 import CountryFlag from "react-country-flag"
 import { addBaseURL } from "../../shared/utils"
 import { useRouter } from "next/router"
+import { useLanguageQuery, useSelectedLanguage } from "next-export-i18n"
 
 interface PostViewProps {
   post: Post
@@ -26,6 +27,9 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
   const [post, setPost] = useState(targetPost)
 
   const router = useRouter()
+
+  const { lang: selectedLanguage } = useSelectedLanguage()
+  const [languageQuery] = useLanguageQuery()
 
   const onCommentPosted = () => {
     setPost((prev) => ({ ...prev, comments_count: prev.comments_count + 1 }))
@@ -85,10 +89,25 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
     router.push({
       pathname: "/profile/[id]",
       query: {
+        ...languageQuery,
         id: post.user.username
       }
     })
   }
+
+  const lang = useMemo(
+    () =>
+      /*@ts-ignore*/
+      ({
+        gb: "en",
+        kz: "kk",
+        kg: "kk",
+        tr: "tr",
+        az: "az",
+        uz: "uz"
+      }[selectedLanguage as Language]),
+    [selectedLanguage]
+  )
 
   return (
     <Page title={post?.title as string}>
@@ -110,7 +129,9 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
                   </span>
 
                   <span className={"mx-2 text-gray-400 text-[14px]"}>
-                    {moment(post.created_at).calendar()}
+                    {moment(post.created_at)
+                      .locale(lang as Language)
+                      .calendar()}
                   </span>
 
                   <CountryFlag

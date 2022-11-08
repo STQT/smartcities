@@ -4,7 +4,11 @@ import cn from "classnames"
 import { fetchFlows } from "store/slices/main"
 import { useAppDispatch, useAppSelector } from "store"
 import { useCallback, useEffect } from "react"
-import { useTranslation, useSelectedLanguage } from "next-export-i18n"
+import {
+  useTranslation,
+  useSelectedLanguage,
+  useLanguageQuery
+} from "next-export-i18n"
 import { Language, Theme } from "../../../types"
 import { addBaseURL } from "../../../utils"
 
@@ -16,20 +20,26 @@ export const MainFlows = ({ onItemClick }: MainFlowsProps) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
+  const [languageQuery] = useLanguageQuery()
   const { lang } = useSelectedLanguage()
   const { flows } = useAppSelector((state) => state.main)
+
+  console.log(languageQuery)
 
   const handleItemClick = (id: number) => {
     router.push({
       pathname: "/flow/[id]/",
-      query: { id }
+      query: { ...languageQuery, id }
     })
 
     onItemClick?.()
   }
 
   const handleCategoriesClick = () => {
-    router.push("/")
+    router.push({
+      pathname: "/",
+      query: languageQuery
+    })
   }
 
   const itemClasses = (id: number) =>

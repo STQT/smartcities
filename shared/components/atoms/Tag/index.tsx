@@ -1,13 +1,16 @@
 import type { Tag as ITag } from "shared/types"
 import { useRouter } from "next/router"
+import { useLanguageQuery } from "next-export-i18n"
 
 export const Tag = ({ name, id }: ITag) => {
   const router = useRouter()
+  const [languageQuery] = useLanguageQuery()
 
   const handleTagClick = () => {
     router.push({
       pathname: "/tag/[id]",
       query: {
+        ...languageQuery,
         id
       }
     })

@@ -10,13 +10,17 @@ import {
   Tag,
   Views
 } from "shared/components/atoms"
-import { Post as TPost } from "shared/types"
+import { Language, Post as TPost } from "shared/types"
 
 import { addBaseURL } from "shared/utils"
 
 import { ARTICLE, QUESTION, NEWS, BOOKMARKS } from "services/api"
 import moment from "moment"
-import { useTranslation } from "next-export-i18n"
+import {
+  useLanguageQuery,
+  useSelectedLanguage,
+  useTranslation
+} from "next-export-i18n"
 
 interface PostProps {
   targetPost: TPost
@@ -27,13 +31,29 @@ export const Post = ({ targetPost }: PostProps) => {
   const router = useRouter()
 
   const { t } = useTranslation()
+  const { lang: selectedLanguage } = useSelectedLanguage()
+  const [languageQuery] = useLanguageQuery()
 
   const imageURL = useMemo(() => post && addBaseURL(post.image), [post])
+
+  const lang = useMemo(
+    () =>
+      /*@ts-ignore*/
+      ({
+        gb: "en",
+        kz: "kk",
+        kg: "kk",
+        tr: "tr",
+        az: "az",
+        uz: "uz"
+      }[selectedLanguage as Language]),
+    [selectedLanguage]
+  )
 
   const handleReadMore = () => {
     router.push({
       pathname: `/${post.type.toLowerCase()}/[id]`,
-      query: { id: post.id }
+      query: { ...languageQuery, id: post.id }
     })
   }
 
@@ -41,6 +61,7 @@ export const Post = ({ targetPost }: PostProps) => {
     router.push({
       pathname: "/profile/[id]",
       query: {
+        ...languageQuery,
         id: post.user.username
       }
     })
@@ -110,7 +131,9 @@ export const Post = ({ targetPost }: PostProps) => {
           </span>
 
           <span className={"mx-2 text-gray-400 text-[14px]"}>
-            {moment(post.created_at).calendar()}
+            {moment(post.created_at)
+              .locale(lang as Language)
+              .calendar()}
           </span>
 
           <CountryFlag

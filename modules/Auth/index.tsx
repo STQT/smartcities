@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react"
 import { useRouter } from "next/router"
-import { useTranslation } from "next-export-i18n"
+import { useLanguageQuery, useTranslation } from "next-export-i18n"
 
 import { toast } from "react-toastify"
 
@@ -15,6 +15,7 @@ import { setLoggedIn } from "store/slices/main"
 export const AuthPage = () => {
   const router = useRouter()
   const { t } = useTranslation()
+  const [languageQuery] = useLanguageQuery()
 
   const [formState, setFormState] = useState({
     username: "",
@@ -27,14 +28,15 @@ export const AuthPage = () => {
     setFormState({ ...formState, [e.target.name]: e.target.value })
   }
 
-  const handleRegisterClick = () => router.push("/register")
+  const handleRegisterClick = () =>
+    router.push({ pathname: "/register", query: languageQuery })
 
   const handleLoginClick = () => {
     login(formState.username, formState.password, {
       successCb: () => {
         USER.getCurrent().then(() => {
           dispatch(setLoggedIn())
-          router.push("/feed")
+          router.push({ pathname: "/feed", query: languageQuery })
         })
       },
 

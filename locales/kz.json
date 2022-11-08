@@ -1,0 +1,104 @@
+{
+  "welcome": "Қош келдіңіз",
+  "search": "Іздеу",
+  "feed": "Feed",
+  "know_more": "Көбірек білу",
+  "rules": "Ережелер",
+  "reading_now": "Қазір оқылуда",
+  "login_0": "Кіру",
+  "login_1": "Кіру",
+  "read_more": "Толығырақ",
+  "categories": "Категориялар",
+
+  "news": "Жаңалықтар",
+
+  "articles": "Мақалалар",
+  "article": "Мақала",
+
+  "questions": "Сұрақтар",
+  "question": "Сұрақ",
+
+  "comments": "Пікірлер",
+  "write_comment": "Пікір қалдыру",
+  "publish": "Жариялау",
+
+  "comments_not_found": "Пікірлер табылмады",
+  "news_not_found": "Жаңалықтар табылмады",
+  "articles_not_found": "Мақалалар табылмады",
+  "questions_not_found": "Сұрақтар табылмады",
+
+  "name": "Аты",
+  "surname": "Тегі",
+  "username": "Пайдаланушы аты",
+  "password": "Құпия сөз",
+  "repeat_password": "Құпия сөзді қайталаңыз",
+  "email": "E-Mail",
+
+  "register": "Тіркеу",
+  "already_registered?": "Есептік жазба бар ма?",
+
+  "profile": "Профиль",
+  "notifications": "Хабарламалар",
+  "publications": "Жарияланымдар",
+  "saves": "Сақтап алынғандар",
+  "how_to_become_author": "Қалай автор болуға болады?",
+
+  "exit": "Шығу",
+  "change": "Өзгерту",
+
+  "create": "Жариялау",
+  "settings": "Параметрлер",
+
+  "forgot_password": "Құпия сөзді ұмыттыңыз ба?",
+
+  "or_sign_in_with_other_services": "Немесе ыңғайлы тіркеу әдісін таңдаңыз",
+  "load_more": "Көбірек жүктеу",
+  "delete": "Жою",
+
+  "choose_thread": "Бағытты таңдаңыз",
+  "choose": "Таңдау",
+  "thread": "Бағыт",
+
+  "title": "Тақырып",
+  "subtitle": "Тақырыпша",
+  "post_type": "Пост түрі",
+  "create_port": "Пост жариялау",
+  "choose_tags": "Тегтерді таңдаңыз",
+  "create_tag": "Тег жасау",
+  "tags": "Тегтер",
+  "preview_image": "Пост мұқабасы",
+  "click_to_choose_image": "Суретті таңдау үшін басыңыз",
+
+  "work_place": "Жұмыс орны",
+  "job_position": "Лауазымы",
+  "country": "Ел",
+  "choose_country": "Елді таңдаңыз",
+  "save": "Сақтау",
+  "birth_date": "Туған күні",
+
+  "male": "Еркек",
+  "female": "Әйел",
+  "gender": "Жынысы",
+
+  "back": "Артқа",
+
+  "wrong_password_or_login": "Құпия сөз немесе логин дұрыс емес",
+  "access_to_all_features_after_login": "Авторизациядан кейін сіз барлық Hub Smart Cities мүмкіндіктеріне қол жеткізе аласыз",
+  "wrong_code": "Қате код",
+  "terms_of_service": "Қызмет көрсету шарттары",
+  "i_agree_with": "Келісемін",
+  "enter_code": "Кодты енгізіңіз",
+  "use_login_to_enter": "Есептік жазбаға кіру үшін логинді пайдаланыңыз",
+  "continue": "Жалғастыру",
+  "create_post": "Пост жариялау",
+  "this_field_is_required": "Бұл өріс міндетті болып табылады",
+  "minimum_length_is_6_symbols": "Минималды ұзындығы-6 таңба",
+  "passwords_not_match": "Құпия сөздер бірдей емес",
+  "invalid_email_address": "Электрондық пошта мекенжайы дұрыс емес",
+  "user_with_this_email_address_already_exists": "Бұл электрондық пошта мекенжайы бар пайдаланушы бұрыннан бар",
+  "a_user_with_that_username_already_exists": "Мұндай атты пайдаланушы бұрыннан бар",
+  "info_successfuly_changed": "Ақпарат сәтті өзгертілді",
+  "about_us": "Біз туралы",
+  "feedback": "Кері байланыс",
+  "agreement": "Келісім"
+}

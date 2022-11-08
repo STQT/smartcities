@@ -23,7 +23,7 @@ import { useAppDispatch } from "store"
 import cn from "classnames"
 import { PencilIcon } from "@heroicons/react/24/solid"
 import FormData from "form-data"
-import { useTranslation } from "next-export-i18n"
+import { useLanguageQuery, useTranslation } from "next-export-i18n"
 import { setAuthTokens } from "axios-jwt"
 
 export const RegisterPage = () => {
@@ -68,13 +68,14 @@ export const RegisterPage = () => {
   const [userData, setUserData] = useState<User | null>(null)
 
   const { t } = useTranslation()
+  const [languageQuery] = useLanguageQuery()
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormState({ ...formState, [e.target.name]: e.target.value })
   }
 
   const handleLoginClick = () => {
-    router.push("/auth")
+    router.push({ pathname: "/auth", query: languageQuery })
   }
 
   const handleRegisterClick = () => {
@@ -147,7 +148,7 @@ export const RegisterPage = () => {
         })
         .then(() => {
           dispatch(setLoggedIn())
-          router.push("/feed")
+          router.push({ pathname: "/feed", query: languageQuery })
         })
         .catch(() => {
           toast(t("wrong_code"), {

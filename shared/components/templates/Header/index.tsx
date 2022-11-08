@@ -11,7 +11,11 @@ import {
 } from "@heroicons/react/24/outline"
 import { MobileMenu } from "../MobileMenu"
 import { useScrollBlock } from "../../../hooks"
-import { useSelectedLanguage, useTranslation } from "next-export-i18n"
+import {
+  useLanguageQuery,
+  useSelectedLanguage,
+  useTranslation
+} from "next-export-i18n"
 import { setSearchTerm } from "store/slices/main"
 
 const languages = [
@@ -52,6 +56,7 @@ export const Header = () => {
   const [hasScrolled, setScrolled] = useState(false)
   const [isMenuOpened, setMenuOpen] = useState(false)
   const dispatch = useAppDispatch()
+  const [languageQuery] = useLanguageQuery()
 
   const [blockScroll, allowScroll] = useScrollBlock()
 
@@ -107,7 +112,12 @@ export const Header = () => {
     return (
       <>
         <section className={"hidden md:flex gap-[20px] items-center"}>
-          <Logo type={"xs"} onClick={() => router.push("/feed")} />
+          <Logo
+            type={"xs"}
+            onClick={() =>
+              router.push({ pathname: "/feed", query: languageQuery })
+            }
+          />
           <h1 className={"text-[18px] lg:text-[24px] font-semibold"}>
             {t("welcome")}, {user?.first_name}
           </h1>
@@ -128,11 +138,11 @@ export const Header = () => {
             <input
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  router.push("/search")
+                  router.push({ pathname: "/search", query: languageQuery })
                 }
               }}
               onChange={(e) => dispatch(setSearchTerm(e.target.value))}
-              placeholder={"Search"}
+              placeholder={t("search")}
               spellCheck={false}
               className={"w-full h-full outline-none bg-[#F5F6FA]"}
             />
@@ -149,7 +159,9 @@ export const Header = () => {
           <Avatar
             size={50}
             src={user?.image}
-            onClick={() => router.push("/me")}
+            onClick={() =>
+              router.push({ pathname: "/me", query: languageQuery })
+            }
           />
         </section>
       </>
@@ -178,11 +190,11 @@ export const Header = () => {
             <input
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  router.push("/search")
+                  router.push({ pathname: "/search", query: languageQuery })
                 }
               }}
               onChange={(e) => dispatch(setSearchTerm(e.target.value))}
-              placeholder={"Search"}
+              placeholder={t("search")}
               spellCheck={false}
               className={"w-full h-full outline-none bg-[#F5F6FA]"}
             />
@@ -197,7 +209,9 @@ export const Header = () => {
           />
 
           <button
-            onClick={() => router.push("/auth")}
+            onClick={() =>
+              router.push({ pathname: "/auth", query: languageQuery })
+            }
             className={
               "text-[18px] flex gap-2 items-center text-blue font-semibold"
             }>

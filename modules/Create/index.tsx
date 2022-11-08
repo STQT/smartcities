@@ -13,7 +13,11 @@ import { PreviewSelect, TagsSelect, Editor } from "./components/templates"
 import { toast } from "react-toastify"
 import { useRouter } from "next/router"
 import { isLoggedIn } from "axios-jwt"
-import { useSelectedLanguage, useTranslation } from "next-export-i18n"
+import {
+  useLanguageQuery,
+  useSelectedLanguage,
+  useTranslation
+} from "next-export-i18n"
 import { addBaseURL } from "shared/utils"
 
 const generateSuccessCreateToast = (type: string) => {
@@ -38,6 +42,7 @@ export const CreatePage = () => {
   const { t } = useTranslation()
 
   const { lang } = useSelectedLanguage()
+  const [languageQuery] = useLanguageQuery()
 
   const PostTypeOptions: { label: string; value: PostTypes }[] = [
     { label: t("question"), value: "QUESTION" },
@@ -91,7 +96,7 @@ export const CreatePage = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      router.push("/auth")
+      router.push({ pathname: "/auth", query: languageQuery })
     }
   }, [])
 
@@ -151,7 +156,13 @@ export const CreatePage = () => {
               generateSuccessCreateToast("вопрос")
           }
 
-          router.push("/me?tab=posts")
+          router.push({
+            pathname: "/me",
+            query: {
+              ...languageQuery,
+              tab: "posts"
+            }
+          })
         })
         .catch(() => {
           toast("Что-то пошло не так, попробуйте позже", { type: "error" })
@@ -245,7 +256,7 @@ export const CreatePage = () => {
                 theme={"gray"}
                 className={"px-5"}
                 onClick={() => {
-                  router.push("/")
+                  router.push({ pathname: "/", query: languageQuery })
                 }}>
                 {t("back")}
               </Button>

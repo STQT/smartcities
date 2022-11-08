@@ -1,0 +1,104 @@
+{
+  "welcome": "Кош келиңиздер",
+  "search": "Издөө",
+  "feed": "Берүү",
+  "know_more": "Көбүрөөк билүү",
+  "rules": "Эрежелер",
+  "reading_now": "Азыр окуу",
+  "login_0": "Логин",
+  "login_1": "Логин",
+  "read_more": "Андан ары окуу",
+  "categories": "Категориялар",
+
+  "news": "Жаңылыктар",
+
+  "articles": "Макалалар",
+  "article": "Макала",
+
+  "questions": "Суроолор",
+  "question": "Суроо",
+
+  "comments": "Комментарийлер",
+  "write_comment": "Комментарий жазуу",
+  "publish": "Жарыялоо",
+
+  "comments_not_found": "Комментарийлер табылган жок",
+  "news_not_found": "Жаңылыктар табылган жок",
+  "articles_not_found": "Макалалар табылган жок",
+  "questions_not_found": "Суроолор табылган жок",
+
+  "name": "Аты",
+  "surname": "Фамилиясы",
+  "username": " Колдонуучунун аты",
+  "password": "Сырсоз",
+  "repeat_password": "Сырсөздү кайталоо",
+  "email": "Электрондук почта",
+  
+  "register": "Каттоо",
+  "already_registered?": "Эми катталгансызбы?",
+
+  "profile": "Профиль",
+  "notifications": "Эскертмелер",
+  "publications": "Басылмалар",
+  "saves": "Сактоолор",
+  "how_to_become_author": "Кантип автор болсо болот?",
+
+  "exit": "Чыгуу",
+  "change": "Өзгөртүү",
+
+  "create": "Түзүү",
+  "settings": "Ырастоолор",
+
+  "forgot_password": "Сырсөзүңүздү унутуп калдыңызбы?",
+
+  "or_sign_in_with_other_services": "Же башка кызматтарды жардами менен системага кириңиз ",
+  "load_more": "Көбүрөөк жүктөө ",
+  "delete": "Жоюу",
+
+  "choose_thread": "Байланышты тандоо",
+  "choose": "Тандоо",
+  "thread": "Байланыш",
+  
+  "title": "Аталышы",
+  "subtitle": "Субтитр",
+  "post_type": "Кабардын түрү",
+  "create_port": "Кабар түзүү",
+  "choose_tags": "Тегдерди тандоо",
+  "create_tag": "Тег түзүү",
+  "tags": "Тегдер",
+  "preview_image": "Алдын ала көрүү үчүн сүрөт",
+  "click_to_choose_image": "Сүрөт тандоо үчүн басыңыз",
+  
+  "work_place": "Жумуш орду",
+  "job_position": "Кызмат орду",
+  "country": "Өлкө",
+  "choose_country": "Өлкөнү тандаңыз",
+  "save": "Сактоо",
+  "birth_date": "Туулган күн",
+
+  "male": "Эркек",
+  "female": "Аял",
+  "gender": "Жыныс",
+
+  "back": "Артка",
+
+  "wrong_password_or_login": "Туура эмес сырсөз же логин",
+  "access_to_all_features_after_login": "Авторизациядан кийин сиз Hub SmartCitiesтин бардык мүмкүнчүлүктөрүнө кире аласыз",
+  "wrong_code": " Туура эмес код",
+  "terms_of_service": "Кызмат көрсөтүү шарттары",
+  "i_agree_with": "… менен мен макулмун ",
+  "enter_code": " Кодду киргизиңиз",
+  "use_login_to_enter": "Каттоо эсебиңизге кирүү үчүн логиниңизди колдонуңуз",
+  "continue": "Улантуу",
+  "create_post": "Кабар түзүү",
+  "this_field_is_required": "Бул аянт толтуруу үчүн милдеттүү",
+  "minimum_length_is_6_symbols": "Эң аз узундук - 6 белги",
+  "passwords_not_match": "Сырсөздөр дал келбейт",
+  "invalid_email_address": "Электрондук почтанын дареги туура эмес",
+  "user_with_this_email_address_already_exists": "Мындай электрондук почта дареги бар колдонуучу мурунтан эле бар",
+  "a_user_with_that_username_already_exists": "Мындай наамдагы колдонуучу мурунтан эле бар",
+  "info_successfuly_changed": "Маалымат ийгиликтүү өзгөртүлдү",
+  "about_us": "Биз жөнүндө",
+  "feedback": "Кайра байланыш",
+  "agreement": "Келишим"
+}

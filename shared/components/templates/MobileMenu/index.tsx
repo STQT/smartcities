@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "store"
 import { MainFlows } from "../../molecules"
 import { Fragment } from "react"
 import { Transition } from "@headlessui/react"
-import { useTranslation } from "next-export-i18n"
+import { useLanguageQuery, useTranslation } from "next-export-i18n"
 import cn from "classnames"
 
 interface MobileMenuProps {
@@ -26,32 +26,40 @@ export const MobileMenu = ({ closeMenu, isMenuOpened }: MobileMenuProps) => {
   const { isLoggedIn, user } = useAppSelector((state) => state.main)
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
+  const [languageQuery] = useLanguageQuery()
 
   const router = useRouter()
 
   const handleLogout = () => {
     dispatch(logOut())
-    router.push("/auth")
+    router.push({ pathname: "/auth", query: languageQuery })
     closeMenu()
   }
 
   const handleMoveToNotifications = () => {
-    router.push("/me?tab=notifications")
-    closeMenu()
-  }
-
-  const handleMoveToSearch = () => {
-    router.push("/search")
+    router.push({
+      pathname: "/me",
+      query: {
+        ...languageQuery,
+        tab: "notifications"
+      }
+    })
     closeMenu()
   }
 
   const handleMoveToProfile = () => {
-    router.push("/me?tab=profile")
+    router.push({
+      pathname: "/me",
+      query: {
+        ...languageQuery,
+        tab: "profile"
+      }
+    })
     closeMenu()
   }
 
   const handleMoveToCreate = () => {
-    router.push("/create")
+    router.push({ pathname: "/create", query: languageQuery })
     closeMenu()
   }
 
@@ -85,7 +93,7 @@ export const MobileMenu = ({ closeMenu, isMenuOpened }: MobileMenuProps) => {
 
                 <Logo
                   onClick={() => {
-                    router.push("/feed")
+                    router.push({ pathname: "/feed", query: languageQuery })
                     closeMenu()
                   }}
                 />

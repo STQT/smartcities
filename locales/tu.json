@@ -1,0 +1,104 @@
+{
+  "welcome": "Hoşgeldiniz",
+  "search": "Aramak",
+  "feed": "Feed",
+  "know_more": "Daha fazla öğrenmek için",
+  "rules": "Tüzük",
+  "reading_now": "Şimdi Okuma",
+  "login_0": "Login",
+  "login_1": "Login",
+  "read_more": "Daha okuma",
+  "categories": "Kategoriler",
+
+  "news": "Haberler",
+
+  "articles": "Makaleler",
+  "article": "Makale",
+
+  "questions": "Sorular",
+  "question": "Soru",
+
+  "comments": "Yorumlar",
+  "write_comment": "Yorum yazmak için",
+  "publish": "Yayımlamak",
+
+  "comments_not_found": "Sorular bulunamadı",
+  "news_not_found": "Haber bulunamadı",
+  "articles_not_found": "Makaleler bulunamadı",
+  "questions_not_found": "Sorular bulunamadı",
+
+  "name": "İsim",
+  "surname": "Soyadı",
+  "username": "Kullanıcı adı",
+  "password": "Şifre",
+  "repeat_password": "Zaten kayıtlı?",
+  "email": "E-Mail",
+
+  "register": "Kayıt olmak",
+  "already_registered?": "Zaten kayıtlı?",
+
+  "profile": "Profil",
+  "notifications": "Bildirim",
+  "publications": "Yayın",
+  "saves": "Kaydeder",
+  "how_to_become_author": "Nasıl yazar olunur?",
+
+  "exit": "Çıkış",
+  "change": "Değiştirmek",
+
+  "create": "Yaratmak",
+  "settings": "Ayarlar",
+
+  "forgot_password": "Parolanızı mı unuttunuz?",
+
+  "or_sign_in_with_other_services": "Veya diğer hizmetlerle oturum açın",
+  "load_more": "Daha fazla yüklemek için",
+  "delete": "Silmek",
+
+  "choose_thread": "Choose thread",
+  "choose": "Seçmek",
+  "thread": "Thread",
+
+  "title": "Başlık",
+  "subtitle": "Allt yazı",
+  "post_type": "Yazı tipi",
+  "create_port": "Bağlantı noktası oluşturmak için",
+  "choose_tags": "Eiketleri seçmek için",
+  "create_tag": "Gönderi oluşturmak",
+  "tags": "Etiketler",
+  "preview_image": "Önizleme resmi",
+  "click_to_choose_image": "Resmi seçmek için tıklayın",
+
+  "work_place": "İş yeri",
+  "job_position": "İş pozisyonu",
+  "country": "Ülke",
+  "choose_country": "Ùlke seçmek",
+  "save": "Kaydetmek",
+  "birth_date": "Doğum günü",
+
+  "male": "Erkek",
+  "female": "Dişi",
+  "gender": "Cinsiyet",
+
+  "back": "Arka",
+
+  "wrong_password_or_login": "Yanlış şifre veya giriş",
+  "access_to_all_features_after_login": "Yetkilendirmeden sonra Hub Smart şehirlerinin tüm özelliklerine erişeceksiniz",
+  "wrong_code": "Yanlış kod",
+  "terms_of_service": "Kullanım Şartları",
+  "i_agree_with": "Kabul ediyorum",
+  "enter_code": "Kodu girmek için",
+  "use_login_to_enter": "Girmek için giriş kullanmak için",
+  "continue": "Devam etmek",
+  "create_post": "Gönderi oluşturmak",
+  "this_field_is_required": "Bu alan gereklidir",
+  "minimum_length_is_6_symbols": "Minimum uzunluk 6 semboldür",
+  "passwords_not_match": "Parola eşleşmiyor",
+  "invalid_email_address": "Geçersiz e-mail",
+  "user_with_this_email_address_already_exists": "Bu e-mail adresi zaten var",
+  "a_user_with_that_username_already_exists": "Bir kullanıcı bu ismi zaten kulanıyor",
+  "info_successfuly_changed": "Bilgi başarıyla değiştirildi",
+  "about_us": "Hakkımızda",
+  "feedback": "Geri bildirim",
+  "agreement": "Anlaşma"
+}

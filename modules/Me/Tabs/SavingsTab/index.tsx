@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { Tab } from "@headlessui/react"
 
-import { useTranslation } from "next-export-i18n"
+import { useLanguageQuery, useTranslation } from "next-export-i18n"
 import { useRouter } from "next/router"
 import cn from "classnames"
 
@@ -25,11 +25,13 @@ const Post = ({
 }) => {
   const router = useRouter()
   const { t } = useTranslation()
+  const [languageQuery] = useLanguageQuery()
 
   const handleOpen = () => {
     router.push({
       pathname: `/${type.toLowerCase()}/[id]`,
       query: {
+        ...languageQuery,
         id: post.id
       }
     })
@@ -127,7 +129,7 @@ export const SavingsTab = () => {
               className={
                 "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
               }>
-              {posts?.news.map((post) => (
+              {posts?.questions.map((post) => (
                 <Post
                   key={post.id}
                   onDelete={handleDelete}
@@ -153,7 +155,7 @@ export const SavingsTab = () => {
               className={
                 "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
               }>
-              {posts?.articles.map((post) => (
+              {posts?.news.map((post) => (
                 <Post
                   key={post.id}
                   onDelete={handleDelete}
@@ -179,7 +181,7 @@ export const SavingsTab = () => {
               className={
                 "grid grid-cols-1 md:grid-cols-2 gap-[20px] mt-[20px]"
               }>
-              {posts?.questions.map((post) => (
+              {posts?.articles.map((post) => (
                 <Post
                   key={post.id}
                   onDelete={handleDelete}

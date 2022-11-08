@@ -7,6 +7,7 @@ import { useRouter } from "next/router"
 import { useLinkedIn } from "react-linkedin-login-oauth2"
 import FacebookLogin from "react-facebook-login"
 import cn from "classnames"
+import { useLanguageQuery } from "next-export-i18n"
 
 interface SignInWithProps {
   isRegister?: boolean
@@ -15,6 +16,8 @@ interface SignInWithProps {
 export const SignInWith = ({ isRegister }: SignInWithProps) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
+
+  const [languageQuery] = useLanguageQuery()
 
   const handleGoogleLogin = (res: CredentialResponse) => {
     SOCIALS.GOOGLE.login(res.credential as string)
@@ -26,7 +29,7 @@ export const SignInWith = ({ isRegister }: SignInWithProps) => {
       })
       .then(() => {
         dispatch(setLoggedIn())
-        router.push("/me")
+        router.push({ pathname: "/me", query: languageQuery })
       })
   }
 
@@ -46,7 +49,7 @@ export const SignInWith = ({ isRegister }: SignInWithProps) => {
         })
         .then(() => {
           dispatch(setLoggedIn())
-          router.push("/me")
+          router.push({ pathname: "/me", query: languageQuery })
         })
     },
     onError: (error) => {
@@ -64,7 +67,7 @@ export const SignInWith = ({ isRegister }: SignInWithProps) => {
       })
       .then(() => {
         dispatch(setLoggedIn())
-        router.push("/me")
+        router.push({ pathname: "/me", query: languageQuery })
       })
   }
 

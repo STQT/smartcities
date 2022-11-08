@@ -11,12 +11,13 @@ import {
   SavingsTab
 } from "./Tabs"
 import { isLoggedIn } from "axios-jwt"
-import { useTranslation } from "next-export-i18n"
+import { useLanguageQuery, useTranslation } from "next-export-i18n"
 import { ME_TABS } from "shared/constants"
 
 export const ProfilePage = () => {
   const router = useRouter()
   const { t } = useTranslation()
+  const [languageQuery] = useLanguageQuery()
 
   const TABS = useMemo(() => ME_TABS(t), [t])
 
@@ -29,7 +30,7 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      router.push("/auth")
+      router.push({ pathname: "/auth", query: languageQuery })
     }
   }, [])
 

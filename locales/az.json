@@ -1,81 +1,104 @@
 {
-  "welcome": "Salom",
-  "search": "Searh",
-  "feed": "Feed",
-  "know_more": "Know more",
-  "rules": "Rules",
-  "reading_now": "Reading now",
-  "login_0": "Login",
-  "read_more": "Read more",
-  "categories": "Categories",
+   "welcome": "xoş gəlmisiniz",
+   "search": "Axtar",
+   "feed": "Ötürmə",
+   "know_more": "Daha çox bil",
+   "rules": "Qaydalar",
+   "reading_now": "İndi oxu",
+   "login_0": "Giriş_0",
+   "login_1": "Giriş_1",
+   "read_more": "Ətraflı oxu",
+   "kateqoriyalar": "Kateqoriyalar",
+   
+   "news": "Xəbərlər",
 
-  "news": "News",
+   "articles": "məqalələr",
+   "article": "məqalə",
 
-  "articles": "Articles",
-  "article": "Article",
+   "questions": "Suallar",
+   "question": "Sual",
 
-  "questions": "Questions",
-  "question": "Question",
-
-  "comments": "Comments",
-  "write_comment": "Write comment",
-  "publish": "Publish",
-
-  "comments_not_found": "Comments not found",
-  "news_not_found": "News not found",
-  "articles_not_found": "Articles not found",
-  "questions_not_found": "Questions not found",
-
-  "name": "Name",
-  "surname": "Surname",
-  "username": "Username",
-  "password": "Password",
-  "repeat_password": "Repeat password",
-  "email": "E-Mail",
-
-  "register": "Register",
-  "already_registered?": "Already registered?",
-
-  "profile": "Profile",
-  "notifications": "Notifications",
-  "publications": "Publications",
-  "saves": "Saves",
-  "how_to_become_author": "How to become author?",
-
-  "exit": "Exit",
-  "change": "Change",
-
-  "create": "Create",
-  "settings": "Settings",
-
-  "forgot_password": "Forgot password?",
-
-  "or_sign_in_with_other_services": "Or sign in with other services",
-  "load_more": "Load more",
-  "delete": "Delete",
-
-  "choose_thread": "Choose thread",
-  "choose": "Choose",
-  "thread": "Thread",
-
-  "title": "Title",
-  "subtitle": "Subtitle",
-  "post_type": "Post type",
-  "create_port": "Create post",
-  "choose_tags": "Choose tags",
-  "create_tag": "Create tag",
-  "tags": "Tags",
-  "preview_image": "Preview image",
-  "click_to_choose_image": "Click to choose image",
-
-  "work_place": "Work place",
-  "job_position": "Job position",
-  "country": "Country",
-  "choose_country": "Choose country",
-  "save": "Save",
-  "birth_date": "Birth date",
-
-  "male": "Male",
-  "female": "Female",
-  "gender": "Gender"
+   "comments": "Şərhlər",
+   "write_comment": "Şərh yazın",
+   "publish": "Nəşr et",
+   
+   "comments_not_found": "Şərhlər tapılmadı",
+   "news_not_found": "Xxəbər tapılmadı",
+   "articles_not_found": "Məqalə tapılmadı",
+   "questions_not_found": "Suallar tapılmadı",
+   
+   "name": "Ad",
+   "surname": "soyad",
+   "username": "İstifadəçi adı",
+   "password": "Parol",
+   "repeat_password": "Parolu təkrarlayın",
+   "email": "E-poçt",
+   
+   "register": "Qeydiyyatdan keç",
+   "already_registered?": "Artıq qeydiyyatdan keçmisiniz?",
+   
+   "profile": "Profil",
+   "notifications": "Bildirişlər",
+   "publications": "Nəşrlər",
+   "saves": "Yadda saxlamalar",
+   "how_to_become_author": "Necə müəllif olmaq olar?",
+   
+   "exit": "Çıx",
+   "change": "Dəyişmək",
+   
+   "create": "Yarat",
+   "settings": "Parametrlər",
+   
+   "forgot_password": "Şifrənizi unutmusunuz?",
+   
+   "or_sign_in_with_other_services": "Və ya digər xidmətlərlə daxil olun",
+   "load_more": "Daha çox yüklə",
+   "delete": "Sil",
+   
+   "choose_thread": "Əlaqəni seçin",
+   "choose": "Seç",
+   "thread": "əlaqə",
+   
+   "title": "Başlıq",
+   "subtitle": "Altyazı",
+   "post_type": "Yazı növü",
+   "create_port": "Mesaj yaradın",
+   "choose_tags": "Teqləri seçin",
+   "create_tag": "Teq yaradın",
+   "tags": "Teqlər",
+   "preview_image": "şəklə ön baxış",
+   "click_to_choose_image": "Şəkil seçmək üçün klikləyin",
+   
+   "work_place ": "İş yeri",
+   "job_position": "vəzifə",
+   "country": "ölkə",
+   "choose_country": "Ölkə seçin",
+   "save": "Yadda saxlamaq",
+   "birth_date": "Doğum tarixi",
+   
+   "male": "Kişi",
+   "female": "qadın",
+   "gender": "gender",
+   
+   "back": "geri",
+   
+   "wrong_password_or_login": "Yanlış parol və ya giriş",
+   "access_to_all_features_after_login": "Daxil olduqdan sonra bütün Hub SmartCities funksiyalarına giriş əldə edəcəksiniz",
+   "wrong_code": "Səhv kod",
+   "terms_of_service": "Xidmət şərtləri",
+   "i_agree_with": "Razıyam",
+   "enter_code": "Kodu daxil edin",
+   "use_login_to_enter": "Hesabınıza daxil olmaq üçün girişinizdən istifadə edin",
+   "continue": "Davam et",
+   "create_post": "Post yarat",
+   "this_field_is_required": "Bu sahə tələb olunur",
+   "minimum_length_is_6_symbols": "Minimum uzunluq 6 simvoldur",
+   "passwords_not_match": "Parollar uyğun gəlmir",
+   "invalid_email_address": "Yanlış e-poçt ünvanı",
+   "user_with_this_email_address_already_exists": "Bu e-poçtu olan istifadəçi artıq mövcuddur",
+   "a_user_with_that_username_already_exists": "Bu ada malik istifadəçi artıq mövcuddur",
+   "info_successfuly_changed": "Məlumat uğurla dəyişdirildi",
+   "about_us": "Haqqımızda",
+   "feedback": "Əlaqə",
+   "razılaşma": "Razılaşma"
 }

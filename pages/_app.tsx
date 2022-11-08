@@ -1,4 +1,7 @@
 import type { AppProps } from "next/app"
+import Router from "next/router"
+/*@ts-ignore*/
+import withYM from "next-ym"
 import { Provider } from "react-redux"
 import "assets/css/index.css"
 import { store, useAppDispatch } from "store"
@@ -12,12 +15,16 @@ import "react-toastify/dist/ReactToastify.css"
 
 import moment from "moment"
 import "moment/locale/ru"
+import "moment/locale/az"
+import "moment/locale/uz-latn"
+import "moment/locale/tr"
+import "moment/locale/kk"
 
 import { GoogleOAuthProvider } from "@react-oauth/google"
 import { GOOGLE_CLIENT_ID } from "../shared/constants"
 import { USER } from "services/api"
 
-moment.locale("ru")
+moment.locale("en")
 
 const AuthChecker = () => {
   const dispatch = useAppDispatch()
@@ -51,4 +58,4 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   )
 }
 
-export default App
+export default withYM("91085646", Router)(App)
