@@ -200,7 +200,7 @@ export const RegisterPage = () => {
 
   return (
     <>
-      <Page withAside={false} withMenu={false} title={"Регистрация"}>
+      <Page withAside={false} withMenu={false} title={t("register")}>
         <main className={"flex w-full flex-col flex-1"}>
           <section
             className={
