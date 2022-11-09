@@ -7,11 +7,12 @@ import { Post as TPost } from "shared/types"
 import { useAppDispatch, useAppSelector } from "store"
 import { fetchReadingNow } from "store/slices/main"
 import { ARTICLE, NEWS, QUESTION } from "services/api"
-import { useTranslation } from "next-export-i18n"
+import { useLanguageQuery, useTranslation } from "next-export-i18n"
 import { FireIcon } from "@heroicons/react/24/outline"
 
 const Post = ({ targetPost }: { targetPost: TPost }) => {
   const [post, setPost] = useState(targetPost)
+  const [languageQuery] = useLanguageQuery()
 
   const handleLikeToggle = () => {
     const toggleLikeEvent = {
@@ -49,7 +50,7 @@ const Post = ({ targetPost }: { targetPost: TPost }) => {
       <Link
         href={{
           pathname: `/${post.type.toLowerCase()}/[id]`,
-          query: { id: post.id }
+          query: { id: post.id, lang: languageQuery?.lang }
         }}>
         <span
           className={
@@ -88,7 +89,8 @@ export const ReadingNow = () => {
           className={
             "text-blue text-[18px] flex gap-2 items-center ml-[20px] font-semibold"
           }>
-          {t("reading_now")} <FireIcon width={24} />
+          {t("reading_now")}{" "}
+          <img src={"/svg/icons/fire.svg"} className={"w-[24px] h-[24px]"} />
         </h2>
       </div>
 

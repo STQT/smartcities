@@ -84,9 +84,19 @@ export const CreatePage = () => {
   const caption = useCallback(
     (flow?: Theme) => {
       if (flow) {
-        return lang === "gb"
-          ? flow.name
-          : flow[`name_${lang as Exclude<Language, "gb">}`]
+        if (lang === "gb") {
+          return flow.name
+        }
+
+        if (lang === "kg") {
+          return flow.name_kr
+        }
+
+        if (lang === "tr") {
+          return flow.name_tu
+        }
+
+        return flow[`name_${lang as Exclude<Language, "gb">}`]
       }
 
       return ""
@@ -96,7 +106,12 @@ export const CreatePage = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      router.push({ pathname: "/auth", query: languageQuery })
+      router.push({
+        pathname: "/auth",
+        query: {
+          lang: languageQuery?.lang
+        }
+      })
     }
   }, [])
 
@@ -159,7 +174,7 @@ export const CreatePage = () => {
           router.push({
             pathname: "/me",
             query: {
-              ...languageQuery,
+              lang: languageQuery?.lang,
               tab: "posts"
             }
           })
@@ -256,7 +271,12 @@ export const CreatePage = () => {
                 theme={"gray"}
                 className={"px-5"}
                 onClick={() => {
-                  router.push({ pathname: "/", query: languageQuery })
+                  router.push({
+                    pathname: "/",
+                    query: {
+                      lang: languageQuery?.lang
+                    }
+                  })
                 }}>
                 {t("back")}
               </Button>

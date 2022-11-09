@@ -24,12 +24,10 @@ export const MainFlows = ({ onItemClick }: MainFlowsProps) => {
   const { lang } = useSelectedLanguage()
   const { flows } = useAppSelector((state) => state.main)
 
-  console.log(languageQuery)
-
   const handleItemClick = (id: number) => {
     router.push({
       pathname: "/flow/[id]/",
-      query: { ...languageQuery, id }
+      query: { lang: languageQuery?.lang, id }
     })
 
     onItemClick?.()
@@ -38,7 +36,9 @@ export const MainFlows = ({ onItemClick }: MainFlowsProps) => {
   const handleCategoriesClick = () => {
     router.push({
       pathname: "/",
-      query: languageQuery
+      query: {
+        lang: languageQuery?.lang
+      }
     })
   }
 
@@ -56,10 +56,21 @@ export const MainFlows = ({ onItemClick }: MainFlowsProps) => {
   }, [])
 
   const caption = useCallback(
-    (flow: Theme) =>
-      lang === "gb"
-        ? flow.name
-        : flow[`name_${lang as Exclude<Language, "gb">}`],
+    (flow: Theme) => {
+      if (lang === "gb") {
+        return flow.name
+      }
+
+      if (lang === "kg") {
+        return flow.name_kr
+      }
+
+      if (lang === "tr") {
+        return flow.name_tu
+      }
+
+      return flow[`name_${lang as Exclude<Language, "gb">}`]
+    },
     [lang]
   )
 

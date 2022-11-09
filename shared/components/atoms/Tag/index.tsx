@@ -10,7 +10,7 @@ export const Tag = ({ name, id }: ITag) => {
     router.push({
       pathname: "/tag/[id]",
       query: {
-        ...languageQuery,
+        lang: languageQuery?.lang,
         id
       }
     })

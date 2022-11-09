@@ -89,7 +89,7 @@ export const PostView = ({ post: targetPost }: PostViewProps) => {
     router.push({
       pathname: "/profile/[id]",
       query: {
-        ...languageQuery,
+        lang: languageQuery?.lang,
         id: post.user.username
       }
     })

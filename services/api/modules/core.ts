@@ -22,6 +22,14 @@ export const USER = {
     return request.get(`/users/${username}/`)
   },
 
+  search(query?: string) {
+    return request.get("search-user", {
+      params: {
+        q: query
+      }
+    })
+  },
+
   getPublications(
     username: string,
     type: "news" | "article" | "question",

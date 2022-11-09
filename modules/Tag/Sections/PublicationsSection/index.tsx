@@ -30,7 +30,7 @@ const Post = ({
     router.push({
       pathname: `/${type.toLowerCase()}/[id]`,
       query: {
-        ...languageQuery,
+        lang: languageQuery?.lang,
         id
       }
     })

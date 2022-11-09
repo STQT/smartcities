@@ -29,7 +29,12 @@ export const SignInWith = ({ isRegister }: SignInWithProps) => {
       })
       .then(() => {
         dispatch(setLoggedIn())
-        router.push({ pathname: "/me", query: languageQuery })
+        router.push({
+          pathname: "/me",
+          query: {
+            lang: languageQuery?.lang
+          }
+        })
       })
   }
 
@@ -49,7 +54,12 @@ export const SignInWith = ({ isRegister }: SignInWithProps) => {
         })
         .then(() => {
           dispatch(setLoggedIn())
-          router.push({ pathname: "/me", query: languageQuery })
+          router.push({
+            pathname: "/me",
+            query: {
+              lang: languageQuery?.lang
+            }
+          })
         })
     },
     onError: (error) => {
@@ -67,7 +77,12 @@ export const SignInWith = ({ isRegister }: SignInWithProps) => {
       })
       .then(() => {
         dispatch(setLoggedIn())
-        router.push({ pathname: "/me", query: languageQuery })
+        router.push({
+          pathname: "/me",
+          query: {
+            lang: languageQuery?.lang
+          }
+        })
       })
   }
 

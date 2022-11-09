@@ -50,14 +50,19 @@ export const Menu = () => {
 
   const handleLogout = () => {
     dispatch(logOut())
-    router.push({ pathname: "/auth", query: languageQuery })
+    router.push({
+      pathname: "/auth",
+      query: {
+        lang: languageQuery?.lang
+      }
+    })
   }
 
   const handleMoveToNotifications = () => {
     router.push({
       pathname: "/me",
       query: {
-        ...languageQuery,
+        lang: languageQuery?.lang,
         tab: "notifications"
       }
     })
@@ -67,7 +72,7 @@ export const Menu = () => {
     router.push({
       pathname: "/me",
       query: {
-        ...languageQuery,
+        lang: languageQuery?.lang,
         tab: "profile"
       }
     })
@@ -76,7 +81,18 @@ export const Menu = () => {
   const handleMoveToCreate = () => {
     router.push({
       pathname: "/create",
-      query: languageQuery
+      query: {
+        lang: languageQuery?.lang
+      }
+    })
+  }
+
+  const handleMoveToRules = () => {
+    router.push({
+      pathname: "/rules",
+      query: {
+        lang: languageQuery?.lang
+      }
     })
   }
 
@@ -92,7 +108,12 @@ export const Menu = () => {
         })}>
         <Logo
           onClick={() =>
-            router.push({ pathname: "/feed", query: languageQuery })
+            router.push({
+              pathname: "/feed",
+              query: {
+                lang: languageQuery?.lang
+              }
+            })
           }
         />
 
@@ -133,7 +154,7 @@ export const Menu = () => {
           <MenuItem
             Icon={<QuestionMarkCircleIcon className={"w-[20px] h-[20px]"} />}
             label={t("rules")}
-            onClick={() => {}}
+            onClick={handleMoveToRules}
           />
         </section>
       </section>

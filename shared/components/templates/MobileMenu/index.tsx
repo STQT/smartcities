@@ -32,7 +32,12 @@ export const MobileMenu = ({ closeMenu, isMenuOpened }: MobileMenuProps) => {
 
   const handleLogout = () => {
     dispatch(logOut())
-    router.push({ pathname: "/auth", query: languageQuery })
+    router.push({
+      pathname: "/auth",
+      query: {
+        lang: languageQuery?.lang
+      }
+    })
     closeMenu()
   }
 
@@ -40,7 +45,7 @@ export const MobileMenu = ({ closeMenu, isMenuOpened }: MobileMenuProps) => {
     router.push({
       pathname: "/me",
       query: {
-        ...languageQuery,
+        lang: languageQuery?.lang,
         tab: "notifications"
       }
     })
@@ -51,7 +56,7 @@ export const MobileMenu = ({ closeMenu, isMenuOpened }: MobileMenuProps) => {
     router.push({
       pathname: "/me",
       query: {
-        ...languageQuery,
+        lang: languageQuery?.lang,
         tab: "profile"
       }
     })
@@ -59,7 +64,12 @@ export const MobileMenu = ({ closeMenu, isMenuOpened }: MobileMenuProps) => {
   }
 
   const handleMoveToCreate = () => {
-    router.push({ pathname: "/create", query: languageQuery })
+    router.push({
+      pathname: "/create",
+      query: {
+        lang: languageQuery?.lang
+      }
+    })
     closeMenu()
   }
 
@@ -93,7 +103,12 @@ export const MobileMenu = ({ closeMenu, isMenuOpened }: MobileMenuProps) => {
 
                 <Logo
                   onClick={() => {
-                    router.push({ pathname: "/feed", query: languageQuery })
+                    router.push({
+                      pathname: "/feed",
+                      query: {
+                        lang: languageQuery?.lang
+                      }
+                    })
                     closeMenu()
                   }}
                 />

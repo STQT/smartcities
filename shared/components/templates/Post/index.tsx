@@ -53,7 +53,7 @@ export const Post = ({ targetPost }: PostProps) => {
   const handleReadMore = () => {
     router.push({
       pathname: `/${post.type.toLowerCase()}/[id]`,
-      query: { ...languageQuery, id: post.id }
+      query: { lang: languageQuery?.lang, id: post.id }
     })
   }
 
@@ -61,7 +61,7 @@ export const Post = ({ targetPost }: PostProps) => {
     router.push({
       pathname: "/profile/[id]",
       query: {
-        ...languageQuery,
+        lang: languageQuery?.lang,
         id: post.user.username
       }
     })

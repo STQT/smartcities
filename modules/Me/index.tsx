@@ -30,7 +30,12 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      router.push({ pathname: "/auth", query: languageQuery })
+      router.push({
+        pathname: "/auth",
+        query: {
+          lang: languageQuery?.lang
+        }
+      })
     }
   }, [])
 

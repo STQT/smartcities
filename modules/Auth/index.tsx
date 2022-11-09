@@ -29,14 +29,24 @@ export const AuthPage = () => {
   }
 
   const handleRegisterClick = () =>
-    router.push({ pathname: "/register", query: languageQuery })
+    router.push({
+      pathname: "/register",
+      query: {
+        lang: languageQuery?.lang
+      }
+    })
 
   const handleLoginClick = () => {
     login(formState.username, formState.password, {
       successCb: () => {
         USER.getCurrent().then(() => {
           dispatch(setLoggedIn())
-          router.push({ pathname: "/feed", query: languageQuery })
+          router.push({
+            pathname: "/feed",
+            query: {
+              lang: languageQuery?.lang
+            }
+          })
         })
       },
 

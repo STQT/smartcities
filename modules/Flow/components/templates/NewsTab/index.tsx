@@ -28,6 +28,9 @@ export const NewsTab = () => {
 
   useEffect(() => {
     if (router.query.id) {
+      setNews([])
+      setLoading(true)
+
       NEWS.getListByThemeId(Number(router.query.id)).then(
         (res: AxiosListResponse<TPost>) => {
           setNews(res.data.results)
@@ -36,7 +39,7 @@ export const NewsTab = () => {
         }
       )
     }
-  }, [router.query.id])
+  }, [router.query])
 
   useEffect(() => {
     if (router.query.id) {
@@ -67,7 +70,7 @@ export const NewsTab = () => {
         </section>
       )}
 
-      {news.length < newsCount && (
+      {!isLoading && news.length < newsCount && (
         <Button onClick={handleLoadMore}>{t("load_more")}</Button>
       )}
     </main>

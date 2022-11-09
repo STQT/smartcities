@@ -17,6 +17,7 @@ import { PencilIcon } from "@heroicons/react/24/solid"
 import cn from "classnames"
 import FormData from "form-data"
 import { AxiosError } from "axios"
+import { router } from "next/client"
 
 export const ProfileTab = () => {
   const { user } = useAppSelector((state) => state.main)
@@ -105,10 +106,12 @@ export const ProfileTab = () => {
   const profileImage = useMemo(() => {
     if (formState.image && Boolean(image?.preview)) {
       return image?.preview
-    } else {
+    }
+
+    if (formState.image && !Boolean(image?.preview)) {
       return formState.image
     }
-  }, [formState.image, image?.preview])
+  }, [formState.image, image?.preview, image])
 
   const isSaveButtonAvailable = useMemo(() => {
     return (
@@ -291,6 +294,11 @@ export const ProfileTab = () => {
         <div />
         <div />
         <button
+          onClick={() => {
+            router.push({
+              pathname: "how-to-become-author"
+            })
+          }}
           className={"text-[18px] justify-self-start text-blue font-semibold"}>
           {t("how_to_become_author")}
         </button>

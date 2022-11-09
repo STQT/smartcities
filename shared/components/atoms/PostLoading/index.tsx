@@ -13,8 +13,8 @@ export const PostLoading = ({ isLoading, className }: PostLoadingProps) => {
     className
   )
 
-  return (
-    <Transition appear show={isLoading} as={Fragment}>
+  return isLoading ? (
+    <Transition appear show={true} as={Fragment}>
       <Transition.Child
         as={Fragment}
         enter="ease-out duration-300"
@@ -28,5 +28,5 @@ export const PostLoading = ({ isLoading, className }: PostLoadingProps) => {
         </section>
       </Transition.Child>
     </Transition>
-  )
+  ) : null
 }

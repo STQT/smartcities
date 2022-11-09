@@ -5,7 +5,7 @@ import { Page } from "../../shared/components/templates"
 const Policy: NextPage = () => {
   return (
     <Page withMenu={false} title={"Privacy Policy"}>
-      <div className={"w-full rounded-xl bg-white p-12"}>
+      <div className={"w-full rounded-xl bg-white border p-12"}>
         <h2 className={"text-3xl font-bold mb-2"}>Правила сайта</h2>
         <p className={"mb-6 font-semibold text-lg"}>
           Вот список того, чего на ресурсе делать не следует:

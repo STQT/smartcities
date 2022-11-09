@@ -49,7 +49,9 @@ export const FeedPage = () => {
     )
 
   return (
-    <Page withAside={true} title={t("feed")}>
+    <Page
+      withAside={true}
+      title={`"Smart Cities" portal - Organization of Turkic States 2022`}>
       <main className={"flex-1 flex flex-col gap-[20px]"}>
         <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
           <Tab.List

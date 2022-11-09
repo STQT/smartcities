@@ -34,8 +34,6 @@ export const QuestionsTab = ({ query }: { query: string }) => {
 
   return (
     <main>
-      <section className={"h-12 rounded-b-[20px] bg-white"}></section>
-
       <PostLoading className={"mt-6"} isLoading={isLoading} />
       {!isLoading && (
         <EmptyState

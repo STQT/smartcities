@@ -19,8 +19,8 @@ export const EmptyState = ({
     className
   )
 
-  return (
-    <Transition appear show={isEmpty} as={Fragment}>
+  return isEmpty ? (
+    <Transition appear show={true} as={Fragment}>
       <Transition.Child
         as={Fragment}
         enter="ease-out duration-300"
@@ -95,5 +95,5 @@ export const EmptyState = ({
         </section>
       </Transition.Child>
     </Transition>
-  )
+  ) : null
 }

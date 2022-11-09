@@ -115,7 +115,12 @@ export const Header = () => {
           <Logo
             type={"xs"}
             onClick={() =>
-              router.push({ pathname: "/feed", query: languageQuery })
+              router.push({
+                pathname: "/feed",
+                query: {
+                  lang: languageQuery?.lang
+                }
+              })
             }
           />
           <h1 className={"text-[18px] lg:text-[24px] font-semibold"}>
@@ -138,7 +143,12 @@ export const Header = () => {
             <input
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  router.push({ pathname: "/search", query: languageQuery })
+                  router.push({
+                    pathname: "/search",
+                    query: {
+                      lang: languageQuery?.lang
+                    }
+                  })
                 }
               }}
               onChange={(e) => dispatch(setSearchTerm(e.target.value))}
@@ -160,7 +170,12 @@ export const Header = () => {
             size={50}
             src={user?.image}
             onClick={() =>
-              router.push({ pathname: "/me", query: languageQuery })
+              router.push({
+                pathname: "/me",
+                query: {
+                  lang: languageQuery?.lang
+                }
+              })
             }
           />
         </section>
@@ -190,7 +205,12 @@ export const Header = () => {
             <input
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  router.push({ pathname: "/search", query: languageQuery })
+                  router.push({
+                    pathname: "/search",
+                    query: {
+                      lang: languageQuery?.lang
+                    }
+                  })
                 }
               }}
               onChange={(e) => dispatch(setSearchTerm(e.target.value))}
@@ -210,7 +230,12 @@ export const Header = () => {
 
           <button
             onClick={() =>
-              router.push({ pathname: "/auth", query: languageQuery })
+              router.push({
+                pathname: "/auth",
+                query: {
+                  lang: languageQuery?.lang
+                }
+              })
             }
             className={
               "text-[18px] flex gap-2 items-center text-blue font-semibold"

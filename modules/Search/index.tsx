@@ -89,7 +89,9 @@ export const SearchPage = () => {
     <Page title={"Flow"}>
       <main className={"flex-1"}>
         <div
-          className={"flex flex-col p-[24px] pb-0 rounded-t-[20px] bg-white"}>
+          className={
+            "flex border flex-col p-[24px] pb-0 rounded-t-[20px] bg-white"
+          }>
           <Input
             onClick={() => {
               setClicked(true)
@@ -103,7 +105,7 @@ export const SearchPage = () => {
         <Tab.Group selectedIndex={selectedTab} onChange={handleTabChange}>
           <Tab.List
             className={
-              "flex pt-[32px] bg-white px-[40px] gap-[20px] border-b-[0.5px] border-gray-300/30 w-full"
+              "flex border border-t-0 pt-[20px] rounded-b-[20px] bg-white px-[40px] gap-[20px] w-full"
             }>
             {Object.entries(TABS).map(([key, value]) => (
               <Tab className={({ selected }) => tabClasses(selected)} key={key}>

@@ -75,7 +75,12 @@ export const RegisterPage = () => {
   }
 
   const handleLoginClick = () => {
-    router.push({ pathname: "/auth", query: languageQuery })
+    router.push({
+      pathname: "/auth",
+      query: {
+        lang: languageQuery?.lang
+      }
+    })
   }
 
   const handleRegisterClick = () => {
@@ -148,7 +153,12 @@ export const RegisterPage = () => {
         })
         .then(() => {
           dispatch(setLoggedIn())
-          router.push({ pathname: "/feed", query: languageQuery })
+          router.push({
+            pathname: "/feed",
+            query: {
+              lang: languageQuery?.lang
+            }
+          })
         })
         .catch(() => {
           toast(t("wrong_code"), {

@@ -8,7 +8,12 @@ const Home: NextPage = () => {
   const [languageQuery] = useLanguageQuery()
 
   useEffect(() => {
-    router.push({ pathname: "/feed", query: languageQuery })
+    router.push({
+      pathname: "/feed",
+      query: {
+        lang: languageQuery?.lang
+      }
+    })
   }, [router])
 
   return <main className={"text-3xl"}></main>
