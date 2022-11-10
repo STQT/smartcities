@@ -97,7 +97,7 @@ export const Select = ({
             leaveTo="opacity-0">
             <Listbox.Options className={optionsClasses}>
               {options.map((option) => (
-                <>
+                <Fragment key={option.value}>
                   {isLanguageSwitcher && (
                     <LanguageSwitcher
                       key={option.value}
@@ -172,7 +172,7 @@ export const Select = ({
                       )}
                     </Listbox.Option>
                   )}
-                </>
+                </Fragment>
               ))}
             </Listbox.Options>
           </Transition>

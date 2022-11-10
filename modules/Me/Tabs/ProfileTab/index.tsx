@@ -14,12 +14,12 @@ import { USER } from "services/api"
 import { toast } from "react-toastify"
 import { useTranslation } from "next-export-i18n"
 import { PencilIcon } from "@heroicons/react/24/solid"
-import cn from "classnames"
 import FormData from "form-data"
 import { AxiosError } from "axios"
-import { router } from "next/client"
+import { useRouter } from "next/router"
 
 export const ProfileTab = () => {
+  const router = useRouter()
   const { user } = useAppSelector((state) => state.main)
   const { t } = useTranslation()
   const dispatch = useAppDispatch()

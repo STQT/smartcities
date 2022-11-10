@@ -14,7 +14,7 @@ const Home: NextPage = () => {
         lang: languageQuery?.lang
       }
     })
-  }, [router])
+  }, [router, languageQuery])
 
   return <main className={"text-3xl"}></main>
 }
