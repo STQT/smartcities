@@ -3,6 +3,7 @@ const az = require("../locales/az.json")
 const kg = require("../locales/kr.json")
 const kz = require("../locales/kz.json")
 const tr = require("../locales/tu.json")
+const uz = require("../locales/uz.json")
 
 const i18n = {
   translations: {
@@ -10,7 +11,8 @@ const i18n = {
     az,
     kg,
     kz,
-    tr
+    tr,
+    uz
   },
   defaultLang: "gb"
 }

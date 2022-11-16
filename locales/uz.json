@@ -1,0 +1,104 @@
+{
+  "welcome": "Xush kelibsiz",
+  "search": "Qidirish",
+  "feed": "Feed",
+  "know_more": "Ko‘proq bilish",
+  "rules": "Qoidalar",
+  "reading_now": "Hozir o‘qilmoqda",
+  "login_0": "Login",
+  "login_1": "Login",
+  "read_more": "Ko‘proq o‘qish",
+  "categories": "Kategoriyalar",
+
+  "news": "Yangiliklar",
+
+  "articles": "Maqolalar",
+  "article": "Maqola",
+
+  "questions": "Savollar",
+  "question": "Savol",
+
+  "comments": "Kommentariylar",
+  "write_comment": "Izoh yozish",
+  "publish": "Chop etish",
+
+  "comments_not_found": "Izohlar topilmadi",
+  "news_not_found": "Yangiliklar topilmadi",
+  "articles_not_found": "Maqola topilmadi",
+  "questions_not_found": "Savollar topilmadi",
+
+  "name": "Ism",
+  "surname": "Familiya",
+  "username": "Username",
+  "password": "Parol",
+  "repeat_password": "Parolni qaya kirting",
+  "email": "E-Mail",
+
+  "register": "Ro‘yxatdan o‘tish",
+  "already_registered?": "Ro‘yxatdan o‘tganmisiz?",
+
+  "profile": "Profil",
+  "notifications": "Ogohlantirishlar",
+  "publications": "Nashrlar",
+  "saves": "Saqlash",
+  "how_to_become_author": "Qanday qilib muallif bo‘lish mumkin?",
+
+  "exit": "Chiqish",
+  "change": "O‘zgartirish",
+
+  "create": "Yaratish",
+  "settings": "Sozlamalar",
+
+  "forgot_password": "Parolni unutdingizmi?",
+
+  "or_sign_in_with_other_services": "Yoki boshqa xizmatlar bilan tizimga kiring",
+  "load_more": "Ko‘proq yuklash",
+  "delete": "O‘chirish",
+
+  "choose_thread": "Mavzuni tanlang",
+  "choose": "Tanlash",
+  "thread": "Mavzu",
+
+  "title": "Sarlavha",
+  "subtitle": "Subtitle",
+  "post_type": "Post turi",
+  "create_port": "Post yaratish",
+  "choose_tags": "Teglarni tanlash",
+  "create_tag": "Teg yaratish",
+  "tags": "Teglar",
+  "preview_image": "Rasmni oldindan ko‘rish",
+  "click_to_choose_image": "Rasmni tanlash uchun bosing",
+
+  "work_place": "Ish joyi",
+  "job_position": "Lavozim",
+  "country": "Davlat",
+  "choose_country": "Davlatni tanlash",
+  "save": "Saqlash",
+  "birth_date": "Tug'ilgan sana",
+
+  "male": "Erkak",
+  "female": "Ayol",
+  "gender": "Jins",
+
+  "back": "Ortga",
+
+  "wrong_password_or_login": "Login yoki parol noto‘g'ri",
+  "access_to_all_features_after_login": "Avtorizatsiyadan so‘ng siz Hub SmartCities'ning barcha funksiyalariga kirish huquqiga ega bo‘lasiz",
+  "wrong_code": "Noto‘g'ri kod",
+  "terms_of_service": "Xizmat ko‘rsatish shartlari",
+  "i_agree_with": "Men roziman",
+  "enter_code": "Kodni kiriting",
+  "use_login_to_enter": "Akauntingizga kirish uchun logindan foydalaning",
+  "continue": "Davom etish",
+  "create_post": "Post yaratish",
+  "this_field_is_required": "Bu maydon to‘ldirilishi shart",
+  "minimum_length_is_6_symbols": "Minimal uzunlik - 6 ta belgi",
+  "passwords_not_match": "Parollar mos emas",
+  "invalid_email_address": "Elektron pochta manzili noto‘g'ri",
+  "user_with_this_email_address_already_exists": "Ushbu elektron pochta manziliga ega foydalanuvchi mavjud",
+  "a_user_with_that_username_already_exists": "Ushbu foydalanuvchi nomiga ega foydalanuvchi mavjud",
+  "info_successfuly_changed": "Ma'lumotlar muvaffaqiyatli o‘zgartirildi",
+  "about_us": "Biz haqimizda",
+  "feedback": "Qayta aloqa",
+  "agreement": "Kelishuv"
+}

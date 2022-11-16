@@ -22,6 +22,8 @@ export const UsersTab = ({ query }: { query: string }) => {
         setUsers(res.data.results)
         setLoading(false)
       })
+    } else {
+      setUsers([])
     }
   }, [query])
 

@@ -21,15 +21,11 @@ export const ArticlesTab = ({ query }: { query: string }) => {
         setArticles(res.data.results)
         setLoading(false)
       })
+    } else {
+      setLoading(false)
+      setArticles([])
     }
   }, [query])
-
-  useEffect(() => {
-    ARTICLE.getList().then((res) => {
-      setArticles(res.data.results)
-      setLoading(false)
-    })
-  }, [])
 
   return (
     <main>

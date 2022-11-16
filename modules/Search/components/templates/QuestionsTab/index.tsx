@@ -22,15 +22,11 @@ export const QuestionsTab = ({ query }: { query: string }) => {
         setQuestions(res.data.results)
         setLoading(false)
       })
+    } else {
+      setLoading(false)
+      setQuestions([])
     }
   }, [query])
-
-  useEffect(() => {
-    QUESTION.getList().then((res) => {
-      setQuestions(res.data.results)
-      setLoading(false)
-    })
-  }, [])
 
   return (
     <main>

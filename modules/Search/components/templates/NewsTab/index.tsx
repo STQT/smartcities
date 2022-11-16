@@ -22,15 +22,11 @@ export const NewsTab = ({ query }: { query: string }) => {
         setNews(res.data.results)
         setLoading(false)
       })
+    } else {
+      setLoading(false)
+      setNews([])
     }
   }, [query])
-
-  useEffect(() => {
-    NEWS.getList().then((res) => {
-      setNews(res.data.results)
-      setLoading(false)
-    })
-  }, [])
 
   return (
     <main>

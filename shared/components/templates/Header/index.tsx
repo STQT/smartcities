@@ -246,7 +246,7 @@ export const Header = () => {
         </section>
       </section>
     )
-  }, [])
+  }, [lang])
 
   return (
     <>
